@@ -50,10 +50,12 @@ def source_prompt(case):
     )
 
 
-def replacement_objective(case):
-    return (
+def replacement_objective(case, local_no_think):
+    prefix = "/no_think\n" if local_no_think else ""
+    return prefix + (
         f"{TASKS[case['id']]} Edit only {case['source']}; leave the restored {REPRO} "
         "and the note intact. Complete the implementation in the working tree. "
+        "Read the handoff first. Locate and read only the relevant source section before editing. "
         "Use public source within this checkout and the prior note. Do not access Git history, "
         "network resources, other workspaces, external services, or credentials."
     )
@@ -92,14 +94,15 @@ def read_summary(log):
     }
 
 
-def worker_environment(endpoint):
+def worker_environment(endpoint, model):
     env = dict(os.environ)
     if endpoint:
+        local_model = model.removeprefix("continuity-local/")
         env["OPENCODE_CONFIG_CONTENT"] = json.dumps({
             "provider": {"continuity-local": {
                 "npm": "@ai-sdk/openai-compatible", "name": "Local Ollama",
                 "options": {"baseURL": endpoint},
-                "models": {"qwen3:4b": {
+                "models": {local_model: {
                     "name": "Qwen3 4B", "limit": {"context": 16384, "output": 2048}, "tool_call": True,
                 }},
             }},
@@ -117,7 +120,7 @@ def staged_files(workspace):
     return sorted(set(changed + untracked) - {""})
 
 
-def live_case(case, temp, source_model, runtime, model, timeout):
+def live_case(case, temp, source_model, runtime, model, timeout, local_no_think):
     source = download(case, temp / "source", reference=False)
     db = temp / "ledger.db"
     before_log, after_log = temp / "first.log", temp / "replacement.log"
@@ -142,7 +145,7 @@ def live_case(case, temp, source_model, runtime, model, timeout):
     if baseline.returncode != 1 or b"AssertionError" not in baseline.stderr:
         report["grade"]["failure"] = "source reproduction did not fail with an assertion on the base"
         return report
-    task = invoke(db, "start", source, "--objective", replacement_objective(case))
+    task = invoke(db, "start", source, "--objective", replacement_objective(case, local_no_think))
     task_id, token = task["task"], task["token"]
     checkpoint = invoke(db, "checkpoint", task_id, "--include", REPRO, "--include", NOTE,
                         "--note", note.decode(), owner=token)
@@ -205,10 +208,13 @@ def main():
     cli.add_argument("--runtime", choices=("codex", "opencode"), default="opencode")
     cli.add_argument("--model")
     cli.add_argument("--local-endpoint")
+    cli.add_argument("--local-no-think", action="store_true")
     cli.add_argument("--timeout", type=int, default=180)
     args = cli.parse_args()
     if args.local_endpoint:
-        os.environ["OPENCODE_CONFIG_CONTENT"] = worker_environment(args.local_endpoint)[
+        if not args.model or not args.model.startswith("continuity-local/"):
+            cli.error("--local-endpoint requires --model continuity-local/MODEL")
+        os.environ["OPENCODE_CONFIG_CONTENT"] = worker_environment(args.local_endpoint, args.model)[
             "OPENCODE_CONFIG_CONTENT"
         ]
     reports = []
@@ -218,7 +224,8 @@ def main():
                 continue
             temp = Path(directory) / case["id"]
             temp.mkdir()
-            report = live_case(case, temp, args.source_model, args.runtime, args.model, args.timeout)
+            report = live_case(case, temp, args.source_model, args.runtime, args.model, args.timeout,
+                               args.local_no_think)
             reports.append(report)
             print(f"{case['id']}: {'pass' if report['grade']['complete'] else 'incomplete'}",
                   flush=True)
@@ -227,7 +234,7 @@ def main():
         "candidate_commit": git(PROJECT, "rev-parse", "HEAD").decode().strip(), "set": args.set,
         "python": platform.python_version(), "source_model_requested": args.source_model,
         "replacement_runtime": args.runtime, "replacement_model_requested": args.model,
-        "worker_timeout_seconds": args.timeout,
+        "worker_timeout_seconds": args.timeout, "local_no_think": args.local_no_think,
         "codex": execute(["codex", "--version"]).stdout.decode().strip(),
         "opencode": execute(["opencode", "--version"]).stdout.decode().strip()
                     if args.runtime == "opencode" else None,
