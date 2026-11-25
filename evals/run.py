@@ -1,6 +1,7 @@
 """Measure handoff and recovery on pinned public upstream worktrees."""
 
 import argparse
+import base64
 from datetime import datetime, timezone
 import hashlib
 import json
@@ -15,7 +16,7 @@ import tempfile
 import threading
 import time
 
-from continuity.workspace import git
+from continuity.workspace import fingerprint, git
 from .publisher import publisher
 
 EVALS = Path(__file__).resolve().parent
@@ -138,7 +139,15 @@ def transport_case(case, temp):
     started = time.monotonic()
     task = invoke(db, "start", initial, "--objective", objective)
     task_id, old = task["task"], task["token"]
-    seed = invoke(db, "checkpoint", task_id, "--include", NOTE, "--note", note.decode(), owner=old)
+    seed = invoke(db, "checkpoint", task_id, "--include", NOTE, "--note", note.decode(),
+                  "--next", "Run the case predicate", owner=old)
+    manifest = invoke(db, "manifest", task_id, "--with-patch")
+    exported = manifest["artifact"]
+    manifest_roundtrip = (
+        manifest["version"] == 1 and manifest["context"]["next_actions"] == ["Run the case predicate"]
+        and fingerprint(exported["base"], base64.b64decode(exported["git_binary_patch_base64"]))
+        == seed["digest"] == exported["sha256"]
+    )
     before = invoke(db, "inspect", task_id)
     worker = [sys.executable, str(EVALS / "worker.py")]
     worktree = temp / "replacement"
@@ -214,6 +223,7 @@ def transport_case(case, temp):
         },
         "provider": {"puts": puts, "gets": gets, "effects": events},
         "publication_client_killed": killed_client,
+        "manifest_roundtrip": manifest_roundtrip,
         "verification": {"exit": receipt["exit_code"], "snapshot_sha256": seed["digest"],
                          "log_sha256": receipt["output_sha256"]},
         "native": {"exit": native.returncode, "log_sha256": sha(native.stdout + native.stderr),
@@ -226,6 +236,7 @@ def gate(row):
     return (not any(row["arms"]["brief-only"][key] for key in graded)
             and all(row["arms"][arm][key] for arm in ("manual-git", "managed") for key in graded)
             and all(row["faults"].values()) and row["native"]["exit"] == 0
+            and row["manifest_roundtrip"]
             and row["publication_client_killed"]["client_sigkill"]
             and row["publication_client_killed"]["intent_reserved"]
             and row["publication_client_killed"]["replacement_confirmed"]

@@ -1,5 +1,6 @@
 """Local task authority, immutable checkpoints, and verification evidence."""
 
+import base64
 from contextlib import contextmanager
 import hashlib
 import json
@@ -20,7 +21,8 @@ CREATE TABLE IF NOT EXISTS task (
 );
 CREATE TABLE IF NOT EXISTS checkpoint (
     id TEXT PRIMARY KEY, task TEXT NOT NULL REFERENCES task(id), base TEXT NOT NULL,
-    patch BLOB NOT NULL, digest TEXT NOT NULL, includes TEXT NOT NULL, note TEXT NOT NULL
+    patch BLOB NOT NULL, digest TEXT NOT NULL, includes TEXT NOT NULL, note TEXT NOT NULL,
+    context TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS evidence (
     id TEXT PRIMARY KEY, task TEXT NOT NULL REFERENCES task(id),
@@ -101,7 +103,7 @@ class Store:
         if recovery is not None and not secrets.compare_digest(row["recovery_hash"], token_hash(recovery)):
             raise ContinuityError("Invalid operator recovery key")
 
-    def checkpoint(self, task, token, includes, note):
+    def checkpoint(self, task, token, includes, note, context=None):
         with self.connection() as conn:
             owner = self.task(conn, task, token)
         includes = sorted(set(includes))
@@ -111,10 +113,45 @@ class Store:
             current = self.task(conn, task, token)
             if current["checkpoint"] != owner["checkpoint"]:
                 raise ContinuityError("Another checkpoint was saved during capture. Retry.")
-            conn.execute("INSERT INTO checkpoint VALUES (?, ?, ?, ?, ?, ?, ?)",
-                         (checkpoint, task, base, patch, digest, json.dumps(includes), note))
+            conn.execute("INSERT INTO checkpoint VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                         (checkpoint, task, base, patch, digest, json.dumps(includes), note,
+                          json.dumps(context or {})))
             conn.execute("UPDATE task SET checkpoint = ? WHERE id = ?", (checkpoint, task))
         return {"checkpoint": checkpoint, "digest": digest, "base": base}
+
+    def manifest(self, task, *, with_patch=False):
+        with self.connection() as conn:
+            owner = self.task(conn, task)
+            snapshot = self.latest(conn, owner)
+            return self._manifest(conn, owner, snapshot, with_patch=with_patch)
+
+    @staticmethod
+    def _manifest(conn, owner, snapshot, *, with_patch=False):
+        evidence = conn.execute(
+            """SELECT e.id, c.digest, e.exit_code, e.output_hash, e.environment FROM evidence e
+               JOIN checkpoint c ON c.id=e.checkpoint WHERE e.task=? ORDER BY e.rowid""",
+            (owner["id"],),
+        )
+        operations = conn.execute("SELECT id, status FROM operation WHERE task=? ORDER BY rowid",
+                                  (owner["id"],))
+        artifact = {
+            "id": snapshot["id"], "base": snapshot["base"], "sha256": snapshot["digest"],
+            "selected_untracked": json.loads(snapshot["includes"]),
+        }
+        if with_patch:
+            artifact["git_binary_patch_base64"] = base64.b64encode(snapshot["patch"]).decode()
+        return {
+            "format": "git-task-continuity", "version": 1, "task": owner["id"],
+            "generation": owner["generation"], "objective": owner["objective"],
+            "context": {**json.loads(snapshot["context"]), "note": snapshot["note"]},
+            "artifact": artifact,
+            "verification": [
+                {"id": item["id"], "snapshot_sha256": item["digest"], "exit": item["exit_code"],
+                 "log_sha256": item["output_hash"], "environment": json.loads(item["environment"])}
+                for item in evidence
+            ],
+            "operations": [dict(item) for item in operations],
+        }
 
     def inspect(self, task, workspace=None):
         with self.connection() as conn:
@@ -160,14 +197,23 @@ class Store:
                        WHERE id = ?""",
                     (str(destination), token_hash(replacement), task),
                 )
+                manifest = self._manifest(conn, self.task(conn, task), snapshot)
         except BaseException:
             git(owner["workspace"], "worktree", "remove", "--force", str(destination))
             raise
+        context = manifest["context"]
+        structured = "\n".join(
+            f"{label.replace('_', ' ').title()}: {json.dumps(context[label], ensure_ascii=False)}"
+            for label in ("constraints", "decisions", "next_actions", "acceptance") if context.get(label)
+        )
+        pending = [item for item in manifest["operations"] if item["status"] != "confirmed"]
         return {
             "task": task, "token": replacement, "workspace": str(destination),
             "generation": owner["generation"] + 1, "checkpoint": snapshot["id"],
-            "prompt": f"Task objective:\n{owner['objective']}\n\n"
-                      f"Prior worker checkpoint notes (context to verify):\n{snapshot['note']}\n\n"
-                      f"Checkpoint digest: {snapshot['digest']}\n"
+            "prompt": f"Task objective:\n{manifest['objective']}\n\n"
+                      f"Prior worker checkpoint notes (context to verify):\n{context['note']}\n\n"
+                      f"{structured}\n"
+                      f"Checkpoint digest: {manifest['artifact']['sha256']}\n"
+                      f"Unresolved operations (operator reconciliation may be needed): {json.dumps(pending)}\n"
                       "Inspect the restored repository and applicable instructions before continuing.",
         }

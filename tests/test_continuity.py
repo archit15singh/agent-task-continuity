@@ -1,4 +1,6 @@
+import base64
 import concurrent.futures
+import json
 from pathlib import Path
 import sys
 import tempfile
@@ -7,7 +9,7 @@ import unittest
 from continuity.publish import publish, settle
 from continuity.runner import verify
 from continuity.store import Store
-from continuity.workspace import ContinuityError, git
+from continuity.workspace import ContinuityError, fingerprint, git
 from evals.publisher import publisher
 
 
@@ -46,6 +48,21 @@ class ContinuityTests(unittest.TestCase):
             self.store.checkpoint(self.task, self.owner, [], "")
         (dest / "binary.dat").unlink()
         assert self.store.inspect(self.task)["missing_selected"] == ["binary.dat"]
+
+    def test_portable_manifest_can_reproduce_the_snapshot_fingerprint(self):
+        self.checkpoint()
+        self.store.checkpoint(self.task, self.owner, ["binary.dat"], "Handoff",
+                              {"next_actions": ["Run verification"]})
+        manifest = self.store.manifest(self.task, with_patch=True)
+        artifact = manifest["artifact"]
+        assert manifest["version"] == 1
+        assert manifest["context"]["next_actions"] == ["Run verification"]
+        assert fingerprint(artifact["base"], base64.b64decode(
+            artifact["git_binary_patch_base64"],
+        )) == artifact["sha256"]
+        assert self.owner not in json.dumps(manifest)
+        assert self.started["recovery_key"] not in json.dumps(manifest)
+        assert "git_binary_patch_base64" not in self.store.manifest(self.task)["artifact"]
 
     def test_only_one_concurrent_takeover_can_win(self):
         self.checkpoint()

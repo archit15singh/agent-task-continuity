@@ -32,6 +32,10 @@ def parser():
     checkpoint = task_command("checkpoint", "capture a recoverable workspace revision")
     checkpoint.add_argument("--include", action="append", default=[], metavar="FILE")
     checkpoint.add_argument("--note", required=True)
+    for option in ("constraint", "decision", "next", "acceptance"):
+        checkpoint.add_argument(f"--{option}", action="append", default=[])
+    manifest = task_command("manifest", "export a versioned task description", owner=False)
+    manifest.add_argument("--with-patch", action="store_true", help="include workspace contents")
     examine = task_command("inspect", "compare a workspace with its checkpoint", owner=False)
     examine.add_argument("--workspace")
 
@@ -75,6 +79,8 @@ def execute(args, store):
     task = args.task
     if args.action == "inspect":
         return store.inspect(task, args.workspace), 0
+    if args.action == "manifest":
+        return store.manifest(task, with_patch=args.with_patch), 0
     if args.action == "operations":
         with store.connection() as conn:
             store.task(conn, task)
@@ -89,7 +95,11 @@ def execute(args, store):
     if not token:
         raise ContinuityError("Set CONTINUITY_OWNER to the current owner token")
     if args.action == "checkpoint":
-        return store.checkpoint(task, token, args.include, args.note), 0
+        context = {
+            "constraints": args.constraint, "decisions": args.decision,
+            "next_actions": args.next, "acceptance": args.acceptance,
+        }
+        return store.checkpoint(task, token, args.include, args.note, context), 0
     if args.action == "continue":
         result = store.takeover(task, token, args.into)
         if args.runtime:
