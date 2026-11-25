@@ -1,0 +1,38 @@
+{
+  "unit": {
+    "command": "python -m unittest discover -s tests -v",
+    "passed": 6,
+    "python_runs": [
+      "3.13.18",
+      "3.15.0"
+    ],
+    "candidate_commit": "c2f94ba358b88e90009476587a0ba2fa824f5b8e"
+  },
+  "installer_smoke": {
+    "installation": "pip install -e .",
+    "entry_point": "continuity --help",
+    "passed": true
+  },
+  "runtime_smoke": {
+    "prompt": "Reply with exactly ready. Do not call tools.",
+    "codex": {
+      "version": "codex-cli 0.170.0",
+      "response": "ready"
+    },
+    "opencode_hosted": {
+      "version": "opencode v2.1.2",
+      "models": [
+        "deepseek-v4.1-flash-free",
+        "big-pickle",
+        "beam-free"
+      ],
+      "http": 429,
+      "provider_error": "provider.free-limit"
+    },
+    "opencode_local": {
+      "version": "opencode v2.1.2",
+      "model": "qwen3:4b",
+      "response": "ready"
+    }
+  }
+}

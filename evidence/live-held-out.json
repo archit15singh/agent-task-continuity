@@ -1,0 +1,142 @@
+{
+  "utc": "2026-11-25T23:28:00+00:00",
+  "candidate_commit": "b4ce25ba0dc5dc1e661fda2277204c9b48068daa",
+  "set": "held-out",
+  "python": "3.13.18",
+  "source_model_requested": "gpt-6.2-sol",
+  "replacement_runtime": "opencode",
+  "replacement_model_requested": "continuity-local/continuity-qwen3:4b",
+  "worker_timeout_seconds": 180,
+  "local_no_think": true,
+  "codex": "codex-cli 0.170.0",
+  "opencode": "opencode v2.1.2",
+  "cases": [
+    {
+      "id": "packaging",
+      "split": "held-out",
+      "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "d54431aa1a54583d52b7ad698e41859ccc0937e1034721ec7bcb8055e98d3033",
+        "seconds": 30.5974,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 8,
+          "item.started": 6,
+          "turn.completed": 1
+        },
+        "reported_input_tokens": 148651,
+        "reported_cached_input_tokens": 129152,
+        "reported_output_tokens": 917,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "e001b88f6a956ec01e63a7bd70e25e2ddaa4a807822567d4dc34f3e8c27aebe4",
+        "seconds": 180.0093,
+        "runtime_events": {
+          "step_start": 6,
+          "step_finish": 5,
+          "tool_use": 4
+        },
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "8b8bf001860447c0a33b9a27b76e1446a14c69bcfbd45e51357c0c450efb283a",
+        "note_sha256": "0082702b9b1cc9fe4cf38a40baf1e1e9470cbe237f921ec772d4adf02d548a6a",
+        "checkpoint_sha256": "f0f3103dc2864f0bd2b67f66376a7d68a50f085c60281e7ae8137e4a92927856",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": false,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "83f7f529a614f142929aead69c1cf3d32b8e677885e30a5c4839bc72c5246e14",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.24s"
+        ],
+        "changed_source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54",
+        "task_completed": false
+      }
+    },
+    {
+      "id": "attrs",
+      "split": "held-out",
+      "base": "f830e60f9c6485aa7037a52f03fdd28428dfbfc4",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "30c49ff9c3f487a803a779663a056d3ac90b7ea2f25016786f4c83b37e31ff00",
+        "seconds": 28.5427,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 7,
+          "item.started": 5,
+          "turn.completed": 1
+        },
+        "reported_input_tokens": 120381,
+        "reported_cached_input_tokens": 102144,
+        "reported_output_tokens": 989,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "c388655efbd544a13620b8d6fe4b7fac498d6b52bef4f4c2fe9a100ed1038ed8",
+        "seconds": 180.0093,
+        "runtime_events": {
+          "step_start": 5,
+          "step_finish": 4,
+          "tool_use": 2
+        },
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "80ebe4481b30c530143be8799013551587ac2fdb9d30e74686384333c00f4abe",
+        "note_sha256": "5cb3f689fc526fdc408f490d89dde5b99ec55b2093f2bfd08bbaf92af61e67ac",
+        "checkpoint_sha256": "4e0431eafaa2b96665ba9131586a006a6625be3215f2e09621cc3c285eecc205",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": false,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "5c4227b3b7d71bf730163c3fd09573cf9704a0cc59f52115c9dc7ac71c95aa19",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "53 passed in 1.68s"
+        ],
+        "changed_source_sha256": "eb6623ffeb7a3052483a39635fda25da4ebbe36e4ca6d8dfe66d6e02d8ed9b88",
+        "task_completed": false
+      }
+    }
+  ],
+  "candidate_commit_at_receipt_write": "c2f94ba358b88e90009476587a0ba2fa824f5b8e"
+}

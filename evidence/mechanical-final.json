@@ -1,0 +1,239 @@
+{
+  "utc": "2026-11-25T23:26:17+00:00",
+  "candidate_commit": "c2f94ba358b88e90009476587a0ba2fa824f5b8e",
+  "set": "all",
+  "python": "3.13.18",
+  "os": "Darwin",
+  "architecture": "arm64",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "cases": [
+    {
+      "id": "click",
+      "split": "development",
+      "base": "dd149eb3129d887a22202c3fafa5ceb0e0d7018d",
+      "reference": "fdb65f4809719580436acb067410cec64433e5de",
+      "arms": {
+        "brief-only": {
+          "tracked_matches": false,
+          "selected_untracked_matches": false,
+          "source_predicate_passes": false,
+          "tracked_sha256": "d4c02aeae8220db36facabe5c6eff11e2041e72c1dac748ef350eedfabefe2ff",
+          "selected_untracked_sha256": null,
+          "grader_exit": 1,
+          "seconds_including_grade": 0.1165
+        },
+        "manual-git": {
+          "tracked_matches": true,
+          "selected_untracked_matches": true,
+          "source_predicate_passes": true,
+          "tracked_sha256": "e95823823bf2aa65739c2b064778c2893608eaec46080fcd7b7787adf9489b37",
+          "selected_untracked_sha256": "49b4b7068acfb96ba7348985a010070b9a137f737a65e74ee2e8a5669c674a88",
+          "grader_exit": 0,
+          "seconds_including_grade": 0.1132
+        },
+        "managed": {
+          "tracked_matches": true,
+          "selected_untracked_matches": true,
+          "source_predicate_passes": true,
+          "tracked_sha256": "e95823823bf2aa65739c2b064778c2893608eaec46080fcd7b7787adf9489b37",
+          "selected_untracked_sha256": "49b4b7068acfb96ba7348985a010070b9a137f737a65e74ee2e8a5669c674a88",
+          "grader_exit": 0,
+          "seconds_including_grade": 0.5685
+        }
+      },
+      "faults": {
+        "sigkill": true,
+        "late_change_lost_at_documented_boundary": true,
+        "replacement_passed": true,
+        "snapshot_matches": true,
+        "stale_checkpoint_rejected": true,
+        "stale_publish_rejected": true,
+        "lost_ack_recorded_unknown": true,
+        "lookup_reconciled": true,
+        "receipt_reused": true,
+        "single_put_single_effect": true,
+        "verification_bound": true,
+        "drift_invalidates_verification": true,
+        "wrong_revision_publish_rejected": true
+      },
+      "provider": {
+        "puts": 1,
+        "gets": 2,
+        "effects": 1
+      },
+      "publication_client_killed": {
+        "client_sigkill": true,
+        "intent_reserved": true,
+        "replacement_confirmed": true,
+        "puts": 1,
+        "gets": 2,
+        "effects": 1
+      },
+      "manifest_roundtrip": true,
+      "verification": {
+        "exit": 0,
+        "snapshot_sha256": "b846e6a329c5dea1dad350ca8436102c157f420b27dcd729d3993cca75e1edf6",
+        "log_sha256": "7c3784de6c81889e0982c6955d4714197a0b3b4df51005e23e48acb0bb9066a5"
+      },
+      "native": {
+        "exit": 0,
+        "log_sha256": "c0804a8543b7d044544ada56bd1f12cb8b1e4b64c699c20499825ca12ec1d1eb",
+        "summary": [
+          "52 passed, 1 skipped in 0.14s"
+        ]
+      }
+    },
+    {
+      "id": "packaging",
+      "split": "held-out",
+      "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+      "reference": "cf2cdf099375f7e208168cd2d8880699aeef0583",
+      "arms": {
+        "brief-only": {
+          "tracked_matches": false,
+          "selected_untracked_matches": false,
+          "source_predicate_passes": false,
+          "tracked_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54",
+          "selected_untracked_sha256": null,
+          "grader_exit": 1,
+          "seconds_including_grade": 0.0746
+        },
+        "manual-git": {
+          "tracked_matches": true,
+          "selected_untracked_matches": true,
+          "source_predicate_passes": true,
+          "tracked_sha256": "fd10aeb10311d9cdaddd40c1041ed9ad13cdf022142e5fe0f2993b92dddf2fed",
+          "selected_untracked_sha256": "2e31fd2aa14b91079e026dd8b1923df8f026e28e2e59509119a18a5e5255467f",
+          "grader_exit": 0,
+          "seconds_including_grade": 0.0841
+        },
+        "managed": {
+          "tracked_matches": true,
+          "selected_untracked_matches": true,
+          "source_predicate_passes": true,
+          "tracked_sha256": "fd10aeb10311d9cdaddd40c1041ed9ad13cdf022142e5fe0f2993b92dddf2fed",
+          "selected_untracked_sha256": "2e31fd2aa14b91079e026dd8b1923df8f026e28e2e59509119a18a5e5255467f",
+          "grader_exit": 0,
+          "seconds_including_grade": 0.5731
+        }
+      },
+      "faults": {
+        "sigkill": true,
+        "late_change_lost_at_documented_boundary": true,
+        "replacement_passed": true,
+        "snapshot_matches": true,
+        "stale_checkpoint_rejected": true,
+        "stale_publish_rejected": true,
+        "lost_ack_recorded_unknown": true,
+        "lookup_reconciled": true,
+        "receipt_reused": true,
+        "single_put_single_effect": true,
+        "verification_bound": true,
+        "drift_invalidates_verification": true,
+        "wrong_revision_publish_rejected": true
+      },
+      "provider": {
+        "puts": 1,
+        "gets": 2,
+        "effects": 1
+      },
+      "publication_client_killed": {
+        "client_sigkill": true,
+        "intent_reserved": true,
+        "replacement_confirmed": true,
+        "puts": 1,
+        "gets": 2,
+        "effects": 1
+      },
+      "manifest_roundtrip": true,
+      "verification": {
+        "exit": 0,
+        "snapshot_sha256": "0ee5df2a40aacac41894dff34028c24892792046c91dcd5151a48b93b9f31b53",
+        "log_sha256": "7c3784de6c81889e0982c6955d4714197a0b3b4df51005e23e48acb0bb9066a5"
+      },
+      "native": {
+        "exit": 0,
+        "log_sha256": "dc966c80f11c3d01d4737391c87e9931e53202a1a72ebd6e70c5949ce3bc3eeb",
+        "summary": [
+          "238 passed in 0.20s"
+        ]
+      }
+    },
+    {
+      "id": "attrs",
+      "split": "held-out",
+      "base": "f830e60f9c6485aa7037a52f03fdd28428dfbfc4",
+      "reference": "319c53cc178afe980362c1bd59d8109019e344bd",
+      "arms": {
+        "brief-only": {
+          "tracked_matches": false,
+          "selected_untracked_matches": false,
+          "source_predicate_passes": false,
+          "tracked_sha256": "eb6623ffeb7a3052483a39635fda25da4ebbe36e4ca6d8dfe66d6e02d8ed9b88",
+          "selected_untracked_sha256": null,
+          "grader_exit": 1,
+          "seconds_including_grade": 0.0843
+        },
+        "manual-git": {
+          "tracked_matches": true,
+          "selected_untracked_matches": true,
+          "source_predicate_passes": true,
+          "tracked_sha256": "ebe7ec2965d53ad6d49ba8bfe8bf6972d8be12f69d22fedbf84fffc17aadb144",
+          "selected_untracked_sha256": "76e83c5eea6da7cec5b8e12989ce4cd0596b88dc5c271657cf295695a9725303",
+          "grader_exit": 0,
+          "seconds_including_grade": 0.0942
+        },
+        "managed": {
+          "tracked_matches": true,
+          "selected_untracked_matches": true,
+          "source_predicate_passes": true,
+          "tracked_sha256": "ebe7ec2965d53ad6d49ba8bfe8bf6972d8be12f69d22fedbf84fffc17aadb144",
+          "selected_untracked_sha256": "76e83c5eea6da7cec5b8e12989ce4cd0596b88dc5c271657cf295695a9725303",
+          "grader_exit": 0,
+          "seconds_including_grade": 0.5887
+        }
+      },
+      "faults": {
+        "sigkill": true,
+        "late_change_lost_at_documented_boundary": true,
+        "replacement_passed": true,
+        "snapshot_matches": true,
+        "stale_checkpoint_rejected": true,
+        "stale_publish_rejected": true,
+        "lost_ack_recorded_unknown": true,
+        "lookup_reconciled": true,
+        "receipt_reused": true,
+        "single_put_single_effect": true,
+        "verification_bound": true,
+        "drift_invalidates_verification": true,
+        "wrong_revision_publish_rejected": true
+      },
+      "provider": {
+        "puts": 1,
+        "gets": 2,
+        "effects": 1
+      },
+      "publication_client_killed": {
+        "client_sigkill": true,
+        "intent_reserved": true,
+        "replacement_confirmed": true,
+        "puts": 1,
+        "gets": 2,
+        "effects": 1
+      },
+      "manifest_roundtrip": true,
+      "verification": {
+        "exit": 0,
+        "snapshot_sha256": "fef9e74864cc85d5fdc3a53c393960f72d1e9bbd00cc121de07eef94cd342f57",
+        "log_sha256": "7c3784de6c81889e0982c6955d4714197a0b3b4df51005e23e48acb0bb9066a5"
+      },
+      "native": {
+        "exit": 0,
+        "log_sha256": "5f5d98261f15cd1c95bc02646c0008018f9944face9cd50d0cd4afaffdcb7d71",
+        "summary": [
+          "53 passed in 1.78s"
+        ]
+      }
+    }
+  ]
+}

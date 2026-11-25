@@ -1,0 +1,76 @@
+{
+  "utc": "2026-11-25T23:20:46+00:00",
+  "candidate_commit": "7cc54b578452a259307adad9810e48153571f743",
+  "set": "development",
+  "python": "3.13.18",
+  "source_model_requested": "gpt-6.2-sol",
+  "replacement_runtime": "opencode",
+  "replacement_model_requested": "continuity-local/qwen3:4b",
+  "worker_timeout_seconds": 180,
+  "codex": "codex-cli 0.170.0",
+  "opencode": "opencode v2.1.2",
+  "cases": [
+    {
+      "id": "click",
+      "split": "development",
+      "base": "dd149eb3129d887a22202c3fafa5ceb0e0d7018d",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "6cbc8fa147255a473c5a0d16b58202017c6851b24bbca16596f38fe14e80f4d2",
+        "seconds": 27.5721,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 5,
+          "item.started": 3,
+          "turn.completed": 1
+        },
+        "reported_input_tokens": 112156,
+        "reported_cached_input_tokens": 95744,
+        "reported_output_tokens": 908,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "408515e733aca1346ba80f468fe1ce7712bdc7245dd8eb8c0ee82205bc0d3bd4",
+        "seconds": 180.0054,
+        "runtime_events": {
+          "step_start": 1
+        },
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "ea64e90fbc7288dfdbc7548d19c4e4765a7dd633aea6e136fe91f5d5dad9eb30",
+        "note_sha256": "83abebfab7ee96507a0c9778d9a5e8d3993ce021610f39e2c2ac1f767d45b967",
+        "checkpoint_sha256": "71c030aafecea90e720cb3e87550b8e7b09e1a15313456cf66365e8e73d38770",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": false,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "cff755a419b2503dc3c3ea8d2f4783d30bf8c8a92a4903e940e353496e36623f",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "52 passed, 1 skipped in 0.12s"
+        ],
+        "changed_source_sha256": "d4c02aeae8220db36facabe5c6eff11e2041e72c1dac748ef350eedfabefe2ff",
+        "task_completed": false
+      }
+    }
+  ],
+  "candidate_commit_at_receipt_write": "0f56e74fad0cd904f526911e6c11f6543227de44"
+}

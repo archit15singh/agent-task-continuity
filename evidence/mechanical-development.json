@@ -1,0 +1,78 @@
+{
+  "utc": "2026-11-25T23:17:02+00:00",
+  "candidate_commit": "7cc54b578452a259307adad9810e48153571f743",
+  "set": "development",
+  "python": "3.13.18",
+  "os": "Darwin",
+  "architecture": "arm64",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "cases": [
+    {
+      "id": "click",
+      "split": "development",
+      "base": "dd149eb3129d887a22202c3fafa5ceb0e0d7018d",
+      "reference": "fdb65f4809719580436acb067410cec64433e5de",
+      "arms": {
+        "brief-only": {
+          "tracked_matches": false,
+          "selected_untracked_matches": false,
+          "source_predicate_passes": false,
+          "tracked_sha256": "d4c02aeae8220db36facabe5c6eff11e2041e72c1dac748ef350eedfabefe2ff",
+          "selected_untracked_sha256": null,
+          "grader_exit": 1,
+          "seconds_including_grade": 0.1073
+        },
+        "manual-git": {
+          "tracked_matches": true,
+          "selected_untracked_matches": true,
+          "source_predicate_passes": true,
+          "tracked_sha256": "e95823823bf2aa65739c2b064778c2893608eaec46080fcd7b7787adf9489b37",
+          "selected_untracked_sha256": "49b4b7068acfb96ba7348985a010070b9a137f737a65e74ee2e8a5669c674a88",
+          "grader_exit": 0,
+          "seconds_including_grade": 0.1042
+        },
+        "managed": {
+          "tracked_matches": true,
+          "selected_untracked_matches": true,
+          "source_predicate_passes": true,
+          "tracked_sha256": "e95823823bf2aa65739c2b064778c2893608eaec46080fcd7b7787adf9489b37",
+          "selected_untracked_sha256": "49b4b7068acfb96ba7348985a010070b9a137f737a65e74ee2e8a5669c674a88",
+          "grader_exit": 0,
+          "seconds_including_grade": 0.6078
+        }
+      },
+      "faults": {
+        "sigkill": true,
+        "late_change_lost_at_documented_boundary": true,
+        "replacement_passed": true,
+        "snapshot_matches": true,
+        "stale_checkpoint_rejected": true,
+        "stale_publish_rejected": true,
+        "lost_ack_recorded_unknown": true,
+        "lookup_reconciled": true,
+        "receipt_reused": true,
+        "single_put_single_effect": true,
+        "verification_bound": true,
+        "drift_invalidates_verification": true,
+        "wrong_revision_publish_rejected": true
+      },
+      "provider": {
+        "puts": 1,
+        "gets": 2,
+        "effects": 1
+      },
+      "verification": {
+        "exit": 0,
+        "snapshot_sha256": "b846e6a329c5dea1dad350ca8436102c157f420b27dcd729d3993cca75e1edf6",
+        "log_sha256": "7c3784de6c81889e0982c6955d4714197a0b3b4df51005e23e48acb0bb9066a5"
+      },
+      "native": {
+        "exit": 0,
+        "log_sha256": "921b0c051b5c885b86db39842ca94afafcb2d28b1d0616657a3a1b416cf81471",
+        "summary": [
+          "52 passed, 1 skipped in 0.28s"
+        ]
+      }
+    }
+  ]
+}

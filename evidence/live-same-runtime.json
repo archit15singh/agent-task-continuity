@@ -1,0 +1,80 @@
+{
+  "utc": "2026-11-25T23:24:59+00:00",
+  "candidate_commit": "b4ce25ba0dc5dc1e661fda2277204c9b48068daa",
+  "set": "development",
+  "python": "3.13.18",
+  "source_model_requested": "gpt-6.2-sol",
+  "replacement_runtime": "codex",
+  "replacement_model_requested": "gpt-6.2-sol",
+  "worker_timeout_seconds": 180,
+  "local_no_think": false,
+  "codex": "codex-cli 0.170.0",
+  "opencode": null,
+  "cases": [
+    {
+      "id": "click",
+      "split": "development",
+      "base": "dd149eb3129d887a22202c3fafa5ceb0e0d7018d",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "1ce8abd42f47faa36ff3b5e7b0a5f65568318488b5ade8efd8210b7120a40f05",
+        "seconds": 38.5042,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 8,
+          "item.started": 6,
+          "turn.completed": 1
+        },
+        "reported_input_tokens": 206903,
+        "reported_cached_input_tokens": 175744,
+        "reported_output_tokens": 1323,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "codex",
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "1cacd338080cae3c7e87fa1007472b0b9f8682e7ce1e8955a440d584023556eb",
+        "seconds": 26.2126,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 9,
+          "item.started": 7,
+          "turn.completed": 1
+        },
+        "reported_input_tokens": 204278,
+        "reported_cached_input_tokens": 185216,
+        "reported_output_tokens": 720,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "01b19f6b2293eef3cc236373d73fa1326fc43110a48f8f7275949d3ffbaf820c",
+        "note_sha256": "2abb80d79ea6a1eae3d3e9264de2c8bb232eee1af0a8960c121feac0f55144de",
+        "checkpoint_sha256": "c91398b146b466f1b49177c1d8acd6adc23ab53b561dc22e6026747ae01a3e31",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": true,
+        "source_predicate_exit": 0,
+        "source_predicate_log_sha256": "7c3784de6c81889e0982c6955d4714197a0b3b4df51005e23e48acb0bb9066a5",
+        "repro_after_exit": 0,
+        "native_exit": 0,
+        "native_summary": [
+          "52 passed, 1 skipped in 0.13s"
+        ],
+        "changed_source_sha256": "a5a69f55338adf9d5c280cdf6a8a46a30d9a93a86a3434e71ee67573129c7acd",
+        "task_completed": true
+      }
+    }
+  ]
+}
