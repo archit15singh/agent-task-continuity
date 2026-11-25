@@ -1,0 +1,29 @@
+[
+  {
+    "id": "click",
+    "split": "development",
+    "repository": "pallets/click",
+    "base": "dd149eb3129d887a22202c3fafa5ceb0e0d7018d",
+    "reference": "fdb65f4809719580436acb067410cec64433e5de",
+    "source": "src/click/testing.py",
+    "native_test": "tests/test_testing.py"
+  },
+  {
+    "id": "packaging",
+    "split": "held-out",
+    "repository": "pypa/packaging",
+    "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+    "reference": "cf2cdf099375f7e208168cd2d8880699aeef0583",
+    "source": "src/packaging/tags.py",
+    "native_test": "tests/test_tags.py"
+  },
+  {
+    "id": "attrs",
+    "split": "held-out",
+    "repository": "python-attrs/attrs",
+    "base": "f830e60f9c6485aa7037a52f03fdd28428dfbfc4",
+    "reference": "319c53cc178afe980362c1bd59d8109019e344bd",
+    "source": "src/attr/_funcs.py",
+    "native_test": "tests/test_funcs.py"
+  }
+]
