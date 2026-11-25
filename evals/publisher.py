@@ -1,0 +1,90 @@
+"""Loopback reference provider with a one-shot lost-acknowledgment fault."""
+
+from contextlib import contextmanager
+from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
+import json
+import re
+import socket
+import threading
+
+
+class Publisher:
+    def __init__(self, *, drop_first=False):
+        self.drop_first = drop_first
+        self.events = {}
+        self.puts = 0
+        self.gets = 0
+        self.lock = threading.Lock()
+
+    def handler(self):
+        provider = self
+
+        class Handler(BaseHTTPRequestHandler):
+            def log_message(self, *_args):
+                pass
+
+            def reply(self, status, data=None):
+                body = json.dumps(data).encode() if data is not None else b""
+                self.send_response(status)
+                self.send_header("Content-Type", "application/json")
+                self.send_header("Content-Length", str(len(body)))
+                self.end_headers()
+                self.wfile.write(body)
+
+            def operation(self):
+                match = re.fullmatch(r"/events/([0-9a-f]{64})", self.path)
+                return match[1] if match else None
+
+            def do_GET(self):
+                operation = self.operation()
+                with provider.lock:
+                    provider.gets += 1
+                    event = provider.events.get(operation)
+                self.reply(404) if event is None else self.reply(200, event)
+
+            def do_PUT(self):
+                operation = self.operation()
+                if operation is None or self.headers.get("Idempotency-Key") != operation:
+                    self.reply(400)
+                    return
+                try:
+                    length = int(self.headers.get("Content-Length", -1))
+                    if not 0 <= length <= 65536:
+                        raise ValueError("Invalid request length")
+                    payload = json.loads(self.rfile.read(length))
+                    if not isinstance(payload, dict):
+                        raise ValueError("Expected an object")
+                except ValueError:
+                    self.reply(400)
+                    return
+                with provider.lock:
+                    provider.puts += 1
+                    prior = provider.events.get(operation)
+                    if prior is not None and prior["payload"] != payload:
+                        self.reply(409)
+                        return
+                    event = prior or {"id": operation, "payload": payload}
+                    provider.events[operation] = event
+                    drop = provider.drop_first and prior is None
+                    if drop:
+                        provider.drop_first = False
+                if drop:
+                    self.connection.shutdown(socket.SHUT_RDWR)
+                    self.connection.close()
+                else:
+                    self.reply(200 if prior else 201, event)
+
+        return Handler
+
+
+@contextmanager
+def publisher(*, drop_first=True):
+    app = Publisher(drop_first=drop_first)
+    with ThreadingHTTPServer(("127.0.0.1", 0), app.handler()) as server:
+        thread = threading.Thread(target=server.serve_forever, kwargs={"poll_interval": 0.02})
+        thread.start()
+        try:
+            yield app, f"http://127.0.0.1:{server.server_port}"
+        finally:
+            server.shutdown()
+            thread.join()
