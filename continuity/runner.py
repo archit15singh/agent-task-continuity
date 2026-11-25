@@ -4,6 +4,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
+import platform
 import signal
 import subprocess
 import tempfile
@@ -28,9 +29,6 @@ def run(command, workspace, *, seconds, environment=None, log=None):
             except subprocess.TimeoutExpired:
                 timed_out = True
                 status = 124
-            except BaseException:
-                stop(process)
-                raise
             finally:
                 # A worker can leave background descendants even after its main process exits.
                 stop(process)
@@ -76,15 +74,21 @@ def verify(store, task_id, token, command, seconds, log=None):
         finally:
             git(task["workspace"], "worktree", "remove", "--force", str(checked))
     evidence = new_id()
+    environment = {
+        "os": platform.system(), "architecture": platform.machine(),
+        "runner_python": platform.python_version(),
+        "git": git(task["workspace"], "--version").decode().strip(),
+    }
     with store.connection(write=True) as conn:
         current = store.task(conn, task_id, token)
         if current["checkpoint"] != snapshot["id"]:
             raise ContinuityError("Checkpoint changed during verification. Run verification again.")
-        conn.execute("INSERT INTO evidence VALUES (?, ?, ?, ?, ?, ?)", (
+        conn.execute("INSERT INTO evidence VALUES (?, ?, ?, ?, ?, ?, ?)", (
             evidence, task_id, snapshot["id"], json.dumps(command), result["exit_code"],
-            result["output_sha256"],
+            result["output_sha256"], json.dumps(environment),
         ))
-    return {**result, "evidence": evidence, "checkpoint": snapshot["id"], "digest": snapshot["digest"]}
+    return {**result, "evidence": evidence, "checkpoint": snapshot["id"],
+            "digest": snapshot["digest"], "environment": environment}
 
 
 def supervise(store, task_id, token, first, replacement, workspace, seconds, recovery_seconds, logs):

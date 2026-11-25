@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS checkpoint (
 CREATE TABLE IF NOT EXISTS evidence (
     id TEXT PRIMARY KEY, task TEXT NOT NULL REFERENCES task(id),
     checkpoint TEXT NOT NULL REFERENCES checkpoint(id), command TEXT NOT NULL,
-    exit_code INTEGER NOT NULL, output_hash TEXT NOT NULL
+    exit_code INTEGER NOT NULL, output_hash TEXT NOT NULL, environment TEXT NOT NULL
 );
 CREATE TABLE IF NOT EXISTS operation (
     id TEXT PRIMARY KEY, task TEXT NOT NULL REFERENCES task(id), endpoint TEXT NOT NULL,
@@ -108,7 +108,9 @@ class Store:
         base, patch = capture(owner["workspace"], includes)
         digest, checkpoint = fingerprint(base, patch), new_id()
         with self.connection(write=True) as conn:
-            self.task(conn, task, token)
+            current = self.task(conn, task, token)
+            if current["checkpoint"] != owner["checkpoint"]:
+                raise ContinuityError("Another checkpoint was saved during capture. Retry.")
             conn.execute("INSERT INTO checkpoint VALUES (?, ?, ?, ?, ?, ?, ?)",
                          (checkpoint, task, base, patch, digest, json.dumps(includes), note))
             conn.execute("UPDATE task SET checkpoint = ? WHERE id = ?", (checkpoint, task))
@@ -119,7 +121,7 @@ class Store:
             owner = self.task(conn, task)
             snapshot = self.latest(conn, owner)
             records = conn.execute(
-                """SELECT e.id, e.exit_code, c.digest FROM evidence e
+                """SELECT e.id, e.exit_code, e.environment, c.digest FROM evidence e
                    JOIN checkpoint c ON c.id=e.checkpoint WHERE e.task=? ORDER BY e.rowid""",
                 (task,),
             ).fetchall()
@@ -134,6 +136,7 @@ class Store:
             "workspace_digest": digest, "clean_match": digest == snapshot["digest"] and not missing,
             "base_changed": base != snapshot["base"], "missing_selected": missing,
             "verification": [{"id": row["id"], "passed": row["exit_code"] == 0,
+                              "environment": json.loads(row["environment"]),
                               "matches": row["digest"] == digest and not missing} for row in records],
         }
 

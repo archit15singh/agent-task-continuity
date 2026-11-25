@@ -9,8 +9,9 @@ import threading
 
 
 class Publisher:
-    def __init__(self, *, drop_first=False):
+    def __init__(self, *, drop_first=False, after_accept=None):
         self.drop_first = drop_first
+        self.after_accept = after_accept
         self.events = {}
         self.puts = 0
         self.gets = 0
@@ -68,6 +69,8 @@ class Publisher:
                     drop = provider.drop_first and prior is None
                     if drop:
                         provider.drop_first = False
+                if provider.after_accept and prior is None:
+                    provider.after_accept()
                 if drop:
                     self.connection.shutdown(socket.SHUT_RDWR)
                     self.connection.close()
@@ -78,8 +81,8 @@ class Publisher:
 
 
 @contextmanager
-def publisher(*, drop_first=True):
-    app = Publisher(drop_first=drop_first)
+def publisher(*, drop_first=True, after_accept=None):
+    app = Publisher(drop_first=drop_first, after_accept=after_accept)
     with ThreadingHTTPServer(("127.0.0.1", 0), app.handler()) as server:
         thread = threading.Thread(target=server.serve_forever, kwargs={"poll_interval": 0.02})
         thread.start()
@@ -88,3 +91,19 @@ def publisher(*, drop_first=True):
         finally:
             server.shutdown()
             thread.join()
+
+
+if __name__ == "__main__":
+    import argparse
+
+    cli = argparse.ArgumentParser(description=__doc__)
+    cli.add_argument("--port", type=int, default=8765)
+    cli.add_argument("--drop-first", action="store_true")
+    args = cli.parse_args()
+    instance = Publisher(drop_first=args.drop_first)
+    with ThreadingHTTPServer(("127.0.0.1", args.port), instance.handler()) as server:
+        print(f"http://127.0.0.1:{server.server_port}", flush=True)
+        try:
+            server.serve_forever()
+        except KeyboardInterrupt:
+            pass

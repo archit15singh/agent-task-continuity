@@ -8,9 +8,11 @@ import os
 from pathlib import Path
 import platform
 import shlex
+import signal
 import subprocess
 import sys
 import tempfile
+import threading
 import time
 
 from continuity.workspace import git
@@ -75,6 +77,42 @@ def grade(case, workspace, expected_source, expected_note):
     }
 
 
+def crash_after_publish(db, task, owner, evidence, destination):
+    started = threading.Event()
+    client = None
+
+    def kill_client():
+        if not started.wait(timeout=5):
+            raise RuntimeError("Publishing client never started")
+        client.kill()
+
+    with publisher(after_accept=kill_client) as (service, endpoint):
+        env = dict(os.environ, CONTINUITY_OWNER=owner)
+        command = [sys.executable, "-m", "continuity", "--db", str(db), "publish", task,
+                   "--endpoint", endpoint, "--name", "kill-after-accept", "--evidence", evidence]
+        with subprocess.Popen(command, cwd=PROJECT, env=env, stdin=subprocess.DEVNULL,
+                              stdout=subprocess.PIPE, stderr=subprocess.PIPE) as client:
+            started.set()
+            try:
+                client.communicate(timeout=15)
+            except subprocess.TimeoutExpired:
+                client.kill()
+                client.communicate()
+                raise
+        operations = invoke(db, "operations", task)
+        reserved = [item["id"] for item in operations if item["status"] == "reserved"]
+        if len(reserved) != 1:
+            raise RuntimeError("The killed client did not leave one durable reservation")
+        recovered = invoke(db, "continue", task, "--into", destination, owner=owner)
+        settled = invoke(db, "reconcile", task, reserved[0], owner=recovered["token"])
+        return {
+            "client_sigkill": client.returncode == -signal.SIGKILL,
+            "intent_reserved": len(reserved) == 1,
+            "replacement_confirmed": settled["status"] == "confirmed",
+            "puts": service.puts, "gets": service.gets, "effects": len(service.events),
+        }
+
+
 def transport_case(case, temp):
     db = temp / "ledger.db"
     initial = download(case, temp / "initial", reference=True)
@@ -135,11 +173,20 @@ def transport_case(case, temp):
         with (worktree / case["source"]).open("ab") as current:
             current.write(b"\n# changed after verification\n")
         changed = invoke(db, "inspect", task_id)
+        # The baseline publication names an immutable snapshot. Scratch edits stay local.
         invoke(db, "checkpoint", task_id, "--include", NOTE, "--note", "new revision",
                owner=final_owner)
         mismatch = invoke(db, "publish", task_id, "--endpoint", url, "--name", "changed",
                           "--evidence", receipt["evidence"], owner=final_owner, expected=2)
         assert published_snapshot.is_dir()
+    # Restore the previously verified bytes as the input to the additional fault probe.
+    git(worktree, "apply", "-R", "--binary", "-", data=git(worktree, "diff", "--binary",
+                                                        "--", case["source"]))
+    git(worktree, "apply", "--binary", "-", data=source_patch)
+    invoke(db, "checkpoint", task_id, "--include", NOTE, "--note", "restore verified content",
+           owner=final_owner)
+    killed_client = crash_after_publish(db, task_id, final_owner, receipt["evidence"],
+                                       temp / "publish-recovery")
     native = execute([sys.executable, str(EVALS / "native_tests.py"), case["native_test"]],
                      cwd=published_snapshot)
     return {
@@ -166,6 +213,7 @@ def transport_case(case, temp):
             "wrong_revision_publish_rejected": "passing evidence" in mismatch["error"],
         },
         "provider": {"puts": puts, "gets": gets, "effects": events},
+        "publication_client_killed": killed_client,
         "verification": {"exit": receipt["exit_code"], "snapshot_sha256": seed["digest"],
                          "log_sha256": receipt["output_sha256"]},
         "native": {"exit": native.returncode, "log_sha256": sha(native.stdout + native.stderr),
@@ -177,7 +225,11 @@ def gate(row):
     graded = ("tracked_matches", "selected_untracked_matches", "source_predicate_passes")
     return (not any(row["arms"]["brief-only"][key] for key in graded)
             and all(row["arms"][arm][key] for arm in ("manual-git", "managed") for key in graded)
-            and all(row["faults"].values()) and row["native"]["exit"] == 0)
+            and all(row["faults"].values()) and row["native"]["exit"] == 0
+            and row["publication_client_killed"]["client_sigkill"]
+            and row["publication_client_killed"]["intent_reserved"]
+            and row["publication_client_killed"]["replacement_confirmed"]
+            and row["publication_client_killed"]["puts"] == row["publication_client_killed"]["effects"] == 1)
 
 
 def git_version():

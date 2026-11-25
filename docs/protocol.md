@@ -27,3 +27,8 @@ Use Codex headless for a scoped first stage that writes a reproduction and a han
 ### Gates
 
 Before comparative execution run unit tests, the Click dry run, and a wrong-revision evidence check. Treat a negative-control pass, baseline or managed integrity failure, duplicate provider application, or accepted stale write as an engineering failure. A live failure stays in the results. Publish counts, failures, environment, case revisions, test receipts, and elapsed times. Timings are descriptive and mix different workflow steps. For the live feasibility arm, a complete pass requires two distinct runtime invocations, a preserved reproduction, and a positive grader.
+
+## Recorded amendments
+
+- The first held-out mechanical run reached all source and fault gates. Packaging's native suite failed during collection because its `pretend` dependency was missing. The original receipt is retained. The pinned dependency was added and the same cases and grading rules rerun.
+- An additional fault probe kills the publishing client after the provider commits but before the client can record a result. This supplements the frozen comparison by exercising a durable `reserved` intent with the original process gone. It is reported separately from the original gates.
