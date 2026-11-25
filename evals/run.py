@@ -253,6 +253,7 @@ def main():
     cli.add_argument("--output", type=Path, required=True)
     args = cli.parse_args()
     selected = [case for case in CASES if args.set in ("all", case["split"])]
+    revision = git(PROJECT, "rev-parse", "HEAD").decode().strip()
     rows = []
     with tempfile.TemporaryDirectory(prefix="continuity-study-") as directory:
         for case in selected:
@@ -262,7 +263,7 @@ def main():
             print(f"{case['id']}: {'pass' if gate(rows[-1]) else 'fail'}", flush=True)
     document = {
         "utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "candidate_commit": git(PROJECT, "rev-parse", "HEAD").decode().strip(),
+        "candidate_commit": revision,
         "set": args.set, "python": platform.python_version(), "os": platform.system(),
         "architecture": platform.machine(), "git": git_version(), "cases": rows,
     }

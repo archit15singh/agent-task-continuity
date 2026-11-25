@@ -74,10 +74,10 @@ def read_summary(log):
         if not isinstance(event, dict):
             continue
         event_type = event.get("type", "")
-        if not re.fullmatch(r"[a-zA-Z0-9_.-]{1,64}", event_type):
+        if not isinstance(event_type, str) or not re.fullmatch(r"[a-zA-Z0-9_.-]{1,64}", event_type):
             continue
         counts[event_type] = counts.get(event_type, 0) + 1
-        usage = event.get("usage", {})
+        usage = event.get("usage") or {}
         input_tokens += usage.get("input_tokens", 0)
         output_tokens += usage.get("output_tokens", 0)
         cached_tokens += usage.get("cached_input_tokens", 0)
@@ -131,7 +131,7 @@ def live_case(case, temp, source_model, runtime, model, timeout, local_no_think)
     first["artifacts"] = scope
     report = {
         "id": case["id"], "split": case["split"], "base": case["base"], "source": first,
-        "replacement": None, "grade": {"complete": False},
+        "replacement": None, "grade": {"complete": False, "task_completed": False},
     }
     if first["exit_code"] or scope != sorted([NOTE, REPRO]):
         report["grade"]["failure"] = "source worker did not produce exactly the scoped files"
@@ -192,11 +192,12 @@ def live_case(case, temp, source_model, runtime, model, timeout, local_no_think)
         "changed_source_sha256": sha((destination / case["source"]).read_bytes()),
     })
     grade = report["grade"]
-    grade["complete"] = (
-        runtime == "opencode" and replacement["exit_code"] == 0 and grade["restored_repro"]
+    grade["task_completed"] = (
+        replacement["exit_code"] == 0 and grade["restored_repro"]
         and grade["restored_note"] and grade["scope_exact"] and grade["source_predicate_exit"] == 0
         and grade["repro_after_exit"] == 0 and grade["native_exit"] == 0
     )
+    grade["complete"] = runtime == "opencode" and grade["task_completed"]
     return report
 
 
@@ -217,6 +218,7 @@ def main():
         os.environ["OPENCODE_CONFIG_CONTENT"] = worker_environment(args.local_endpoint, args.model)[
             "OPENCODE_CONFIG_CONTENT"
         ]
+    revision = git(PROJECT, "rev-parse", "HEAD").decode().strip()
     reports = []
     with tempfile.TemporaryDirectory(prefix="continuity-live-") as directory:
         for case in CASES:
@@ -227,11 +229,11 @@ def main():
             report = live_case(case, temp, args.source_model, args.runtime, args.model, args.timeout,
                                args.local_no_think)
             reports.append(report)
-            print(f"{case['id']}: {'pass' if report['grade']['complete'] else 'incomplete'}",
+            print(f"{case['id']}: {'pass' if report['grade']['task_completed'] else 'incomplete'}",
                   flush=True)
     document = {
         "utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
-        "candidate_commit": git(PROJECT, "rev-parse", "HEAD").decode().strip(), "set": args.set,
+        "candidate_commit": revision, "set": args.set,
         "python": platform.python_version(), "source_model_requested": args.source_model,
         "replacement_runtime": args.runtime, "replacement_model_requested": args.model,
         "worker_timeout_seconds": args.timeout, "local_no_think": args.local_no_think,
