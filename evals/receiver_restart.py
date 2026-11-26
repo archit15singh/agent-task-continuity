@@ -71,10 +71,10 @@ def serve(database, port, fault):
 
 
 @contextmanager
-def receiver(database, port, fault):
-    command = [sys.executable, "-m", "evals.receiver_restart", "--worker", str(database),
+def receiver(database, port, fault, *, module="evals.receiver_restart", env=None):
+    command = [sys.executable, "-m", module, "--worker", str(database),
                "--port", str(port), "--fault", fault]
-    with subprocess.Popen(command, cwd=PROJECT, stdout=subprocess.PIPE, text=True) as process:
+    with subprocess.Popen(command, cwd=PROJECT, env=env, stdout=subprocess.PIPE, text=True) as process:
         try:
             if not select.select([process.stdout], [], [], 8)[0]:
                 raise RuntimeError("Receiver did not announce its port")

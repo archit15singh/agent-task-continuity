@@ -95,8 +95,8 @@ class Store:
     def recover_owner(self, task, recovery, destination):
         return self._takeover(task, destination, recovery=recovery)
 
-    def takeover(self, task, token, destination):
-        return self._takeover(task, destination, token=token)
+    def takeover(self, task, token, destination, *, replacement_token=None):
+        return self._takeover(task, destination, token=token, replacement_token=replacement_token)
 
     @staticmethod
     def _assert_recovery(row, recovery):
@@ -177,13 +177,19 @@ class Store:
                               "matches": row["digest"] == digest and not missing} for row in records],
         }
 
-    def _takeover(self, task, destination, *, token=None, recovery=None):
+    def _takeover(self, task, destination, *, token=None, recovery=None, replacement_token=None):
+        if replacement_token is not None and (
+            not isinstance(replacement_token, str) or len(replacement_token) < 32
+        ):
+            raise ContinuityError("Use a securely generated replacement token")
+        if replacement_token is not None and secrets.compare_digest(token_hash(replacement_token), token_hash(token)):
+            raise ContinuityError("Takeover requires a different replacement token")
         with self.connection() as conn:
             owner = self.task(conn, task, token)
             self._assert_recovery(owner, recovery)
             snapshot = self.latest(conn, owner)
         destination = restore(owner["workspace"], destination, snapshot["base"], snapshot["patch"])
-        replacement = secrets.token_urlsafe(32)
+        replacement = replacement_token if replacement_token is not None else secrets.token_urlsafe(32)
         try:
             includes = json.loads(snapshot["includes"])
             if fingerprint(*capture(destination, includes)) != snapshot["digest"]:
