@@ -119,3 +119,11 @@ Keep the task, original helper, checkpoint, provider, output budget, guard, and 
 ### H10 · Durable activation and effects
 
 Write activation intent durably before advancing the receiver. Authenticate the receiver's generation update using a separate coordinator credential. Persist the receiver generation across process restart and check it in the same transaction that applies effects and stores receipts. Exercise process death after writing the intent, after advancing the receiver, after local transfer, and before or after the receiver effect commit. After reopening both stores, replay the activation intent and test delayed generation-1 delivery. Predict a stale rejection after recovered activation and exactly one final effect. A generation header in this loopback fixture is a trusted-client assertion. The coordinator credential protects activation only.
+
+### H11 · Oracle expansion and repetition
+
+The first four edit-contract trials accepted one candidate per arm; only the body candidate passed. Repeat seed 32 and add seed 33 in whole/body/body/whole order on fresh checkouts. Compare accepted candidates to the pinned upstream helper over all ABI lists of length zero to three drawn from ten fixed entries. Keep the oracle cases out of both prompts. Count behavior differences separately from guard rejections. This expands verification on the same task; it is not a cross-repository generalization test.
+
+### H12 · Interrupted worktree preparation
+
+The first activation matrix interrupted the coordinator on either side of ownership commit. Add the earlier boundary after successful Git restoration and before local authority changes. Resume with the same staged token and prepared path. The takeover should adopt only a verified linked worktree from the same repository and keep the generation monotonic. A mismatched or unrelated path must be rejected and preserved.
