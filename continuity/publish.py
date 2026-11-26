@@ -22,16 +22,17 @@ def endpoint_url(endpoint):
     return f"http://127.0.0.1:{url.port}"
 
 
-def request(endpoint, operation, payload=None):
+def request(endpoint, operation, payload=None, *, generation=None):
     conn = http.client.HTTPConnection("127.0.0.1", urlsplit(endpoint).port, timeout=3)
     try:
         route = f"/events/{operation}"
         if payload is None:
             conn.request("GET", route)
         else:
-            conn.request("PUT", route, body=payload.encode(), headers={
-                "Content-Type": "application/json", "Idempotency-Key": operation,
-            })
+            headers = {"Content-Type": "application/json", "Idempotency-Key": operation}
+            if generation is not None:
+                headers["X-Continuity-Generation"] = str(generation)
+            conn.request("PUT", route, body=payload.encode(), headers=headers)
         response = conn.getresponse()
         body = response.read(65537)
         if payload is None and response.status == 404:
@@ -75,7 +76,7 @@ def settle(store, task_id, token, operation, *, retry_absent=False):
     # Serialize send initiation against takeover. A started request can outlive a killed owner.
     # A stable provider key handles that race after SQLite releases the local writer lock.
     with store.connection(write=True) as conn:
-        store.task(conn, task_id, token)
+        task = store.task(conn, task_id, token)
         row = conn.execute("SELECT * FROM operation WHERE id = ? AND task = ?",
                            (operation, task_id)).fetchone()
         if row is None:
@@ -85,7 +86,9 @@ def settle(store, task_id, token, operation, *, retry_absent=False):
         try:
             receipt = request(row["endpoint"], operation)
             if receipt is None and retry_absent:
-                receipt = request(row["endpoint"], operation, row["payload"])
+                receipt = request(
+                    row["endpoint"], operation, row["payload"], generation=task["generation"],
+                )
             if receipt is not None and json_text(receipt.get("payload")) != row["payload"]:
                 raise ContinuityError("Provider receipt does not match the reserved payload")
         except (ContinuityError, OSError, http.client.HTTPException, ValueError) as error:

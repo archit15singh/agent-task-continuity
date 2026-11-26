@@ -9,13 +9,23 @@ import threading
 
 
 class Publisher:
-    def __init__(self, *, drop_first=False, after_accept=None):
+    def __init__(self, *, drop_first=False, after_accept=None, before_apply=None, generation_fence=False):
         self.drop_first = drop_first
         self.after_accept = after_accept
+        self.before_apply = before_apply
+        self.generation_fence = generation_fence
+        self.generations = {}
+        self.stale_rejections = 0
         self.events = {}
         self.puts = 0
         self.gets = 0
         self.lock = threading.Lock()
+
+    def advance_generation(self, task, generation):
+        with self.lock:
+            if generation <= self.generations.get(task, 0):
+                raise ValueError("Receiver generation must advance")
+            self.generations[task] = generation
 
     def handler(self):
         provider = self
@@ -30,7 +40,10 @@ class Publisher:
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers()
-                self.wfile.write(body)
+                try:
+                    self.wfile.write(body)
+                except (BrokenPipeError, ConnectionResetError):
+                    pass  # A client can die after handing off a complete request.
 
             def operation(self):
                 match = re.fullmatch(r"/events/([0-9a-f]{64})", self.path)
@@ -58,8 +71,18 @@ class Publisher:
                 except ValueError:
                     self.reply(400)
                     return
+                if provider.before_apply is not None:
+                    provider.before_apply()
                 with provider.lock:
                     provider.puts += 1
+                    if provider.generation_fence:
+                        task = payload.get("task")
+                        generation = self.headers.get("X-Continuity-Generation", "")
+                        expected = provider.generations.get(task) if isinstance(task, str) else None
+                        if expected is None or generation != str(expected):
+                            provider.stale_rejections += 1
+                            self.reply(412)
+                            return
                     prior = provider.events.get(operation)
                     if prior is not None and prior["payload"] != payload:
                         self.reply(409)
@@ -81,8 +104,11 @@ class Publisher:
 
 
 @contextmanager
-def publisher(*, drop_first=True, after_accept=None):
-    app = Publisher(drop_first=drop_first, after_accept=after_accept)
+def publisher(*, drop_first=True, after_accept=None, before_apply=None, generation_fence=False):
+    app = Publisher(
+        drop_first=drop_first, after_accept=after_accept,
+        before_apply=before_apply, generation_fence=generation_fence,
+    )
     with ThreadingHTTPServer(("127.0.0.1", 0), app.handler()) as server:
         thread = threading.Thread(target=server.serve_forever, kwargs={"poll_interval": 0.02})
         thread.start()
