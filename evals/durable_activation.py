@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS intent (
 """
 
 
-def serve(database, port, fault, secret, *, authenticated=False):
+def serve(database, port, fault, secret, *, authenticated=False, bind="127.0.0.1"):
     with closing(sqlite3.connect(database)) as db:
         db.executescript(SCHEMA + """
             CREATE TABLE IF NOT EXISTS epochs (
@@ -151,7 +151,7 @@ def serve(database, port, fault, secret, *, authenticated=False):
                         os._exit(23)
             self.reply(200 if prior else 201, {"id": operation, "payload": body})
 
-    with HTTPServer(("127.0.0.1", port), Handler) as server:
+    with HTTPServer((bind, port), Handler) as server:
         print(server.server_port, flush=True)
         server.serve_forever()
 
@@ -231,7 +231,7 @@ def coordinate(directory, endpoint, fault, secret, *, authenticated=False, recov
         db.commit()
 
 
-def trial(root, stage, *, authenticated=False):
+def trial(root, stage, *, authenticated=False, receiver_factory=receiver):
     root.mkdir()
     source = root / "source"
     source.mkdir()
@@ -240,7 +240,9 @@ def trial(root, stage, *, authenticated=False):
     git(source, "add", "candidate.txt")
     git(source, "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
         "commit", "--quiet", "-m", "base")
-    local, database = root / "local.db", root / "receiver.db"
+    receiver_data = root / "receiver"
+    receiver_data.mkdir()
+    local, database = root / "local.db", receiver_data / "receiver.db"
     task = invoke(local, "start", source, "--objective", "Verify a candidate after durable activation")
     task_id, old = task["task"], task["token"]
     saved = invoke(local, "checkpoint", task_id, "--note", "Verified candidate", owner=old)
@@ -260,7 +262,7 @@ def trial(root, stage, *, authenticated=False):
                                "--endpoint", endpoint, "--fault", fault],
                               cwd=PROJECT, env=env, timeout=30, check=False).returncode
 
-    with receiver(database, 0, "none", module=MODULE, env=env) as (_, port):
+    with receiver_factory(database, 0, "none", module=MODULE, env=env) as (_, port):
         endpoint = f"http://127.0.0.1:{port}"
         try:
             advance(endpoint, "invalid-fixture-key", task_id, 0)
@@ -281,7 +283,7 @@ def trial(root, stage, *, authenticated=False):
         prepared_at_interruption = (root / "replacement" / ".git").is_file()
 
     effect_fault = stage if stage in ("before", "after") else "none"
-    with receiver(database, port, effect_fault, module=MODULE, env=env) as (active, _):
+    with receiver_factory(database, port, effect_fault, module=MODULE, env=env) as (active, _):
         assert read_epochs() == interrupted
         assert run_coordinator("none") == 0
         assert run_coordinator("none") == 0
@@ -299,6 +301,16 @@ def trial(root, stage, *, authenticated=False):
             delayed_status = 412
         else:
             raise AssertionError("Old generation applied an effect")
+        retired_bearer_status = None
+        if authenticated:
+            try:
+                request(endpoint, op, payload, generation=2, bearer=old_bearer)
+            except ContinuityError as error:
+                if str(error) != "Provider returned HTTP 403":
+                    raise
+                retired_bearer_status = 403
+            else:
+                raise AssertionError("Retired bearer applied an effect under the current generation")
         before_publish = counts(database)
         first = invoke(local, "publish", task_id, "--endpoint", endpoint, "--name", "candidate",
                        "--evidence", evidence["evidence"], owner=successor,
@@ -306,14 +318,14 @@ def trial(root, stage, *, authenticated=False):
         assert first["operation"] == op
         effect_exit = active.wait(timeout=5) if effect_fault != "none" else None
     after_first = counts(database)
-    with receiver(database, port, "none", module=MODULE, env=env):
+    with receiver_factory(database, port, "none", module=MODULE, env=env):
         assert read_epochs() == generations
         confirmed = invoke(local, "reconcile", task_id, op, "--retry-absent", owner=successor)
         assert request(endpoint, op)["payload"] == json.loads(payload)
     return {
         "fault": stage, "coordinator_exit": coordinator_exit, "epochs_at_interruption": interrupted,
         "epochs_after_restart_and_replay": generations, "worktree_prepared_at_interruption": prepared_at_interruption, "invalid_activation_http": auth_control,
-        "delayed_old_generation_http": delayed_status, "effects_and_receipts_before_publish": before_publish,
+        "delayed_old_generation_http": delayed_status, "retired_bearer_current_generation_http": retired_bearer_status, "effects_and_receipts_before_publish": before_publish,
         "first_publish_status": first["status"], "effect_receiver_exit": effect_exit,
         "effects_and_receipts_after_first_publish": after_first, "final_status": confirmed["status"],
         "final_effects_and_receipts": counts(database),
@@ -325,6 +337,7 @@ def main():
     cli.add_argument("--output", type=Path)
     cli.add_argument("--worker", type=Path)
     cli.add_argument("--coordinate", type=Path)
+    cli.add_argument("--bind", choices=("127.0.0.1", "0.0.0.0"), default="127.0.0.1")
     cli.add_argument("--port", type=int, default=0)
     cli.add_argument("--fault", default="none")
     cli.add_argument("--endpoint")
@@ -334,7 +347,7 @@ def main():
     args = cli.parse_args()
     authenticated = os.environ.get(AUTH_ENV) == "1"
     if args.worker:
-        serve(args.worker, args.port, args.fault, os.environ[ACTIVATION_ENV], authenticated=authenticated)
+        serve(args.worker, args.port, args.fault, os.environ[ACTIVATION_ENV], authenticated=authenticated, bind=args.bind)
         return
     if args.coordinate:
         coordinate(args.coordinate, args.endpoint, args.fault, os.environ[ACTIVATION_ENV],
