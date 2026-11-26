@@ -13,6 +13,8 @@ Conversation history can explain a coding task. Recovery also requires a restora
 
 A second round found that delayed requests still applied when the receiver's generation lagged. A current-generation receiver rejected all three delayed requests. SQLite receiver crashes on either side of commit converged on one transactional effect and receipt in 6/6 trials. Eight additional live attempts on the frozen task produced zero verified fixes. A subsequent body edit passed the original checks and failed an expanded upstream oracle. The combined durable activation fixture converged across all 18 process-failure trials.
 
+An authenticated receiver rejected current-generation requests carrying retired, missing, or other-task credentials. It confirmed one effect per operation in a further 18 fault trials. After an interrupted restore on each of the three repositories, the source predicate passed while a selected note was missing. A coordinator that persisted a fresh checkout destination recovered the full checkpoint in all three cases.
+
 ## 1. Motivation and questions
 
 A coding worker can disappear after changing files, while waiting for a decision, or after sending a request whose acknowledgment is lost. A saved conversation helps another worker understand prior reasoning. Git and the external provider still carry facts that must be checked before the replacement can act. We asked three questions.
@@ -54,6 +56,8 @@ We used historical source changes in [Click](https://github.com/pallets/click/co
 **Round 3 format controls.** Qwen2.5-Coder 7B received the same recovered task, source excerpt, JSON object format, and output allowance in both arms. The code string contained either the whole function or just its body, with the original signature supplied at application time. We logged provider, JSON, signature, syntax, scope, and behavioral dispositions separately. We replayed a seed and expanded the behavioral oracle to every ABI list of length zero through three over ten fixed entries. The expected results came from the pinned upstream helper and remained outside the initial model prompts. We then tested one feedback request using the first disagreement.
 
 **Combined durable activation.** A coordinator wrote the activation intent and successor credential to a protected fixture directory before advancing an authenticated receiver endpoint. The receiver stored its generation in SQLite and checked it in the same transaction as the simulated effect and receipt. A coordinator process terminated after the intent, receiver activation, worktree creation, or local takeover. A separate receiver process terminated before or after the effect commit. The harness restarted the receiver, replayed the intent, and delivered the archived old-generation request. The local API can adopt a detached linked worktree from the same repository after verifying its checkpoint fingerprint. It preserves mismatched or unrelated destinations during rejection.
+
+**Worker authentication and incomplete restore.** Round 4 ran three matched credential control pairs and repeated the six interruption stages three times with worker authentication enabled. The managed client derives a bearer from the owner token, task, and generation using HMAC-SHA-256. The fixture's coordinator registers only the bearer hash with the next generation. The receiver verifies the bearer hash and the task-specific operation ID in the effect transaction. An independent restore experiment applied only the tracked path from each saved patch, using Git's path filter, then exited the coordinator. We ran the source predicate and checked the tracked and selected untracked bytes independently. The original recovery policy tried to adopt the partial checkout. The new policy persisted another destination and exited before restoring to it. After restarting both processes we checked authority, the restored fingerprint, and the preservation of the partial checkout. [Git apply documentation](https://git-scm.com/docs/git-apply)
 
 ## 4. Results
 
@@ -187,6 +191,23 @@ The first disagreement was the single generic entry `["other"]`. The candidate r
 All 18 trials in the final fixture converged on local and receiver generation 2. All 18 denied the delayed generation-1 request and ended with one confirmed effect and one receipt. The receiver denied an unauthenticated activation in each trial. The worktree-only fault left local generation 1, receiver generation 2, and a prepared checkout. Replay adopted the verified checkout in all three trials for that fault. The regression checks also exercised unrelated destinations, a changed tracked file, a stale checkpoint intent, and reuse of the old token.
 
 The first three ownership stages exhibit different durable states. Death after persisting intent preserves generations `(1, 1)`. Death after receiver advancement yields `(1, 2)`, with local authority temporarily unable to publish. Death after local transfer yields `(2, 2)`, even if the coordinator has yet to mark completion. The worktree-only fault also yields `(1, 2)`. The fixture coordinator resumes using the recorded successor credential and does not rotate the generation again once that credential is active. Worker generations are trusted assertions in the loopback protocol. This tests process death at known boundaries using a simulated transactional effect, with receiver authentication established only for generation administration.
+
+### 4.15 Worker authentication and partial workspace recovery
+
+Each of the following outcomes occurred in all three trials per receiver mode, after restarting the receiver against its persisted database.
+
+| Request | Header only | Authenticated |
+|:-------------------------------------------------------|------------:|--------------:|
+| Retired credential and retired generation | 412 | 412 |
+| Retired, missing, or other-task credential and current generation | 201 | 403 |
+| Valid worker credential with an operation ID derived for another task | 201 | 400 |
+| New publication by the active worker | 201 | 201 |
+| Repeat of the active worker's publication | 200 | 200 |
+| Repeated activation with a different worker binding | 200 | 409 |
+
+An identical activation retry returned HTTP 200 in both modes. The authenticated arm wrote one effect and one receipt per control trial, compared with five in the header-only arm. With authentication enabled, all 18 crash trials reached local and receiver generation 2, rejected the retired generation, and confirmed one effect and one receipt. Receipt lookup remains open within the loopback fixture. The experiment did not vary network trust or test replay of a stolen active bearer.
+
+In all three partial restores, the tracked source matched the upstream reference and its behavior predicate passed, but the selected note was missing. The original coordinator refused the checkout and left the local generation at 1. The revised coordinator saved a new destination and recovered from a second exit before that directory existed. After restart, the new checkout matched the saved fingerprint and passed all three grading checks. It reached generation 2 in each case. The original partial checkout retained its measured state. The injection exited between selected paths at a known boundary. Recovery after host power loss or an interruption inside a Git command remains unmeasured.
 
 ## 5. Design implications and limits
 

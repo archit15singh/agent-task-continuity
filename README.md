@@ -10,6 +10,8 @@ Use a Git patch and copy the relevant untracked files when an operator can coord
 
 Measure workspace recovery and verified task completion separately. The timeout investigation found a stale `PWD` that sent OpenCode to the wrong checkout. The launcher now aligns it with the restored workspace. Ollama was also serving requests for roughly 177 of 180 seconds during the original Packaging replay.
 
+Check authority where the effect happens and verify the whole selected artifact before transferring it. The authenticated loopback receiver denied current-generation requests with retired, missing, or other-task credentials and confirmed one effect per operation in 18 crash trials. In Click, Packaging, and attrs the source check passed even when the restore was missing the selected note. The recovery coordinator retained each incomplete checkout and activated a fresh one only after its fingerprint matched. [Round 4 evidence](evidence/authenticated-recovery.json)
+
 With the launcher fixed, local Qwen3.5 9B preserved both handoff files in all three cases. It still completed **0/3** at the 180-second deadline. The attrs edit failed the change-specific checks. A separate Codex-to-Codex run completed Click. OpenCode's persisted record shows that the corrected 4B Packaging compaction failure hit the 1,500-token output cap. The frozen Packaging case produced zero verified fixes in two runs per compaction setting. Supplying a title removed one auxiliary request in the traced startup. A same-model Codex probe exited cleanly and also left the source unchanged. In the next round, a coding-tuned model returned a scoped edit that passed 238 native tests and failed both task-specific checks. A later body-only edit passed the initial checks and disagreed with upstream on 123 of 1,111 expanded inputs. Qualify a replacement with an independent behavior check before using it for unattended recovery. [Paper](docs/paper.md) · [Evidence](evidence/README.md)
 
 ## Start and hand off a task
@@ -60,6 +62,7 @@ python3.13 -m venv .venv
 .venv/bin/python -m pip install -r evals/requirements.txt
 .venv/bin/python -m unittest discover -s tests -v
 .venv/bin/python -m evals.run --set all --output /tmp/continuity-study.json
+.venv/bin/python -m evals.authenticated_recovery --output /tmp/continuity-authenticated-recovery.json
 ```
 
 See the [implementation plan](docs/plan.md), [preregistered protocol](docs/protocol.md), [research paper](docs/paper.md), [PDF](docs/paper.pdf), the [follow-up protocol](docs/research-loop.md), the [literature review](docs/handoff-literature-review.md), and [machine-readable evidence](evidence/README.md). The pinned cases use Click, Packaging, and attrs. The native tests and application code run locally. Study publication targets a controlled loopback service and a separate disposable bare Git receiver.

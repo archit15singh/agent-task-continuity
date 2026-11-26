@@ -168,3 +168,18 @@ Compare the existing header-only receiver against one that also checks a task-sc
 ### H17 · Incomplete checkout recovery
 
 Reuse the pinned Click, Packaging, and attrs implementation diffs. Capture each source change with a selected untracked note. In a disposable linked checkout apply only the tracked implementation patch and exit the coordinator before the note is applied. The existing coordinator should fail verification and leave ownership unchanged. With recovery enabled it should retain the incomplete checkout, commit a fresh destination to the intent before restoring, and converge on a verified snapshot at generation 2. Also interrupt after committing the fresh path and verify a subsequent restart can finish. Treat the selected-file split as a controlled process-boundary injection rather than a random fault inside Git.
+
+## Round 4 results and next hypotheses
+
+H16 passed within the loopback fixture. All three current-generation attempts per credential class succeeded under header-only checking. With worker authentication, all attempts using the retired credential, no credential, or a credential bound to the other task were refused. A different binding could not replace a binding on a repeated activation. Exploratory checks also found that a valid credential could no longer submit an operation under an ID derived for a different task. The 18 authenticated fault trials each converged on one effect and one receipt.
+
+H17 passed on Click, Packaging, and attrs. The tracked source and the source predicate passed before recovery even though the selected note was missing in all three. The fingerprint precondition caught the missing file. Retrying into a newly recorded path recovered the complete snapshot after a second process exit. The abandoned worktree retained its measured contents.
+
+| Rank | Next experiment | Decision it would change |
+|---:|---|---|
+| 1 | Freeze independent behavior oracles for new repository tasks before running the same-runtime and cross-runtime replacements on matched checkpoints | Whether new replacement failures come from transfer quality, runtime ability, or what the grader measures |
+| 2 | Interrupt the Git child process during checkout and during patch writes, including regular files, binary data, and deletions | Which real Git crash states require quarantine, retry, or operator repair |
+| 3 | Publish to a cooperating hosted receiver and independently read back effects after disconnects | Which loopback guarantees survive a network and a separate service boundary |
+| 4 | Run the paired restart protocol with real operators | Whether managed recovery saves operator time after capture and verification |
+
+[Round 4 receipts](../evidence/authenticated-recovery.json)

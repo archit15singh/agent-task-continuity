@@ -186,3 +186,13 @@ ollama create continuity-coder:7b -f /tmp/continuity-coder-modelfile
 .venv/bin/python -m evals.body_contract --refine --normalize-wrapper \
   --endpoint http://127.0.0.1:11434/v1 --output /tmp/refine-wrapper.json
 ```
+
+## Round 4 authenticated recovery
+
+[Authenticated recovery receipts](authenticated-recovery.json) contain the six credential controls, 18 authenticated crash trials, and three interrupted checkout cases from Click, Packaging, and attrs. Positive publication requests record actual HTTP statuses and compare the returned receipt body. The restore cases report tracked and selected note hashes independently and run the source predicate before and after recovery. The JSON records the four source hashes at [the experiment implementation](https://github.com/archit15singh/agent-task-continuity/commit/f5bdc06).
+
+```sh
+.venv/bin/python -m evals.authenticated_recovery --output /tmp/continuity-authenticated-recovery.json
+```
+
+The worker and coordinator credentials are generated per trial and omitted from the receipt. The effect is a SQLite row in a cooperating loopback service. The checkout fault applies the tracked part of a multi-file patch and stops the coordinator before the selected note is applied.
