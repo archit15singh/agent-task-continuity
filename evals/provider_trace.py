@@ -9,8 +9,30 @@ from time import monotonic
 from urllib.parse import urlsplit
 
 
+def cap_read_observations(messages, limit):
+    if limit < 128:
+        raise ValueError("Read cap must be at least 128 characters")
+    read_calls = set()
+    clipped = []
+    for message in messages:
+        if message.get("role") == "assistant":
+            read_calls.update(call["id"] for call in message.get("tool_calls") or ()
+                              if call.get("id") and (call.get("function") or {}).get("name") == "read")
+        if message.get("role") != "tool" or message.get("tool_call_id") not in read_calls:
+            continue
+        content = message.get("content")
+        if not isinstance(content, str) or len(content) <= limit:
+            continue
+        marker = "\n[Middle of read omitted. Use narrower line ranges to retrieve it.]\n"
+        head = (limit - len(marker)) // 2
+        tail = limit - len(marker) - head
+        message["content"] = content[:head] + marker + content[-tail:]
+        clipped.append([len(content), len(message["content"])])
+    return clipped
+
+
 @contextmanager
-def trace_provider(endpoint, *, reasoning_effort=None):
+def trace_provider(endpoint, *, reasoning_effort=None, read_limit=None):
     backend = urlsplit(endpoint)
     if backend.scheme != "http" or backend.hostname != "127.0.0.1" or backend.path != "/v1":
         raise ValueError("Expected an HTTP loopback provider ending in /v1")
@@ -37,6 +59,9 @@ def trace_provider(endpoint, *, reasoning_effort=None):
                     body["reasoning"] = reasoning
                 payload = json.dumps(body).encode()
             messages = body.get("messages", [])
+            clipped = cap_read_observations(messages, read_limit) if read_limit is not None else []
+            if clipped:
+                payload = json.dumps(body).encode()
             compact = "you must summarize the conversation above" in json.dumps(messages).lower()
             record = {
                 "path": self.path,
@@ -46,6 +71,7 @@ def trace_provider(endpoint, *, reasoning_effort=None):
                 "tool_count": len(body.get("tools") or []),
                 "reasoning_effort": body.get("reasoning_effort", reasoning.get("effort")),
                 **({"seed_forwarded": body["seed"]} if "seed" in body else {}),
+                **({"capped_read_lengths": clipped} if read_limit is not None else {}),
                 "reasoning_characters": 0,
                 "visible_characters": 0,
                 "requested_max_tokens": body.get("max_tokens", body.get("max_output_tokens")),

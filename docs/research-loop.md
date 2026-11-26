@@ -240,3 +240,11 @@ H21 killed the Git child after a text edit and deletion had landed. The binary f
 | 4 | Fault Git during worktree creation and exercise publication across a cooperating remote receiver | Which recovery and authority states survive a wider boundary |
 
 [Round 5 evidence index](../evidence/README.md)
+
+## Round 6 goal and loop
+
+Test whether limiting the source returned by a read helps a replacement finish the frozen Click task. Exercise conditional publication against the hosted GitHub receiver and prepare a real operator pilot. Freeze criteria before running each check, retain all failures, and report the strongest conclusion each measurement supports.
+
+- **H26 · Read observation cap.** Use the same Click checkpoint, prompt, OpenCode configuration, Qwen3 8B model, reasoning-off request, and 180-second deadline per attempt. Run two pairs in default/capped/capped/default order. Change only large read-tool results at the relay. Keep up to 4,096 characters, divided between the beginning and end, with an omission notice. Count clipped observations and next-request input tokens separately from scoped edits and verified behavior. Keep the carried reproduction, native tests, and 45 independent probes unchanged.
+- **H27 · Hosted conditional publication.** In the project’s public GitHub repository, create a unique disposable ref with an expected-absent lease. Independently observe the exact SHA while the client worker is alive, then kill the worker before it writes a durable acknowledgment. Require a retry of the same SHA to converge, reject a delayed different-SHA write with the same lease, read back the intended SHA, and remove only the fixture-created ref with a matching lease. Repeat three times. Measure remote ref state and client disposition. GitHub’s receiver provides a ref lease, without the prototype’s task-generation bearer or simulator effect counters.
+- **H28 · Human pilot.** Use two distinct pinned changes and counterbalance manual and managed order across participants. Preserve the same starting data, conduct tasks without agent help, and record active phase duration, independent verification, aborts, and wall-clock time. The initial automated run qualifies the instrument only. Participant outcomes require actual voluntary participation and separate permission to publish anonymous measurements.
