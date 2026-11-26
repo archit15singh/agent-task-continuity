@@ -207,3 +207,7 @@ Qualify each harness with a scripted provider response that replaces one line in
 ### H21 · Interrupt the Git process during a restore
 
 Use a disposable repository with a text edit, a binary edit, a deletion, and a selected note. Block a repository-local byte-preserving Git filter during a single multi-path apply and check that an earlier path has reached disk before sending SIGKILL to Git's process group. Compare the interrupted directory with the saved fingerprint and grade a fresh retry; preserve the interrupted directory. Run three matched trials. This tests the Git child boundary on an instrumented fixture independently of the live worker matrix.
+
+### H22 · Qualify reasoning control on the measured alias
+
+The Click OpenCode attempt emitted reasoning despite the prompt directive. After the serial live matrix, send the same short arithmetic prompt to the native chat, Chat Completions, and Responses endpoints. Compare each default with its documented API-level off request at a 32-token output allowance and zero temperature. Record metadata, exact-answer pass, lengths, reasoning output, and provider status. Treat this as an endpoint qualification. A positive result licenses a separately frozen repository comparison of the setting.
