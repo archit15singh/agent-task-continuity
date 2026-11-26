@@ -203,3 +203,7 @@ Before inspecting any replacement's result, construct a deliberately incomplete 
 ### H20 · Tool execution control
 
 Qualify each harness with a scripted provider response that replaces one line in a disposable text file. Retain the same runtime flags and tool settings as H18. Check for the tool result on the next provider request and grade the file bytes independently. A passing control establishes that the harness can receive and apply a valid response under this configuration. The synthetic response does not establish live model tool quality.
+
+### H21 · Interrupt the Git process during a restore
+
+Use a disposable repository with a text edit, a binary edit, a deletion, and a selected note. Block a repository-local byte-preserving Git filter during a single multi-path apply and check that an earlier path has reached disk before sending SIGKILL to Git's process group. Compare the interrupted directory with the saved fingerprint and grade a fresh retry; preserve the interrupted directory. Run three matched trials. This tests the Git child boundary on an instrumented fixture independently of the live worker matrix.
