@@ -16,6 +16,8 @@ With the launcher fixed, local Qwen3.5 9B preserved both handoff files in all th
 
 Test the grader before trusting a passing repair. On three new tasks, all six fresh Qwen3 8B Codex and OpenCode attempts restored the intended checkpoint and left the implementation unchanged. Each deliberately incomplete repair passed its carried reproduction and the parent native tests. Broader probes rejected all three and accepted three equivalent reference variants. We also stopped a native Git apply after it had changed some paths. In three trials the store refused the partial snapshot and a fresh worktree restored every selected path. [Paired attempts](evidence/paired-continuation.json) · [Grader controls](evidence/paired-oracle-controls.json) · [Git crash receipts](evidence/git-restore-crash.json)
 
+Qualify the receiver on the work it must finish. On the same frozen set, the signed-in Codex configuration passed independent checks in both attempts on each of the three tasks. The local read cap produced one edit and no verified fixes. For publication, GitHub preserved the intended ref in three interrupted trials. An authenticated fixture on a hosted VM confirmed one effect and receipt in nine container or coordinator fault trials. [Receiver qualification](evidence/receiver-qualification.json) · [Hosted Git](evidence/hosted-git.json) · [Hosted container](evidence/hosted-receiver.json)
+
 ## Start and hand off a task
 
 Requires Python 3.11+, Git, and a Unix-like host. A runtime CLI is required only for automatic launch. Run these commands from the study checkout or install the package with `python -m pip install -e .`.

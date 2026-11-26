@@ -253,3 +253,11 @@ Test whether limiting the source returned by a read helps a replacement finish t
 - **H31 · Scoped edit response.** Give the same local Qwen3 8B alias the two frozen Click source fragments and the same objective. Request two replacement blocks in one JSON response, with reasoning off and two fixed seeds. Apply only those blocks after checking their edit shape and compiled syntax. Use the same visible reproduction, native modules and 45 behavioral probes after application. This qualification changes the interaction contract and source context together.
 - **H32 · Correct the scoped guard and replay.** The command fragment appears twice in Click. Constrain the anchor to the named class and method. Require a known-valid upstream edit to pass the guard, replay the original request once, then test one prompt explicitly asking the model to change both blocks. Compare response hashes, apply disposition, and behavior separately.
 - **H33 · Repeat receiver qualification.** The first signed-in Codex series passed all three tasks. Repeat the same frozen series once, keeping the deadline and grader fixed. Report attempts by task and avoid treating the two repeats on each task as separate repository samples.
+
+### Round 6 outcomes
+
+The read cap reduced an individual observation and enabled one scoped edit. Default and capped arms each finished 0/2. Peak input grew above the original baseline in one capped run. The corrected scope guard admitted the upstream control and the exact local response was a no-op. More explicit wording yielded a candidate with four disagreements. The configured signed-in Codex model passed the same three tasks twice with the original prompt and checkpoint hashes. The result qualifies the tested configuration on this sample.
+
+GitHub conditional leases recovered the intended ref in 3/3 external trials. The isolated receiver on a hosted Linux VM converged in 9/9 faults across three injection stages. These cover different effect contracts. The hosted service runs with a bind-mounted persistent receiver store and a client on the same VM.
+
+Two scripted operator-pilot sequences exercised all phase markers and produced verified recoveries. Human data are kept separate subject to participant permission. [Operator pilot](operator-pilot.md) · [Round 6 receipts](../evidence/README.md)

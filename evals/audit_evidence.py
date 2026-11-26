@@ -101,8 +101,48 @@ def audit_grading():
                 and all(row["reasoning_effort"] == "none" for row in attempt["provider_requests"]), file)
 
 
+def audit_round_six():
+    capped = read("capped-reads")["attempts"]
+    require([row["read_limit"] for row in capped] == [None, 4096, 4096, None], "read cap ordering")
+    require(not any(row["grade"]["verified"] for row in capped), "read cap outcomes")
+    require(all(len({row[key] for row in capped}) == 1 for key in ("checkpoint_sha256", "prompt_sha256")),
+            "matched inputs for capped reads")
+    baseline = read("paired-continuation")["attempts"]
+    for file in ("receiver-qualification", "receiver-qualification-repeat"):
+        attempts = read(file)["attempts"]
+        require(len(attempts) == 3 and all(row["grade"]["verified"] for row in attempts), file)
+        for row in attempts:
+            original = baseline[row["case"]][0]
+            require(all(original[key] == row[key] for key in ("checkpoint_sha256", "prompt_sha256")),
+                    f"{file}: {row['case']} changed inputs")
+    hosted_git = read("hosted-git")
+    require(len(hosted_git["trials"]) == 3 and all(
+        row["final_independent_readback"] == hosted_git["base_revision"] and row["removed_with_matching_lease"]
+        and row["different_target_rejected_as_stale"] and row["same_target_up_to_date"]
+        for row in hosted_git["trials"]), "hosted Git recovery")
+    hosted = read("hosted-receiver")
+    require(len(hosted["trials"]) == 9 and all(
+        row["retired_bearer_current_generation_http"] == 403 and row["delayed_old_generation_http"] == 412
+        and row["final_effects_and_receipts"] == [1, 1] and row["final_status"] == "confirmed"
+        for row in hosted["trials"]), "hosted authenticated receiver")
+    replay = read("scoped-click-replay")
+    require(replay["upstream_edit_guard_control"] and replay["attempts"][1]["grade"]["hidden_disagreements"] == 4,
+            "scoped Click replay")
+    require(replay["attempts"][0]["output_sha256"] == read("scoped-click")["attempts"][0]["output_sha256"],
+            "exact scoped model replay")
+    for name in ("operator-pilot-rehearsal", "operator-pilot-reversed"):
+        report = read(name)
+        observations = report["observations"]
+        require(report["mode"] == "scripted rehearsal" and len(observations) == 2
+                and all(row["verified"] and row["operator_active_seconds_self_reported"] is None
+                        for row in observations), name)
+
+
 def audit_provenance():
-    for receipt, revision in (("authenticated-recovery", "f5bdc06"), ("paired-continuation", "d630a70")):
+    for receipt, revision in (
+        ("authenticated-recovery", "f5bdc06"), ("paired-continuation", "d630a70"),
+        ("capped-reads", "3026d2c"),
+    ):
         for path, expected in read(receipt)["source_sha256"].items():
             source = subprocess.check_output(["git", "show", f"{revision}:{path}"], cwd=ROOT)
             require(hashlib.sha256(source).hexdigest() == expected, f"{receipt}: {path}")
@@ -115,6 +155,14 @@ def audit_provenance():
         ("paired-click-reasoning-off", "2047533", "paired_reasoning_control", "runner_sha256"),
         ("paired-reasoning-repeat", "f87f7c2", "paired_reasoning_control", "runner_sha256"),
         ("paired-codex-click-reasoning-off", "f87f7c2", "paired_reasoning_control", "runner_sha256"),
+        ("hosted-git", "24daa95", "hosted_git", "source_sha256"),
+        ("hosted-receiver", "a40b28e", "hosted_receiver", "runner_sha256"),
+        ("operator-pilot-rehearsal", "d5561e1", "operator_pilot", "source_sha256"),
+        ("operator-pilot-reversed", "d5561e1", "operator_pilot", "source_sha256"),
+        ("receiver-qualification", "f2c178c", "receiver_qualification", "source_sha256"),
+        ("receiver-qualification-repeat", "f2c178c", "receiver_qualification", "source_sha256"),
+        ("scoped-click", "a65c445", "scoped_click", "source_sha256"),
+        ("scoped-click-replay", "fdc4758", "scoped_click", "source_sha256"),
     ):
         source = subprocess.check_output(["git", "show", f"{revision}:evals/{module}.py"], cwd=ROOT)
         require(hashlib.sha256(source).hexdigest() == read(receipt)[key], f"{receipt}: {module}")
@@ -129,7 +177,7 @@ def audit_provenance():
     paper = (ROOT / "docs/paper.md").read_text()
     appendix = paper.split("## Appendix A.", 1)[1]
     hypothesis_ids = re.findall(r"^\| H(\d+) ·", appendix, re.MULTILINE)
-    require(hypothesis_ids == [str(number) for number in range(1, 26)], "appendix coverage for H1–H25")
+    require(hypothesis_ids == [str(number) for number in range(1, 34)], "appendix coverage for H1–H33")
     rows = [line for line in appendix.splitlines() if re.match(r"^\| (?:H\d+|RQ\d+) ·", line)]
     require(all("../evidence/" in row for row in rows), "appendix receipt links")
 
@@ -138,5 +186,6 @@ if __name__ == "__main__":
     audit_design()
     audit_recovery()
     audit_grading()
+    audit_round_six()
     audit_provenance()
-    print("Verified headline receipt checks, source provenance, links and H1–H25 coverage.")
+    print("Verified headline receipt checks, source provenance, links and H1–H33 coverage.")

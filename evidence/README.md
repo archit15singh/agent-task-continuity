@@ -254,3 +254,17 @@ The timed model matrix uses one local inference server serially and preloads the
 ```
 
 The original live matrix used the archived relay in `d630a70`. The OpenCode off repeat ran at `2047533` and the Codex off repeat at `f87f7c2`. The relay changes in the latter add support for the nested Responses reasoning field.
+
+## Round 6 receiver qualification, hosted recovery, and operator pilot
+
+The [capped-read matrix](capped-reads.json) records four frozen OpenCode Click attempts and the sizes of oversized observations clipped at the relay. The [initial scoped trial](scoped-click.json) retains an anchor ambiguity and the [replay](scoped-click-replay.json) confirms the reference control, unchanged exact replay, and applied partial edit. The [signed-in Codex trial](receiver-qualification.json) and [repeat](receiver-qualification-repeat.json) use the same Round 5 prompts, artifacts and graders with a different provider and model.
+
+```sh
+.venv/bin/python -m evals.capped_reads --output /tmp/continuity-capped-reads.json
+.venv/bin/python -m evals.scoped_click --diagnostic --output /tmp/continuity-scoped-click.json
+.venv/bin/python -m evals.receiver_qualification --output /tmp/continuity-receiver-qualification.json
+```
+
+The local commands need the Qwen3 8B alias described in Round 5. The signed-in Codex command instead needs existing CLI account access. For hosted Git, `python -m evals.hosted_git --output /tmp/continuity-hosted-git.json` requires write access to this study repository. It creates and removes only disposable refs in `refs/heads/continuity-eval/`. The [hosted Git receipt](hosted-git.json) records separate remote readback. The [container receipt](hosted-receiver.json) comes from [the successful manually dispatched workflow](https://github.com/archit15singh/agent-task-continuity/actions/runs/45812920668). Its [first run](https://github.com/archit15singh/agent-task-continuity/actions/runs/45812722995) stopped before the first fault trial because the TCP port appeared before HTTP readiness. To reproduce the same hosted fixture locally, run `python -m evals.hosted_receiver --output /tmp/continuity-hosted-receiver.json` on a Docker host.
+
+The [operator guide](../docs/operator-pilot.md) describes the consent and run procedures. The [first](operator-pilot-rehearsal.json) and [reversed-order](operator-pilot-reversed.json) instrument rehearsals publish automated results only.

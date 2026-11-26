@@ -6,7 +6,7 @@ Participation is voluntary. Use a disposable local checkout, avoid any personal 
 
 ## Prepare
 
-From the study repository, create two distinct tasks using the public reference changes. Across participants, assign sequences 0, 1, 2, and 3 in rotation. Sequences vary both arm order and case assignment. Follow the order printed during preparation.
+Activate the study virtual environment with `source .venv/bin/activate` if your shell lacks a bare `python`. From the study repository, create two distinct tasks using the public reference changes. Across participants, assign sequences 0, 1, 2, and 3 in rotation. Sequences vary both arm order and case assignment. Follow the order printed during preparation.
 
 ```sh
 study_root="$(mktemp -d /tmp/continuity-operator.XXXXXX)/exercise"

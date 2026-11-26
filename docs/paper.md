@@ -17,6 +17,8 @@ An authenticated receiver rejected current-generation requests carrying retired,
 
 A paired pilot on three new historical tasks restored identical checkpoints in all six fresh Codex and OpenCode attempts with the same local model. None changed the source. Three deliberately incomplete repairs passed their carried reproduction and parent native checks, while reference-derived behavior probes rejected all three and accepted three equivalent implementations. Three native Git process kills left partial output on disk. Each incomplete checkout was refused and a fresh restore reproduced the checkpoint.
 
+On those same three tasks a signed-in Codex configuration passed the independent graders in six of six attempts over two series. A local read cap reduced some input sizes and produced no verified fix. The hosted GitHub receiver preserved the intended ref across three publisher failures. An authenticated fixture running as a separate container on a hosted VM converged in nine faults.
+
 ## 1. Motivation and questions
 
 A coding worker can disappear after changing files, while waiting for a decision, or after sending a request whose acknowledgment is lost. A saved conversation helps another worker understand prior reasoning. Git and the external provider still carry facts that must be checked before the replacement can act. We asked three questions.
@@ -30,8 +32,8 @@ The project implements 11 ideas as one prototype. The CLI covers cross-agent con
 | Question | Prediction or feasibility criterion | Primary observation |
 |:---|:---|:---|
 | RQ1 · Transport | Managed recovery and manual Git should recover the same selected artifact. A brief alone should leave the clean checkout unchanged. | Exact tracked and selected untracked bytes, plus an independent behavior check, per case (§4.1). |
-| RQ2 · Recovery | After a controlled interruption, a successor should recover the saved revision, fences should refuse stale authority, and a cooperating receiver should produce one effect per reserved operation. | Checkpoint match, receiver acceptance and independently observed effects and receipts per fault trial (§§4.1, 4.8, 4.10, 4.14–4.15, 4.17). |
-| RQ3 · Live feasibility | A fresh replacement may finish under the stated deadline. A pass requires the preserved artifact, a scoped edit, and passing behavioral checks. | Verified completions and observed failure stages per worker attempt (§§4.2–4.7, 4.11–4.13, 4.16, 4.18–4.19). |
+| RQ2 · Recovery | After a controlled interruption, a successor should recover the saved revision, fences should refuse stale authority, and a cooperating receiver should produce one effect per reserved operation. | Checkpoint match, receiver acceptance and independently observed effects and receipts per fault trial (§§4.1, 4.8, 4.10, 4.14–4.15, 4.17, 4.21). |
+| RQ3 · Live feasibility | A fresh replacement may finish under the stated deadline. A pass requires the preserved artifact, a scoped edit, and passing behavioral checks. | Verified completions and observed failure stages per worker attempt (§§4.2–4.7, 4.11–4.13, 4.16, 4.18–4.20). |
 
 Table 1. Study questions and criteria.
 
@@ -267,9 +269,27 @@ On the identical Click checkpoint and prompt, OpenCode with API-level off made a
 
 The Responses off repeat used the original Codex Click prompt and checkpoint, for which the default attempt timed out. Codex exited in 137.5 seconds. Its fourth request had 10,265 input tokens and consumed all 2,048 configured output tokens while the provider reported completion. The source remained unchanged and all 16 disagreements remained. A second endpoint smoke before this repeat again returned the exact answer on all three off arms. One default reasoning string changed in length despite the zero-temperature request. These observations qualify a provider setting and motivate smaller context reads. They establish no verified completion improvement.
 
+### 4.20 Read limits, scoped edits, and receiver qualification
+
+Round 6 used the Round 5 Click checkpoint, OpenCode, Qwen3 8B, reasoning-off on the wire, and a 180-second deadline. Two attempts per arm ran in default, capped, capped, default order. The capped relay shortened each oversized read observation to 4,096 characters. Both default attempts peaked at 8,194 input tokens and left the source unchanged. Capped attempts peaked at 5,127 and 8,745 tokens. Repeated interactions can still grow the request because they accumulate new observations. One capped attempt applied a source edit and disagreed on 24/45 probes, compared with 16/45 on the parent. Both arms finished 0/2 verified. [Capped reads](../evidence/capped-reads.json)
+
+The two-block JSON qualification then withheld the full tool loop and supplied only the relevant Click fragments. The original guard refused both responses because the command fragment occurred twice. We narrowed the anchor to its class and method and verified that the upstream edit passed. The exact replay produced the same response hash and left both blocks unchanged. An explicit request to change both blocks produced a scoped edit that reduced independent disagreements to 4/45. It still failed the full grade. [Initial JSON trial](../evidence/scoped-click.json) · [Guard correction and replay](../evidence/scoped-click-replay.json)
+
+Separately, a configured Codex session using requested model `gpt-6.2-sol` received the same three frozen tasks and the same task deadline and graders. Each initial attempt preserved both artifacts, stayed within file scope, passed its reproduction and native modules, and passed every independent probe. A separately planned repeat passed all three again, giving 6/6 attempts on three tasks. Across the two series, verified attempts took 32.0–40.6 seconds. Prompts and checkpoint hashes match the prior paired study. The changed model and provider distinguish this qualification from the local comparison. Two observations per task provide a repeatability check, with no population-level estimate. [Initial qualification](../evidence/receiver-qualification.json) · [Repeat qualification](../evidence/receiver-qualification-repeat.json)
+
+### 4.21 Hosted publication recovery
+
+In three trials using the public GitHub repository, a publisher issued an expected-absent lease for a unique ref. Independent readback observed the intended SHA while the worker still lived. The worker was killed after its Git child returned and before a durable acknowledgment. Replaying the same SHA converged, and a different SHA using the old lease was rejected in 3/3. We removed each test ref with a matching lease and verified its absence. This test observes the final GitHub ref and published command dispositions. It does not count GitHub's internal effects or authenticate prototype task generations. [Hosted Git receipts](../evidence/hosted-git.json)
+
+The authenticated receiver fixture ran in a distinct Docker network namespace on a GitHub-hosted Linux VM. The client reached it through a forwarded port. The first setup failed because the Docker port accepted TCP before the receiver was ready. An HTTP readback replaced the TCP readiness check. The corrected run interrupted coordinator activation and receiver transactions on both sides of commit, with three trials per stage. In all nine trials the receiver rejected the stale generation and the retired task credential under the current generation. Recovery confirmed one effect and receipt. Client, receiver and the bind-mounted durable volume share the hosted VM. This tests service restart on hosted infrastructure. Separate-host failover and production external effects remain unmeasured. [Initial workflow](https://github.com/archit15singh/agent-task-continuity/actions/runs/45812722995) · [Successful workflow](https://github.com/archit15singh/agent-task-continuity/actions/runs/45812920668) · [Hosted receiver receipts](../evidence/hosted-receiver.json)
+
+### 4.22 Operator pilot instrument
+
+Two rehearsed sequences exercised the manual and managed procedures, phase markers, independent grader, and receipt export. Each produced two verified recoveries. The rehearsals report phase elapsed time without participant observations. The pilot measures recovery and verification of a prepared candidate. A comparison of human performance requires participant data across counterbalanced assignments. [Operator guide](operator-pilot.md) · [First rehearsal](../evidence/operator-pilot-rehearsal.json) · [Reversed order](../evidence/operator-pilot-reversed.json)
+
 ## 5. Discussion and threats to validity
 
-The strongest engineering result is that a replacement can recover the selected artifact and settle a reserved effect after controlled failures. Manual Git matched managed recovery on the transport gate. The managed prototype adds an ownership check, evidence binding, and publication readback around that transport. The study did not establish an improvement in verified completion or operator time.
+The strongest engineering result is that a replacement can recover the selected artifact and settle a reserved effect after controlled failures. Manual Git matched managed recovery on the transport gate. The managed prototype adds an ownership check, evidence binding, and publication readback around that transport. The study qualified one configured receiver on a small frozen set. It did not estimate a completion advantage from managed handoff or a change in operator time.
 
 **Construct validity.** A checkpoint fingerprint covers selected Git-normalized content. It leaves out ignored files, staging state, and live runtime state. A green upstream suite or process exit does not establish task correctness. The study uses a carried reproduction and independent behavior checks to narrow that gap. The expanded checks still sample specified behavior and could reject a legitimate output outside the sampled equivalent implementations. For publication, a fixture receipt and a Git ref update observe different kinds of effects.
 
@@ -277,7 +297,7 @@ The strongest engineering result is that a replacement can recover the selected 
 
 **Conclusion validity.** The analysis describes measured attempts and does not estimate population effects. Repeated fault trials probe named states of the same mechanism. Provider calls and oracle inputs share attempts and cannot serve as independent task replicates. A failure to solve within 180 seconds shows failure under that deadline. Experiments did not estimate how often a different model or a longer run would succeed.
 
-**External validity.** We used six historically selected changes across three Python libraries, one macOS host, pinned local model configurations, and deliberately targeted failures. Public reference changes may occur in training data. The fixture receiver shares one SQLite transaction between an effect and its receipt. The bare-Git experiment exercises a local conditional ref update. Hosted effects, cross-host failover, disk or power loss, and writes outside the managed route remain outside the evidence. The human protocol was rehearsed using scripts and collected no participant data.
+**External validity.** We used six historically selected changes across three Python libraries, local testing on one macOS host, pinned model configurations, and deliberately targeted failures. Public reference changes may occur in training data. The fixture receiver shares one SQLite transaction between an effect and its receipt. The bare-Git experiment exercises a local conditional ref update. The hosted experiments cover Git ref state and simulated effects across a container restart. Cross-host failover, independent production effects, disk or power loss, and writes outside the managed route remain outside the evidence. The human protocol was rehearsed using scripts and collected no participant data.
 
 ## 6. Related work
 
@@ -304,7 +324,7 @@ The study used public revisions and disposable local receivers. It collected no 
 
 ## Appendix A. Hypotheses, outcomes, and receipts
 
-The predictions below are summarized from the [initial protocol](protocol.md) and [follow-up log](research-loop.md). Each row links to the observations on which its disposition depends. The first table also includes the initial research questions and the unnumbered first-round diagnostics. Counts belong to their named scenarios, and overlapping follow-ups on the same task are kept separate.
+The predictions below are summarized from the [initial protocol](protocol.md) and [follow-up log](research-loop.md). Each row links to the observations on which its disposition depends. The first table also includes the initial research questions and unnumbered first-round diagnostics. Counts belong to their named scenarios, and overlapping follow-ups on the same task are kept separate.
 
 ### Initial evaluation and Round 1
 
@@ -350,3 +370,14 @@ The predictions below are summarized from the [initial protocol](protocol.md) an
 | H23 · OpenCode Click with off | Earlier clean exit in 65.1 s, source unchanged. §4.19. | [OpenCode follow-up](../evidence/paired-click-reasoning-off.json) |
 | H24 · Accept equivalent reference variants | All three alternates matched all 247 probes. §4.16. | [Positive controls](../evidence/paired-alternate-controls.json) |
 | H25 · Codex Click with off | Earlier clean exit in 137.5 s, source unchanged. §4.19. | [Codex follow-up](../evidence/paired-codex-click-reasoning-off.json) |
+
+| Round 6 hypotheses | Reported outcome | Evidence |
+|:----------------------------|:--------------------------------------------|:-------------------|
+| H26 · Cap tool read observations | 0/2 verified per arm. One capped edit failed on 24/45 probes. §4.20. | [Capped reads](../evidence/capped-reads.json) |
+| H27 · Hosted Git ref recovery | 3/3 retained the intended SHA and rejected the delayed conflict. §4.21. | [Hosted ref trials](../evidence/hosted-git.json) |
+| H28 · Human handoff effort | Instrument qualified in two scripted sequences. Participant comparison pending. §4.22. | [Rehearsal](../evidence/operator-pilot-rehearsal.json) |
+| H29 · Hosted authenticated receiver | 9/9 converged at one confirmed effect and receipt. §4.21. | [Hosted container trials](../evidence/hosted-receiver.json) |
+| H30 · Qualify configured Codex | 3/3 initially passed all frozen grading gates. §4.20. | [Qualification](../evidence/receiver-qualification.json) |
+| H31 · Scope a replacement to two blocks | Initial guard rejected both responses due to a duplicate anchor. §4.20. | [Initial trial](../evidence/scoped-click.json) |
+| H32 · Requalify and replay the guard | Reference control passed. Exact replay was unchanged. Explicit prompt edit missed 4/45. §4.20. | [Corrected replay](../evidence/scoped-click-replay.json) |
+| H33 · Repeat receiver qualification | 3/3 repeated the initial successes on the same tasks. §4.20. | [Repeat](../evidence/receiver-qualification-repeat.json) |
