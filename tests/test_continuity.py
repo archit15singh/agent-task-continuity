@@ -7,7 +7,7 @@ import tempfile
 import unittest
 
 from continuity.publish import publish, settle
-from continuity.runner import verify
+from continuity.runner import run, verify
 from continuity.store import Store
 from continuity.workspace import ContinuityError, fingerprint, git
 from evals.publisher import publisher
@@ -34,6 +34,14 @@ class ContinuityTests(unittest.TestCase):
         (self.source / "binary.dat").write_bytes(b"\0\x81some data\r\n")
         (self.source / "excluded.txt").write_text("excluded")
         return self.store.checkpoint(self.task, self.owner, ["binary.dat"], "Continue verification")
+
+    def test_runner_aligns_pwd_with_the_child_workspace(self):
+        result = run(
+            [sys.executable, "-c",
+             "import os; from pathlib import Path; assert Path(os.environ['PWD']) == Path.cwd()"],
+            self.source, seconds=10, environment={"PWD": str(self.directory)},
+        )
+        self.assertEqual(result["exit_code"], 0)
 
     def test_isolated_restore_and_stale_detection(self):
         self.checkpoint()

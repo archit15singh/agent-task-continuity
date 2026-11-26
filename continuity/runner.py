@@ -17,6 +17,10 @@ from .workspace import ContinuityError, capture, fingerprint, git, restore
 def run(command, workspace, *, seconds, environment=None, log=None):
     if not command or seconds <= 0:
         raise ContinuityError("Specify a command and a positive timeout")
+    workspace = Path(workspace).resolve()
+    environment = dict(os.environ if environment is None else environment)
+    # Some runtimes use PWD to identify the project even when the process cwd differs.
+    environment["PWD"] = str(workspace)
     started = time.monotonic()
     with tempfile.TemporaryFile() as output:
         with subprocess.Popen(
