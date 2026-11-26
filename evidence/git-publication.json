@@ -1,0 +1,43 @@
+{
+  "utc": "2026-11-26T08:03:59+00:00",
+  "evaluation_code_sha256": "1b42fcb18761c64fa8715179655e0fb4f43743bbb636fce0cc2aca322eb04d9b",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "trials": [
+    {
+      "ref_visible_before_kill": true,
+      "command_pending_at_kill": true,
+      "publisher_signal": 9,
+      "same_target_retry_exit": 0,
+      "same_target_already_up_to_date": true,
+      "different_target_retry_exit": 1,
+      "different_target_rejected_as_stale": true,
+      "ref_still_matches_candidate": true,
+      "receiver_updates": 1,
+      "only_update_was_expected_creation": true
+    },
+    {
+      "ref_visible_before_kill": true,
+      "command_pending_at_kill": true,
+      "publisher_signal": 9,
+      "same_target_retry_exit": 0,
+      "same_target_already_up_to_date": true,
+      "different_target_retry_exit": 1,
+      "different_target_rejected_as_stale": true,
+      "ref_still_matches_candidate": true,
+      "receiver_updates": 1,
+      "only_update_was_expected_creation": true
+    },
+    {
+      "ref_visible_before_kill": true,
+      "command_pending_at_kill": true,
+      "publisher_signal": 9,
+      "same_target_retry_exit": 0,
+      "same_target_already_up_to_date": true,
+      "different_target_retry_exit": 1,
+      "different_target_rejected_as_stale": true,
+      "ref_still_matches_candidate": true,
+      "receiver_updates": 1,
+      "only_update_was_expected_creation": true
+    }
+  ]
+}

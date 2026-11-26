@@ -1,6 +1,7 @@
 """Run the frozen Packaging handoff with a paired compaction setting."""
 
 import argparse
+from contextlib import nullcontext
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -10,6 +11,7 @@ import tempfile
 from continuity.runner import run, runtime_command
 from continuity.workspace import git
 from .live import NOTE, REPRO, read_summary, replacement_objective, staged_files, worker_environment
+from .provider_trace import trace_provider
 from .run import CASES, EVALS, PROJECT, check_argv, download, execute, invoke, sha
 
 CASE = next(case for case in CASES if case["id"] == "packaging")
@@ -42,6 +44,8 @@ def main():
     cli.add_argument("--model")
     cli.add_argument("--endpoint")
     cli.add_argument("--dry-run", action="store_true")
+    cli.add_argument("--trace-single-auto", action="store_true",
+                     help="Run one additional auto-compaction arm through a metadata-only provider trace")
     cli.add_argument("--timeout", type=int, default=180)
     args = cli.parse_args()
     if not args.dry_run and (not args.endpoint or not args.model):
@@ -85,7 +89,7 @@ def main():
         if args.dry_run:
             return
 
-        for index, auto in enumerate((True, False, False, True), 1):
+        for index, auto in enumerate((True,) if args.trace_single_auto else (True, False, False, True), 1):
             db = temp / f"ledger-{index}.db"
             task = invoke(db, "start", source, "--objective", replacement_objective(CASE, True))
             checkpoint = invoke(
@@ -94,17 +98,19 @@ def main():
             )
             destination = temp / f"attempt-{index}"
             handoff = invoke(db, "continue", task["task"], "--into", destination, owner=task["token"])
-            env = worker_environment(args.endpoint, args.model, None)
-            env.pop("CONTINUITY_OWNER", None)
-            env.pop("CONTINUITY_RECOVERY_KEY", None)
-            config = json.loads(env["OPENCODE_CONFIG_CONTENT"])
-            config["compaction"] = {"auto": auto}
-            env["OPENCODE_CONFIG_CONTENT"] = json.dumps(config)
-            log = temp / f"attempt-{index}.log"
-            worker = run(
-                runtime_command("opencode", handoff["prompt"], args.model),
-                destination, seconds=args.timeout, environment=env, log=log,
-            )
+            tracer = trace_provider(args.endpoint) if args.trace_single_auto else nullcontext((args.endpoint, []))
+            with tracer as (endpoint, provider_requests):
+                env = worker_environment(endpoint, args.model, None)
+                env.pop("CONTINUITY_OWNER", None)
+                env.pop("CONTINUITY_RECOVERY_KEY", None)
+                config = json.loads(env["OPENCODE_CONFIG_CONTENT"])
+                config["compaction"] = {"auto": auto}
+                env["OPENCODE_CONFIG_CONTENT"] = json.dumps(config)
+                log = temp / f"attempt-{index}.log"
+                worker = run(
+                    runtime_command("opencode", handoff["prompt"], args.model),
+                    destination, seconds=args.timeout, environment=env, log=log,
+                )
             worker.update(read_summary(log))
             result = grade(destination)
             result["complete"] = (
@@ -114,6 +120,7 @@ def main():
             report["arms"].append({
                 "attempt": index, "auto_compaction": auto, "checkpoint_sha256": checkpoint["digest"],
                 "worker": worker, "grade": result,
+                **({"provider_requests": provider_requests} if args.trace_single_auto else {}),
             })
             save()
             print(f"{index} auto={auto}: {worker['exit_code']} / complete={result['complete']}", flush=True)
