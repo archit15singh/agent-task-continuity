@@ -1,0 +1,46 @@
+{
+  "utc": "2026-11-26T11:29:52+00:00",
+  "kind": "author-side fresh-clone check, no live inference",
+  "base_revision": "b289080180e4f8b5e9b93d9b6d70b62fb17831d4",
+  "environment": {
+    "os": "Darwin",
+    "architecture": "arm64",
+    "python": "3.13.18",
+    "git": "git version 2.54.0 (Apple Git-157)"
+  },
+  "unit_tests": {
+    "exit": 0,
+    "summary": [
+      "Ran 8 tests in 1.333s",
+      "",
+      "OK"
+    ]
+  },
+  "mechanical": [
+    {
+      "id": "click",
+      "fault_predicates_passed": 13,
+      "native_exit": 0
+    },
+    {
+      "id": "packaging",
+      "fault_predicates_passed": 13,
+      "native_exit": 0
+    },
+    {
+      "id": "attrs",
+      "fault_predicates_passed": 13,
+      "native_exit": 0
+    }
+  ],
+  "authenticated_activation_confirmed": 18,
+  "partial_checkout_restores": 3,
+  "native_git_crash_restores": 3,
+  "paired_calibration_fingerprints_matching": 3,
+  "receipt_auditor": {
+    "original_exit": 0,
+    "edited_receipt_exit": 1,
+    "edited_receipt_message": "Evidence check failed: transport manual-git",
+    "restored_receipt_exit": 0
+  }
+}

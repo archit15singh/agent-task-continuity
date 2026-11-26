@@ -1,6 +1,26 @@
 # Evidence and reproduction
 
-Each receipt identifies the candidate or harness revision, the pinned upstream input, and the checks that ran. Source and output hashes let a reproducer compare byte-level evidence. Raw live runtime logs can contain local paths and interleaved tool data. The public receipts carry event counts, dispositions, durations, hashes, and test summaries.
+The receipts record the measured outcomes and, where applicable, the runner revision, upstream revision, and source or output hashes. Raw live runtime logs can contain local paths and interleaved tool data. The public receipts carry event counts, dispositions, durations, hashes, and test summaries. [Paper and hypothesis index](../docs/paper.md#appendix-a-hypotheses-outcomes-and-receipts)
+
+## Verify the artifact
+
+**Audit the archived evidence.** In a full Git clone, run `python -m evals.audit_evidence` from the root. It needs Python and Git and makes no network or model calls. It checks selected headline counts, matched inputs, historical source hashes, local links, and the appendix's hypothesis coverage. A mismatched result exits nonzero.
+
+**Rerun deterministic checks.** From a fresh clone with the pinned Python dependencies, run these commands. Repository case fetches need network access. The commands do not use an inference provider. The paired calibration command also records the installed Codex and OpenCode versions.
+
+```sh
+python3.13 -m venv .venv
+.venv/bin/python -m pip install -r evals/requirements.txt
+.venv/bin/python -m unittest discover -s tests
+.venv/bin/python -m evals.run --set all --output /tmp/continuity-mechanical.json
+.venv/bin/python -m evals.authenticated_recovery --output /tmp/continuity-authenticated.json
+.venv/bin/python -m evals.git_restore_crash --output /tmp/continuity-git-crash.json
+.venv/bin/python -m evals.paired_continuation --verify-only --output /tmp/continuity-calibration.json
+```
+
+The author-side [fresh-clone verification](reporting-verification.json) records the outcomes of this pass. Compare the listed gates, counts, and fingerprints rather than timestamps or durations. The [reporting audit](../docs/reporting-audit.md) explains the limits of the public evidence and exact live replay.
+
+**Build the paper PDF.** Run `pandoc docs/paper.md --pdf-engine=tectonic --lua-filter=docs/render-paper.lua -o docs/paper.pdf`. The filter points historical receipt links at the pinned study revision for readers outside the checkout.
 
 | Receipt | What it records |
 |---|---|
