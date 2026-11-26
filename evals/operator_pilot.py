@@ -3,6 +3,7 @@
 import argparse
 from datetime import datetime, timezone
 import json
+from math import isfinite
 from pathlib import Path
 from time import monotonic_ns
 
@@ -41,7 +42,7 @@ def save(root, state):
     pending.replace(root / "study.json")
 
 
-def mark(root, arm, phase):
+def mark(root, arm, phase, *, active_seconds=None):
     state = json.loads((root / "study.json").read_text())
     tasks = state["tasks"]
     phases = tasks[arm]["phases"]
@@ -50,6 +51,11 @@ def mark(root, arm, phase):
     if arm == state["order"][1] and "finish" not in tasks[state["order"][0]]["phases"]:
         raise SystemExit("Finish the first arm before starting the second")
     phases[phase] = monotonic_ns()
+    if active_seconds is not None:
+        elapsed = (phases[phase] - phases["start"]) / 1e9
+        if phase != "finish" or not isfinite(active_seconds) or not 0 <= active_seconds <= elapsed:
+            raise SystemExit("Active time must be between zero and elapsed time and supplied at finish")
+        tasks[arm]["operator_active_seconds_self_reported"] = active_seconds
     if phase == "finish":
         case = next(case for case in SELECTED_CASES if case["id"] == tasks[arm]["case"])
         replacement = root / f"{arm}-restored"
@@ -76,7 +82,7 @@ def receipt(root, output):
         observations.append({"arm": arm, "case": task["case"], "completed": True,
                              "verified": task["verified"] and total <= LIMIT_SECONDS,
                              "phase_elapsed": measurements, "total_seconds": total,
-                             "operator_active_seconds": None})
+                             "operator_active_seconds_self_reported": task.get("operator_active_seconds_self_reported")})
     output.write_text(json.dumps({"utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                                   "mode": state["mode"], "sequence": state["sequence"],
                                   "limit_seconds": LIMIT_SECONDS, "source_sha256": sha(Path(__file__).read_bytes()),
@@ -117,6 +123,7 @@ def main():
     cli.add_argument("--sequence", type=int, choices=range(4), default=0)
     cli.add_argument("--arm", choices=ARMS)
     cli.add_argument("--phase", choices=PHASES)
+    cli.add_argument("--active-seconds", type=float, help="optional self-timed active seconds on finish")
     cli.add_argument("--output", type=Path)
     args = cli.parse_args()
     root = args.workspace.resolve()
@@ -129,7 +136,7 @@ def main():
     elif args.command == "mark":
         if args.arm is None or args.phase is None:
             cli.error("--arm and --phase are required")
-        mark(root, args.arm, args.phase)
+        mark(root, args.arm, args.phase, active_seconds=args.active_seconds)
     elif args.command == "receipt":
         receipt(root, args.output)
     else:
