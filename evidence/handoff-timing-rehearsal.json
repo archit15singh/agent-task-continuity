@@ -1,0 +1,115 @@
+{
+  "utc": "2026-11-26T08:31:20+00:00",
+  "evaluation_code_sha256": "e002c0f4ec7cd37ddc16cab4bc2d6a8916a12f9f7fe2b7fddbad39f1ea8f6be5",
+  "source": "scripted_rehearsal",
+  "cases": [
+    {
+      "case": "click",
+      "base": "dd149eb3129d887a22202c3fafa5ceb0e0d7018d",
+      "trials": [
+        {
+          "arm": "manual",
+          "capture_ns": 7467917,
+          "restart_to_workspace_ns": 30962791,
+          "workspace_to_predicate_ns": 76594709,
+          "restart_to_first_verified_action_ns": 107557500,
+          "predicate_exit": 0,
+          "restored": true,
+          "operator_active_ns": null
+        },
+        {
+          "arm": "managed",
+          "capture_ns": 142795708,
+          "restart_to_workspace_ns": 126805792,
+          "workspace_to_predicate_ns": 67966750,
+          "restart_to_first_verified_action_ns": 194772542,
+          "predicate_exit": 0,
+          "restored": true,
+          "operator_active_ns": null
+        },
+        {
+          "arm": "clean_control",
+          "capture_ns": 292,
+          "restart_to_workspace_ns": 24448833,
+          "workspace_to_predicate_ns": 67202708,
+          "restart_to_first_verified_action_ns": null,
+          "predicate_exit": 1,
+          "restored": false,
+          "operator_active_ns": null
+        }
+      ]
+    },
+    {
+      "case": "packaging",
+      "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+      "trials": [
+        {
+          "arm": "managed",
+          "capture_ns": 146744959,
+          "restart_to_workspace_ns": 120590666,
+          "workspace_to_predicate_ns": 44481375,
+          "restart_to_first_verified_action_ns": 165072041,
+          "predicate_exit": 0,
+          "restored": true,
+          "operator_active_ns": null
+        },
+        {
+          "arm": "manual",
+          "capture_ns": 6809333,
+          "restart_to_workspace_ns": 29267792,
+          "workspace_to_predicate_ns": 43226750,
+          "restart_to_first_verified_action_ns": 72494542,
+          "predicate_exit": 0,
+          "restored": true,
+          "operator_active_ns": null
+        },
+        {
+          "arm": "clean_control",
+          "capture_ns": 125,
+          "restart_to_workspace_ns": 22239583,
+          "workspace_to_predicate_ns": 44517958,
+          "restart_to_first_verified_action_ns": null,
+          "predicate_exit": 1,
+          "restored": false,
+          "operator_active_ns": null
+        }
+      ]
+    },
+    {
+      "case": "attrs",
+      "base": "f830e60f9c6485aa7037a52f03fdd28428dfbfc4",
+      "trials": [
+        {
+          "arm": "manual",
+          "capture_ns": 8479542,
+          "restart_to_workspace_ns": 33029708,
+          "workspace_to_predicate_ns": 49523417,
+          "restart_to_first_verified_action_ns": 82553125,
+          "predicate_exit": 0,
+          "restored": true,
+          "operator_active_ns": null
+        },
+        {
+          "arm": "managed",
+          "capture_ns": 149626750,
+          "restart_to_workspace_ns": 135910042,
+          "workspace_to_predicate_ns": 51089458,
+          "restart_to_first_verified_action_ns": 186999500,
+          "predicate_exit": 0,
+          "restored": true,
+          "operator_active_ns": null
+        },
+        {
+          "arm": "clean_control",
+          "capture_ns": 209,
+          "restart_to_workspace_ns": 23689958,
+          "workspace_to_predicate_ns": 51023375,
+          "restart_to_first_verified_action_ns": null,
+          "predicate_exit": 1,
+          "restored": false,
+          "operator_active_ns": null
+        }
+      ]
+    }
+  ]
+}

@@ -48,10 +48,14 @@ def main():
                      help="Run one additional auto-compaction arm through a metadata-only provider trace")
     cli.add_argument("--fixed-title", action="store_true",
                      help="Provide a fixed OpenCode title on the single traced attempt")
+    cli.add_argument("--reasoning-matrix", action="store_true",
+                     help="Trace four fixed-title attempts in default, none, none, default order")
     cli.add_argument("--timeout", type=int, default=180)
     args = cli.parse_args()
     if not args.dry_run and (not args.endpoint or not args.model):
         cli.error("live runs need --endpoint and --model")
+    if args.reasoning_matrix and (args.trace_single_auto or args.fixed_title):
+        cli.error("--reasoning-matrix already traces and applies a fixed title")
     if args.fixed_title and not args.trace_single_auto:
         cli.error("--fixed-title requires --trace-single-auto")
     if args.endpoint and not args.endpoint.startswith("http://127.0.0.1:"):
@@ -66,7 +70,7 @@ def main():
         "opencode": execute(["opencode", "--version"]).stdout.decode().strip(),
         "model": args.model,
         "timeout": args.timeout,
-        **({"fixed_title": True} if args.fixed_title else {}),
+        **({"fixed_title": True} if args.fixed_title or args.reasoning_matrix else {}),
         "fixture_hashes": {name: sha((FIXTURE / name).read_bytes()) for name in (NOTE, REPRO)},
         "arms": [],
     }
@@ -94,7 +98,12 @@ def main():
         if args.dry_run:
             return
 
-        for index, auto in enumerate((True,) if args.trace_single_auto else (True, False, False, True), 1):
+        if args.reasoning_matrix:
+            arms = [(True, effort) for effort in (None, "none", "none", None)]
+        else:
+            arms = [(auto, None) for auto in ((True,) if args.trace_single_auto else (True, False, False, True))]
+        traced = args.trace_single_auto or args.reasoning_matrix
+        for index, (auto, effort) in enumerate(arms, 1):
             db = temp / f"ledger-{index}.db"
             task = invoke(db, "start", source, "--objective", replacement_objective(CASE, True))
             checkpoint = invoke(
@@ -103,7 +112,7 @@ def main():
             )
             destination = temp / f"attempt-{index}"
             handoff = invoke(db, "continue", task["task"], "--into", destination, owner=task["token"])
-            tracer = trace_provider(args.endpoint) if args.trace_single_auto else nullcontext((args.endpoint, []))
+            tracer = trace_provider(args.endpoint, reasoning_effort=effort) if traced else nullcontext((args.endpoint, []))
             with tracer as (endpoint, provider_requests):
                 env = worker_environment(endpoint, args.model, None)
                 env.pop("CONTINUITY_OWNER", None)
@@ -113,7 +122,7 @@ def main():
                 env["OPENCODE_CONFIG_CONTENT"] = json.dumps(config)
                 log = temp / f"attempt-{index}.log"
                 command = runtime_command("opencode", handoff["prompt"], args.model)
-                if args.fixed_title:
+                if args.fixed_title or args.reasoning_matrix:
                     command[-1:-1] = ["--title", "Frozen Packaging handoff"]
                 worker = run(
                     command,
@@ -128,7 +137,8 @@ def main():
             report["arms"].append({
                 "attempt": index, "auto_compaction": auto, "checkpoint_sha256": checkpoint["digest"],
                 "worker": worker, "grade": result,
-                **({"provider_requests": provider_requests} if args.trace_single_auto else {}),
+                **({"provider_requests": provider_requests} if traced else {}),
+                **({"reasoning_effort": effort} if args.reasoning_matrix else {}),
             })
             save()
             print(f"{index} auto={auto}: {worker['exit_code']} / complete={result['complete']}", flush=True)

@@ -1,0 +1,66 @@
+{
+  "utc": "2026-11-26T08:35:02+00:00",
+  "evaluation_code_sha256": "c5d940d4c898be045fcf6e513bd133e18f732d4a4e97743b1f550e55d215b708",
+  "trials": [
+    {
+      "arm": "receiver_first",
+      "activation_boundary": {
+        "old_owner_local_generation": 1,
+        "old_owner_result": "unknown",
+        "old_owner_http_412": true
+      },
+      "generation_fence": true,
+      "receiver_advanced_before_release": true,
+      "publisher_sigkill": true,
+      "generation_before": 1,
+      "generation_after": 2,
+      "stale_local_owner_rejected": true,
+      "local_operation_before_recovery": "unknown",
+      "receiver_effects_before_recovery": 0,
+      "receiver_stale_rejections_before_recovery": 2,
+      "replacement_confirmed": true,
+      "receiver_puts": 3,
+      "receiver_effects_total": 1
+    },
+    {
+      "arm": "receiver_first",
+      "activation_boundary": {
+        "old_owner_local_generation": 1,
+        "old_owner_result": "unknown",
+        "old_owner_http_412": true
+      },
+      "generation_fence": true,
+      "receiver_advanced_before_release": true,
+      "publisher_sigkill": true,
+      "generation_before": 1,
+      "generation_after": 2,
+      "stale_local_owner_rejected": true,
+      "local_operation_before_recovery": "unknown",
+      "receiver_effects_before_recovery": 0,
+      "receiver_stale_rejections_before_recovery": 2,
+      "replacement_confirmed": true,
+      "receiver_puts": 3,
+      "receiver_effects_total": 1
+    },
+    {
+      "arm": "receiver_first",
+      "activation_boundary": {
+        "old_owner_local_generation": 1,
+        "old_owner_result": "unknown",
+        "old_owner_http_412": true
+      },
+      "generation_fence": true,
+      "receiver_advanced_before_release": true,
+      "publisher_sigkill": true,
+      "generation_before": 1,
+      "generation_after": 2,
+      "stale_local_owner_rejected": true,
+      "local_operation_before_recovery": "unknown",
+      "receiver_effects_before_recovery": 0,
+      "receiver_stale_rejections_before_recovery": 2,
+      "replacement_confirmed": true,
+      "receiver_puts": 3,
+      "receiver_effects_total": 1
+    }
+  ]
+}

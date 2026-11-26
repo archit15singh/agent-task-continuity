@@ -10,7 +10,7 @@ from urllib.parse import urlsplit
 
 
 @contextmanager
-def trace_provider(endpoint):
+def trace_provider(endpoint, *, reasoning_effort=None):
     backend = urlsplit(endpoint)
     if backend.scheme != "http" or backend.hostname != "127.0.0.1" or backend.path != "/v1":
         raise ValueError("Expected an HTTP loopback provider ending in /v1")
@@ -27,6 +27,9 @@ def trace_provider(endpoint):
                 return
             payload = self.rfile.read(int(self.headers["Content-Length"]))
             body = json.loads(payload)
+            if reasoning_effort is not None and self.path == "/v1/chat/completions":
+                body["reasoning_effort"] = reasoning_effort
+                payload = json.dumps(body).encode()
             messages = body.get("messages", [])
             compact = "you must summarize the conversation above" in json.dumps(messages).lower()
             record = {
@@ -35,6 +38,9 @@ def trace_provider(endpoint):
                 "compaction_summary": compact,
                 "messages": len(messages),
                 "tool_count": len(body.get("tools") or []),
+                "reasoning_effort": body.get("reasoning_effort"),
+                "reasoning_characters": 0,
+                "visible_characters": 0,
                 "requested_max_tokens": body.get("max_tokens", body.get("max_output_tokens")),
             }
             records.append(record)
@@ -50,6 +56,9 @@ def trace_provider(endpoint):
                     if line.startswith(b"data: {"):
                         event = json.loads(line[6:])
                         for choice in event.get("choices", []):
+                            delta = choice.get("delta") or {}
+                            record["reasoning_characters"] += len(delta.get("reasoning") or delta.get("reasoning_content") or "")
+                            record["visible_characters"] += len(delta.get("content") or "")
                             if choice.get("finish_reason"):
                                 record["finish_reason"] = choice["finish_reason"]
                         if event.get("type") in ("response.completed", "response.incomplete", "response.failed"):
