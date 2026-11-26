@@ -3,6 +3,7 @@
 import argparse
 from contextlib import closing
 from datetime import datetime, timezone
+import fcntl
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import json
 import os
@@ -16,14 +17,15 @@ import tempfile
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from continuity.publish import json_text, request
-from continuity.store import Store
+from continuity.publish import json_text, operation_id, publication_bearer, request
+from continuity.store import PreparedSnapshotMismatch, Store
 from continuity.workspace import ContinuityError, git, restore
 from .receiver_restart import SCHEMA, counts, receiver
 from .run import PROJECT, invoke, sha
 
 MODULE = "evals.durable_activation"
 ACTIVATION_ENV = "CONTINUITY_FIXTURE_ACTIVATION_KEY"
+AUTH_ENV = "CONTINUITY_FIXTURE_AUTHENTICATE_WORKERS"
 INTENT = """
 CREATE TABLE IF NOT EXISTS intent (
     task TEXT PRIMARY KEY, old_owner TEXT NOT NULL, next_owner TEXT NOT NULL,
@@ -33,9 +35,13 @@ CREATE TABLE IF NOT EXISTS intent (
 """
 
 
-def serve(database, port, fault, secret):
+def serve(database, port, fault, secret, *, authenticated=False):
     with closing(sqlite3.connect(database)) as db:
-        db.executescript(SCHEMA + "CREATE TABLE IF NOT EXISTS epochs(task TEXT PRIMARY KEY, current INTEGER NOT NULL);")
+        db.executescript(SCHEMA + """
+            CREATE TABLE IF NOT EXISTS epochs (
+                task TEXT PRIMARY KEY, current INTEGER NOT NULL, bearer_hash TEXT
+            );
+        """)
 
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *_):
@@ -74,12 +80,15 @@ def serve(database, port, fault, secret):
                 expected = body["expected"]
                 if type(expected) is not int or expected < 0:
                     raise ValueError("Invalid generation")
+                binding = body.get("bearer_hash") if authenticated else None
+                if authenticated and (not isinstance(binding, str) or not re.fullmatch(r"[0-9a-f]{64}", binding)):
+                    raise ValueError("Invalid worker binding")
             except (KeyError, TypeError, ValueError):
                 self.reply(400)
                 return
             with closing(sqlite3.connect(database)) as db:
                 db.execute("BEGIN IMMEDIATE")
-                row = db.execute("SELECT current FROM epochs WHERE task = ?", (task[1],)).fetchone()
+                row = db.execute("SELECT current, bearer_hash FROM epochs WHERE task = ?", (task[1],)).fetchone()
                 current = row[0] if row else 0
                 target = expected + 1
                 if current not in (expected, target):
@@ -87,9 +96,13 @@ def serve(database, port, fault, secret):
                     return
                 if current == expected:
                     db.execute(
-                        "INSERT INTO epochs VALUES (?, ?) ON CONFLICT(task) DO UPDATE SET current = excluded.current",
-                        (task[1], target),
+                        """INSERT INTO epochs VALUES (?, ?, ?) ON CONFLICT(task)
+                           DO UPDATE SET current = excluded.current, bearer_hash = excluded.bearer_hash""",
+                        (task[1], target, binding),
                     )
+                elif row[1] != binding:
+                    self.reply(409)
+                    return
                 db.commit()
             self.reply(200, {"generation": target})
 
@@ -111,10 +124,19 @@ def serve(database, port, fault, secret):
             payload = json_text(body)
             with closing(sqlite3.connect(database)) as db:
                 db.execute("BEGIN IMMEDIATE")
-                epoch = db.execute("SELECT current FROM epochs WHERE task = ?", (task,)).fetchone()
-                if epoch != (generation,):
+                epoch = db.execute("SELECT current, bearer_hash FROM epochs WHERE task = ?", (task,)).fetchone()
+                if not epoch or epoch[0] != generation:
                     self.reply(412)
                     return
+                if authenticated:
+                    bearer = re.fullmatch(r"Bearer ([0-9a-f]{64})", self.headers.get("Authorization", ""))
+                    if not bearer or not epoch[1] or not secrets.compare_digest(sha(bearer[1].encode()), epoch[1]):
+                        self.reply(403)
+                        return
+                    name = body.get("name")
+                    if not isinstance(name, str) or operation_id(task, name) != operation:
+                        self.reply(400)
+                        return
                 prior = db.execute("SELECT payload FROM receipts WHERE op = ?", (operation,)).fetchone()
                 if prior and prior[0] != payload:
                     self.reply(409)
@@ -134,40 +156,69 @@ def serve(database, port, fault, secret):
         server.serve_forever()
 
 
-def advance(endpoint, key, task, expected):
+def advance(endpoint, key, task, expected, *, bearer=None):
+    body = {"expected": expected}
+    if bearer is not None:
+        body["bearer_hash"] = sha(bearer.encode())
     req = Request(
-        endpoint + "/activation/" + task, data=json_text({"expected": expected}).encode(),
+        endpoint + "/activation/" + task, data=json_text(body).encode(),
         headers={"Authorization": "Bearer " + key, "Content-Type": "application/json"},
     )
     with urlopen(req, timeout=5) as response:
         return json.load(response)["generation"]
 
 
-def coordinate(directory, endpoint, fault, secret):
-    with closing(sqlite3.connect(directory / "intent.db")) as db:
+def coordinate(directory, endpoint, fault, secret, *, authenticated=False, recover_partial=False,
+               partial_path=None):
+    with (directory / "coordinator.lock").open("a") as lock, closing(sqlite3.connect(directory / "intent.db")) as db:
+        fcntl.flock(lock, fcntl.LOCK_EX)
         task, old, successor, destination, expected, checkpoint, complete = db.execute("SELECT * FROM intent").fetchone()
         if complete:
             return
         if fault == "intent":
             os._exit(31)
-        target = advance(endpoint, secret, task, expected)
+        bearer = publication_bearer(successor, task, expected + 1) if authenticated else None
+        target = advance(endpoint, secret, task, expected, bearer=bearer)
         if fault == "receiver":
             os._exit(32)
         store = Store(directory / "local.db")
         with store.connection() as conn:
             current = store.task(conn, task)["generation"]
         if current == expected:
-            if fault == "workspace":
+            if fault == "workspace" or partial_path is not None:
                 with store.connection() as conn:
                     owner = store.task(conn, task, old)
                     snapshot = store.latest(conn, owner)
                 assert snapshot["id"] == checkpoint
+                if partial_path is not None:
+                    git(owner["workspace"], "worktree", "add", "--detach", destination, snapshot["base"])
+                    git(destination, "apply", "--binary", "--whitespace=nowarn",
+                        f"--include={partial_path}", "-", data=snapshot["patch"])
+                    os._exit(35)
                 restore(owner["workspace"], destination, snapshot["base"], snapshot["patch"])
                 os._exit(34)
-            store.takeover(
-                task, old, destination, replacement_token=successor, expected_checkpoint=checkpoint,
-                prepared=Path(destination).exists(),
-            )
+            while True:
+                try:
+                    store.takeover(
+                        task, old, destination, replacement_token=successor, expected_checkpoint=checkpoint,
+                        prepared=os.path.lexists(destination),
+                    )
+                except PreparedSnapshotMismatch:
+                    if not recover_partial:
+                        raise
+                    retry = str(directory / f"replacement-{secrets.token_hex(16)}")
+                    cursor = db.execute(
+                        "UPDATE intent SET destination = ? WHERE task = ? AND destination = ? AND complete = 0",
+                        (retry, task, destination),
+                    )
+                    if cursor.rowcount != 1:
+                        raise ContinuityError("Another coordinator changed the restore destination")
+                    db.commit()
+                    destination = retry
+                    if fault == "retry-path":
+                        os._exit(36)
+                else:
+                    break
         with store.connection() as conn:
             verified = store.task(conn, task, successor)
             if (verified["generation"], verified["workspace"], verified["checkpoint"]) != (
@@ -180,7 +231,7 @@ def coordinate(directory, endpoint, fault, secret):
         db.commit()
 
 
-def trial(root, stage):
+def trial(root, stage, *, authenticated=False):
     root.mkdir()
     source = root / "source"
     source.mkdir()
@@ -196,6 +247,8 @@ def trial(root, stage):
     evidence = invoke(local, "verify", task_id, "--command", f"{sys.executable} -c 'print(1)'", owner=old)
     successor, key = secrets.token_urlsafe(32), secrets.token_urlsafe(32)
     env = dict(os.environ, **{ACTIVATION_ENV: key})
+    env[AUTH_ENV] = "1" if authenticated else "0"
+    old_bearer = publication_bearer(old, task_id, 1) if authenticated else None
 
     def read_epochs():
         with closing(sqlite3.connect(database)) as db:
@@ -217,7 +270,7 @@ def trial(root, stage):
             auth_control = error.code
         else:
             raise AssertionError("Unauthenticated activation passed")
-        assert advance(endpoint, key, task_id, 0) == 1
+        assert advance(endpoint, key, task_id, 0, bearer=old_bearer) == 1
         with closing(sqlite3.connect(root / "intent.db")) as db:
             db.executescript(INTENT)
             db.execute("INSERT INTO intent VALUES (?, ?, ?, ?, ?, ?, 0)",
@@ -239,7 +292,7 @@ def trial(root, stage):
             "base": git(source, "rev-parse", "HEAD").decode().strip(),
         })
         try:
-            request(endpoint, op, payload, generation=1)
+            request(endpoint, op, payload, generation=1, bearer=old_bearer)
         except ContinuityError as error:
             if str(error) != "Provider returned HTTP 412":
                 raise
@@ -276,12 +329,16 @@ def main():
     cli.add_argument("--fault", default="none")
     cli.add_argument("--endpoint")
     cli.add_argument("--workspace-only", action="store_true")
+    cli.add_argument("--recover-partial", action="store_true")
+    cli.add_argument("--partial-path")
     args = cli.parse_args()
+    authenticated = os.environ.get(AUTH_ENV) == "1"
     if args.worker:
-        serve(args.worker, args.port, args.fault, os.environ[ACTIVATION_ENV])
+        serve(args.worker, args.port, args.fault, os.environ[ACTIVATION_ENV], authenticated=authenticated)
         return
     if args.coordinate:
-        coordinate(args.coordinate, args.endpoint, args.fault, os.environ[ACTIVATION_ENV])
+        coordinate(args.coordinate, args.endpoint, args.fault, os.environ[ACTIVATION_ENV],
+                   authenticated=authenticated, recover_partial=args.recover_partial, partial_path=args.partial_path)
         return
     if not args.output:
         cli.error("--output is required")

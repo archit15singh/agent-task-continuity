@@ -1,6 +1,7 @@
 """Fence managed writes and reconcile uncertain responses by operation ID."""
 
 import hashlib
+import hmac
 import http.client
 import json
 from urllib.parse import urlsplit
@@ -22,7 +23,16 @@ def endpoint_url(endpoint):
     return f"http://127.0.0.1:{url.port}"
 
 
-def request(endpoint, operation, payload=None, *, generation=None):
+def publication_bearer(owner, task, generation):
+    scope = f"continuity-publish-v1\0{task}\0{generation}".encode()
+    return hmac.digest(owner.encode(), scope, "sha256").hex()
+
+
+def operation_id(task, name):
+    return hashlib.sha256(f"{task}\0{name}".encode()).hexdigest()
+
+
+def request(endpoint, operation, payload=None, *, generation=None, bearer=None):
     conn = http.client.HTTPConnection("127.0.0.1", urlsplit(endpoint).port, timeout=3)
     try:
         route = f"/events/{operation}"
@@ -32,6 +42,8 @@ def request(endpoint, operation, payload=None, *, generation=None):
             headers = {"Content-Type": "application/json", "Idempotency-Key": operation}
             if generation is not None:
                 headers["X-Continuity-Generation"] = str(generation)
+            if bearer is not None:
+                headers["Authorization"] = "Bearer " + bearer
             conn.request("PUT", route, body=payload.encode(), headers=headers)
         response = conn.getresponse()
         body = response.read(65537)
@@ -49,7 +61,7 @@ def request(endpoint, operation, payload=None, *, generation=None):
 
 def publish(store, task_id, token, endpoint, name, evidence):
     endpoint = endpoint_url(endpoint)
-    operation = hashlib.sha256(f"{task_id}\0{name}".encode()).hexdigest()
+    operation = operation_id(task_id, name)
     with store.connection(write=True) as conn:
         task = store.task(conn, task_id, token)
         checkpoint = store.latest(conn, task)
@@ -88,6 +100,7 @@ def settle(store, task_id, token, operation, *, retry_absent=False):
             if receipt is None and retry_absent:
                 receipt = request(
                     row["endpoint"], operation, row["payload"], generation=task["generation"],
+                    bearer=publication_bearer(token, task_id, task["generation"]),
                 )
             if receipt is not None and json_text(receipt.get("payload")) != row["payload"]:
                 raise ContinuityError("Provider receipt does not match the reserved payload")

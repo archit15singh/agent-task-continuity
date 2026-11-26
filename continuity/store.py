@@ -44,6 +44,10 @@ def new_id():
     return uuid.uuid4().hex
 
 
+class PreparedSnapshotMismatch(ContinuityError):
+    """The registered prepared worktree does not contain the saved artifact."""
+
+
 class Store:
     def __init__(self, path):
         self.path = Path(path).resolve()
@@ -212,7 +216,11 @@ class Store:
         replacement = replacement_token if replacement_token is not None else secrets.token_urlsafe(32)
         try:
             includes = json.loads(snapshot["includes"])
+            if prepared and any(not os.path.lexists(destination / entry) for entry in includes):
+                raise PreparedSnapshotMismatch("Prepared workspace is missing a selected file")
             if fingerprint(*capture(destination, includes)) != snapshot["digest"]:
+                if prepared:
+                    raise PreparedSnapshotMismatch("Restored workspace differs from the saved checkpoint")
                 raise ContinuityError("Restored workspace differs from the saved checkpoint")
             with self.connection(write=True) as conn:
                 current = self.task(conn, task, token)
