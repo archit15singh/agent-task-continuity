@@ -63,6 +63,7 @@ def replacement_objective(case, local_no_think):
 
 def read_summary(log):
     counts = {}
+    timeline = []
     input_tokens = output_tokens = cached_tokens = 0
     rate_limited = False
     provider_error = None
@@ -77,6 +78,22 @@ def read_summary(log):
         if not isinstance(event_type, str) or not re.fullmatch(r"[a-zA-Z0-9_.-]{1,64}", event_type):
             continue
         counts[event_type] = counts.get(event_type, 0) + 1
+        timestamp = event.get("timestamp")
+        if type(timestamp) is int and event_type in {"step_start", "step_finish", "tool_use", "error", "text"}:
+            entry = {"event": event_type, "ms": timestamp}
+            part = event.get("part") or {}
+            if event_type == "tool_use":
+                tool = part.get("tool")
+                state = (part.get("state") or {}).get("status")
+                for key, value in (("tool", tool), ("status", state)):
+                    if isinstance(value, str) and re.fullmatch(r"[a-zA-Z0-9_.-]{1,64}", value):
+                        entry[key] = value
+            if event_type == "step_finish":
+                tokens = part.get("tokens") or {}
+                for key in ("input", "output", "reasoning"):
+                    if type(tokens.get(key)) is int:
+                        entry[key] = tokens[key]
+            timeline.append(entry)
         usage = event.get("usage") or {}
         input_tokens += usage.get("input_tokens", 0)
         output_tokens += usage.get("output_tokens", 0)
@@ -87,14 +104,18 @@ def read_summary(log):
             error_type = error.get("type")
             if isinstance(error_type, str) and re.fullmatch(r"[A-Za-z0-9_.-]{1,48}", error_type):
                 provider_error = error_type
+    if timeline:
+        origin = timeline[0]["ms"]
+        for entry in timeline:
+            entry["ms"] -= origin
     return {
-        "runtime_events": counts, "reported_input_tokens": input_tokens,
+        "runtime_events": counts, "runtime_timeline": timeline, "reported_input_tokens": input_tokens,
         "reported_cached_input_tokens": cached_tokens, "reported_output_tokens": output_tokens,
         "provider_rate_limited": rate_limited, "provider_error_type": provider_error,
     }
 
 
-def worker_environment(endpoint, model):
+def worker_environment(endpoint, model, reasoning_effort):
     env = dict(os.environ)
     if endpoint:
         local_model = model.removeprefix("continuity-local/")
@@ -103,7 +124,8 @@ def worker_environment(endpoint, model):
                 "npm": "@ai-sdk/openai-compatible", "name": "Local Ollama",
                 "options": {"baseURL": endpoint},
                 "models": {local_model: {
-                    "name": "Qwen3 4B", "limit": {"context": 16384, "output": 2048}, "tool_call": True,
+                    "name": local_model, "limit": {"context": 16384, "output": 2048}, "tool_call": True,
+                    **({"options": {"reasoningEffort": reasoning_effort}} if reasoning_effort else {}),
                 }},
             }},
             "permission": {
@@ -203,27 +225,33 @@ def live_case(case, temp, source_model, runtime, model, timeout, local_no_think)
 
 def main():
     cli = argparse.ArgumentParser(description=__doc__)
-    cli.add_argument("--set", choices=("development", "held-out"), required=True)
+    cli.add_argument("--set", choices=("development", "held-out", "all"), required=True)
+    cli.add_argument("--case", choices=[case["id"] for case in CASES])
     cli.add_argument("--output", type=Path, required=True)
     cli.add_argument("--source-model", default="gpt-6.2-sol")
     cli.add_argument("--runtime", choices=("codex", "opencode"), default="opencode")
     cli.add_argument("--model")
     cli.add_argument("--local-endpoint")
     cli.add_argument("--local-no-think", action="store_true")
+    cli.add_argument("--local-reasoning-effort", choices=("none", "low", "medium", "high"))
     cli.add_argument("--timeout", type=int, default=180)
     args = cli.parse_args()
     if args.local_endpoint:
         if not args.model or not args.model.startswith("continuity-local/"):
             cli.error("--local-endpoint requires --model continuity-local/MODEL")
-        os.environ["OPENCODE_CONFIG_CONTENT"] = worker_environment(args.local_endpoint, args.model)[
+        os.environ["OPENCODE_CONFIG_CONTENT"] = worker_environment(
+            args.local_endpoint, args.model, args.local_reasoning_effort,
+        )[
             "OPENCODE_CONFIG_CONTENT"
         ]
+    cases = [case for case in CASES if (args.set == "all" or case["split"] == args.set)
+             and (args.case is None or case["id"] == args.case)]
+    if not cases:
+        cli.error("--case does not belong to --set")
     revision = git(PROJECT, "rev-parse", "HEAD").decode().strip()
     reports = []
     with tempfile.TemporaryDirectory(prefix="continuity-live-") as directory:
-        for case in CASES:
-            if case["split"] != args.set:
-                continue
+        for case in cases:
             temp = Path(directory) / case["id"]
             temp.mkdir()
             report = live_case(case, temp, args.source_model, args.runtime, args.model, args.timeout,
@@ -237,6 +265,7 @@ def main():
         "python": platform.python_version(), "source_model_requested": args.source_model,
         "replacement_runtime": args.runtime, "replacement_model_requested": args.model,
         "worker_timeout_seconds": args.timeout, "local_no_think": args.local_no_think,
+        "local_reasoning_effort": args.local_reasoning_effort,
         "codex": execute(["codex", "--version"]).stdout.decode().strip(),
         "opencode": execute(["opencode", "--version"]).stdout.decode().strip()
                     if args.runtime == "opencode" else None,
