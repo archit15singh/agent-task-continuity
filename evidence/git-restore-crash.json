@@ -1,0 +1,82 @@
+{
+  "utc": "2026-11-26T10:46:34+00:00",
+  "git": "git version 2.54.0 (Apple Git-157)",
+  "source_sha256": "235af9c008a60b06d08dede3898bac0133634c5a3d1777298497db30a56e1abb",
+  "trials": [
+    {
+      "git_exit": -9,
+      "partial_rejected": true,
+      "generation_after_partial_rejection": 1,
+      "recovered_generation": 2,
+      "checkpoint_sha256": "e4d3ec08b6d8fc5c94697dfa688a11acb419d83d432f9b8bfc6bb692dfe29343",
+      "base": {
+        "a-text.txt": "761ca39634e5caa7a20a8ff174b8c1adcb31b16f22a78fa58c4d501ff932b051",
+        "b-bytes.bin": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+        "c-delete.txt": "d8d050ccb9afda0fc7559ce368a36a0e2721d880f117061f7639435cff471131",
+        "d-note.txt": null
+      },
+      "during_and_after_kill": {
+        "a-text.txt": "692953f85a5bc851dfb7f41bcf7b4f0ae9f96a7e6147541b648a8d7eaed0272d",
+        "b-bytes.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "c-delete.txt": null,
+        "d-note.txt": null
+      },
+      "expected_and_recovered": {
+        "a-text.txt": "692953f85a5bc851dfb7f41bcf7b4f0ae9f96a7e6147541b648a8d7eaed0272d",
+        "b-bytes.bin": "cd6816b77f68d70001fc3eaa4d42bdd67cb5973b3151cc5292ecc02a3daac6ab",
+        "c-delete.txt": null,
+        "d-note.txt": "a6dc201303b38fc75fbda27b1f4cff3c7887a4b1ebbdcc00fbccbe63a3ad0d9b"
+      }
+    },
+    {
+      "git_exit": -9,
+      "partial_rejected": true,
+      "generation_after_partial_rejection": 1,
+      "recovered_generation": 2,
+      "checkpoint_sha256": "e4d3ec08b6d8fc5c94697dfa688a11acb419d83d432f9b8bfc6bb692dfe29343",
+      "base": {
+        "a-text.txt": "761ca39634e5caa7a20a8ff174b8c1adcb31b16f22a78fa58c4d501ff932b051",
+        "b-bytes.bin": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+        "c-delete.txt": "d8d050ccb9afda0fc7559ce368a36a0e2721d880f117061f7639435cff471131",
+        "d-note.txt": null
+      },
+      "during_and_after_kill": {
+        "a-text.txt": "692953f85a5bc851dfb7f41bcf7b4f0ae9f96a7e6147541b648a8d7eaed0272d",
+        "b-bytes.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "c-delete.txt": null,
+        "d-note.txt": null
+      },
+      "expected_and_recovered": {
+        "a-text.txt": "692953f85a5bc851dfb7f41bcf7b4f0ae9f96a7e6147541b648a8d7eaed0272d",
+        "b-bytes.bin": "cd6816b77f68d70001fc3eaa4d42bdd67cb5973b3151cc5292ecc02a3daac6ab",
+        "c-delete.txt": null,
+        "d-note.txt": "a6dc201303b38fc75fbda27b1f4cff3c7887a4b1ebbdcc00fbccbe63a3ad0d9b"
+      }
+    },
+    {
+      "git_exit": -9,
+      "partial_rejected": true,
+      "generation_after_partial_rejection": 1,
+      "recovered_generation": 2,
+      "checkpoint_sha256": "e4d3ec08b6d8fc5c94697dfa688a11acb419d83d432f9b8bfc6bb692dfe29343",
+      "base": {
+        "a-text.txt": "761ca39634e5caa7a20a8ff174b8c1adcb31b16f22a78fa58c4d501ff932b051",
+        "b-bytes.bin": "40aff2e9d2d8922e47afd4648e6967497158785fbd1da870e7110266bf944880",
+        "c-delete.txt": "d8d050ccb9afda0fc7559ce368a36a0e2721d880f117061f7639435cff471131",
+        "d-note.txt": null
+      },
+      "during_and_after_kill": {
+        "a-text.txt": "692953f85a5bc851dfb7f41bcf7b4f0ae9f96a7e6147541b648a8d7eaed0272d",
+        "b-bytes.bin": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "c-delete.txt": null,
+        "d-note.txt": null
+      },
+      "expected_and_recovered": {
+        "a-text.txt": "692953f85a5bc851dfb7f41bcf7b4f0ae9f96a7e6147541b648a8d7eaed0272d",
+        "b-bytes.bin": "cd6816b77f68d70001fc3eaa4d42bdd67cb5973b3151cc5292ecc02a3daac6ab",
+        "c-delete.txt": null,
+        "d-note.txt": "a6dc201303b38fc75fbda27b1f4cff3c7887a4b1ebbdcc00fbccbe63a3ad0d9b"
+      }
+    }
+  ]
+}

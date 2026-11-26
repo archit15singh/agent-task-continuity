@@ -1,0 +1,997 @@
+{
+  "utc": "2026-11-26T10:41:15+00:00",
+  "host": {
+    "platform": "Darwin",
+    "arch": "arm64",
+    "python": "3.13.18",
+    "codex": "codex-cli 0.170.0",
+    "opencode": "opencode v2.1.2",
+    "git": "git version 2.54.0 (Apple Git-157)"
+  },
+  "per_worker_timeout_s": 180,
+  "model": {
+    "alias": "continuity-paired:8b",
+    "digest": "0b9d5fc41387def5f0c95d5ba7462a390c01569c3f6cff6f40ce4492a15be5c8",
+    "settings": "repeat_penalty                 1\nstop                           \"<|im_start|>\"\nstop                           \"<|im_end|>\"\ntemperature                    0.6\ntop_k                          20\ntop_p                          0.95\nnum_ctx                        16384\nnum_predict                    2048",
+    "family": "qwen3",
+    "quantization": "Q4_K_M",
+    "base_model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41"
+  },
+  "calibration": [
+    {
+      "id": "click-help",
+      "repository": "pallets/click",
+      "parent": "648d7c403829013ade629d63ddbfe808f6b2b770",
+      "reference": "29bacc773e817b2e49a75b6258399dc3e129b031",
+      "parent_repro": {
+        "exit": 1,
+        "assertion": true
+      },
+      "reference_repro": {
+        "exit": 0,
+        "assertion": false
+      },
+      "parent_native": {
+        "tests/test_commands.py": {
+          "exit": 0,
+          "test_summary": [
+            "82 passed in 0.10s"
+          ]
+        },
+        "tests/test_options.py": {
+          "exit": 0,
+          "test_summary": [
+            "640 passed in 0.30s"
+          ]
+        }
+      },
+      "reference_native": {
+        "tests/test_commands.py": {
+          "exit": 0,
+          "test_summary": [
+            "86 passed in 0.10s"
+          ]
+        },
+        "tests/test_options.py": {
+          "exit": 0,
+          "test_summary": [
+            "644 passed in 0.31s"
+          ]
+        }
+      },
+      "hidden_probe_count": 45,
+      "parent_hidden_disagreements": 16,
+      "reference_hidden_sha256": "76da363976cbda81601c87c61eed68000757eaf8b787412b00cd815fc71e7f0d"
+    },
+    {
+      "id": "packaging-quotes",
+      "repository": "pypa/packaging",
+      "parent": "2497782b2bb03812d2a12ae882a4390c61ec5061",
+      "reference": "5b583e309996a085ad3b5b045f3bf50a09c11b58",
+      "parent_repro": {
+        "exit": 1,
+        "assertion": true
+      },
+      "reference_repro": {
+        "exit": 0,
+        "assertion": false
+      },
+      "parent_native": {
+        "tests/test_markers.py": {
+          "exit": 0,
+          "test_summary": [
+            "2294 passed in 0.47s"
+          ]
+        },
+        "tests/test_requirements.py": {
+          "exit": 0,
+          "test_summary": [
+            "5320 passed in 1.28s"
+          ]
+        }
+      },
+      "reference_native": {
+        "tests/test_markers.py": {
+          "exit": 0,
+          "test_summary": [
+            "2299 passed in 0.46s"
+          ]
+        },
+        "tests/test_requirements.py": {
+          "exit": 0,
+          "test_summary": [
+            "5321 passed in 1.27s"
+          ]
+        }
+      },
+      "hidden_probe_count": 165,
+      "parent_hidden_disagreements": 50,
+      "reference_hidden_sha256": "12e829cf0abc1be7638b7b003fb8dca37b29b086794c72e028ee5f123e247b66"
+    },
+    {
+      "id": "attrs-converter",
+      "repository": "python-attrs/attrs",
+      "parent": "53e632c5218b729da6ac37a35b4b68379dc18999",
+      "reference": "6fda0a4e086b56d7058855e4c15112c8f58de74c",
+      "parent_repro": {
+        "exit": 1,
+        "assertion": true
+      },
+      "reference_repro": {
+        "exit": 0,
+        "assertion": false
+      },
+      "parent_native": {
+        "tests/test_converters.py": {
+          "exit": 0,
+          "test_summary": [
+            "30 passed in 0.01s"
+          ]
+        },
+        "tests/test_setattr.py": {
+          "exit": 0,
+          "test_summary": [
+            "35 passed, 1 xfailed in 0.04s"
+          ]
+        }
+      },
+      "reference_native": {
+        "tests/test_converters.py": {
+          "exit": 0,
+          "test_summary": [
+            "31 passed in 0.01s"
+          ]
+        },
+        "tests/test_setattr.py": {
+          "exit": 0,
+          "test_summary": [
+            "36 passed, 1 xfailed in 0.04s"
+          ]
+        }
+      },
+      "hidden_probe_count": 37,
+      "parent_hidden_disagreements": 31,
+      "reference_hidden_sha256": "2c0f20274ed655706c4521c669a06b730650ebc15ec5aa64f6bd99d841de3b4d"
+    }
+  ],
+  "attempts": {
+    "click-help": [
+      {
+        "runtime": "codex",
+        "checkpoint_sha256": "084da77ad3dfe2a3a3e979af6207885b18ad7eb479850b990bc3219b004a5c4f",
+        "prompt_sha256": "ae634d9c9bc7ebf3f9faa350edc0635d9f480b88d2b9ca258e4859153dae3bef",
+        "restored_before_launch": true,
+        "worker": {
+          "exit_code": 124,
+          "timed_out": true,
+          "output_sha256": "fd8b7c3846994d7558c00addfda7f519558a5d4f2bac7aa189777f1193883d71",
+          "seconds": 180.0045,
+          "runtime_events": {
+            "thread.started": 1,
+            "item.completed": 9,
+            "turn.started": 1,
+            "item.started": 4
+          },
+          "runtime_timeline": [],
+          "reported_input_tokens": 0,
+          "reported_cached_input_tokens": 0,
+          "reported_output_tokens": 0,
+          "provider_rate_limited": false,
+          "provider_error_type": null
+        },
+        "provider_http_errors": 0,
+        "provider_requests": [
+          {
+            "path": "/v1/responses",
+            "request_at_seconds": 0.287,
+            "compaction_summary": false,
+            "messages": 0,
+            "tool_count": 8,
+            "reasoning_effort": null,
+            "reasoning_characters": 0,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "response_event": "response.completed",
+            "usage": {
+              "input_tokens": 4422,
+              "output_tokens": 1081,
+              "total_tokens": 5503
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 52.131
+          },
+          {
+            "path": "/v1/responses",
+            "request_at_seconds": 52.422,
+            "compaction_summary": false,
+            "messages": 0,
+            "tool_count": 8,
+            "reasoning_effort": null,
+            "reasoning_characters": 0,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "response_event": "response.completed",
+            "usage": {
+              "input_tokens": 7722,
+              "output_tokens": 679,
+              "total_tokens": 8401
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 36.747
+          },
+          {
+            "path": "/v1/responses",
+            "request_at_seconds": 89.172,
+            "compaction_summary": false,
+            "messages": 0,
+            "tool_count": 8,
+            "reasoning_effort": null,
+            "reasoning_characters": 0,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "response_event": "response.completed",
+            "usage": {
+              "input_tokens": 9730,
+              "output_tokens": 624,
+              "total_tokens": 10354
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 34.389
+          },
+          {
+            "path": "/v1/responses",
+            "request_at_seconds": 123.563,
+            "compaction_summary": false,
+            "messages": 0,
+            "tool_count": 8,
+            "reasoning_effort": null,
+            "reasoning_characters": 0,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "response_event": "response.completed",
+            "usage": {
+              "input_tokens": 12549,
+              "output_tokens": 638,
+              "total_tokens": 13187
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 38.913
+          },
+          {
+            "path": "/v1/responses",
+            "request_at_seconds": 162.478,
+            "compaction_summary": false,
+            "messages": 0,
+            "tool_count": 8,
+            "reasoning_effort": null,
+            "reasoning_characters": 0,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "ended": "downstream_closed",
+            "duration_seconds": 25.031
+          }
+        ],
+        "grade": {
+          "scope_exact": false,
+          "changed_files": [
+            "continuity-live-note.md",
+            "continuity-live-repro.py"
+          ],
+          "artifact_preserved": {
+            "continuity-live-note.md": true,
+            "continuity-live-repro.py": true
+          },
+          "repro": {
+            "exit": 1,
+            "assertion": true
+          },
+          "native": {
+            "tests/test_commands.py": {
+              "exit": 0,
+              "test_summary": [
+                "82 passed in 0.13s"
+              ]
+            },
+            "tests/test_options.py": {
+              "exit": 0,
+              "test_summary": [
+                "640 passed in 0.34s"
+              ]
+            }
+          },
+          "oracle_exit": 0,
+          "hidden_count": 45,
+          "hidden_disagreements": 16,
+          "hidden_first_disagreements": [
+            "command/' '/'Use the replacement'/37",
+            "command/' '/'Use the replacement'/80",
+            "command/' '/True/37",
+            "command/' '/True/80",
+            "command/''/'Use the replacement'/37",
+            "command/''/'Use the replacement'/80",
+            "command/''/True/37",
+            "command/''/True/80"
+          ],
+          "observed_oracle_sha256": "6f63a0b02109cd1d79d1d3b24b739973f2fc84a81445f391b13e195ded3125eb",
+          "source_sha256": {
+            "src/click/core.py": "090689d002f0e33cb2569e84ee03fa6bf1bcf1e8ae5c4f6607316720943e8a06"
+          },
+          "verified": false
+        }
+      },
+      {
+        "runtime": "opencode",
+        "checkpoint_sha256": "084da77ad3dfe2a3a3e979af6207885b18ad7eb479850b990bc3219b004a5c4f",
+        "prompt_sha256": "ae634d9c9bc7ebf3f9faa350edc0635d9f480b88d2b9ca258e4859153dae3bef",
+        "restored_before_launch": true,
+        "worker": {
+          "exit_code": 124,
+          "timed_out": true,
+          "output_sha256": "ad9080a2621d266df1a91316a582b7ff9cf930506c5ecd1ed577c00c237ef578",
+          "seconds": 180.0094,
+          "runtime_events": {
+            "step_start": 3,
+            "step_finish": 2,
+            "tool_use": 1
+          },
+          "runtime_timeline": [
+            {
+              "event": "step_start",
+              "ms": 0
+            },
+            {
+              "event": "step_finish",
+              "ms": 83944,
+              "input": 1774,
+              "output": 2048,
+              "reasoning": 0
+            },
+            {
+              "event": "step_start",
+              "ms": 84358
+            },
+            {
+              "event": "tool_use",
+              "ms": 112217,
+              "tool": "read",
+              "status": "completed"
+            },
+            {
+              "event": "step_finish",
+              "ms": 112247,
+              "input": 49,
+              "output": 696,
+              "reasoning": 0
+            },
+            {
+              "event": "step_start",
+              "ms": 124855
+            }
+          ],
+          "reported_input_tokens": 0,
+          "reported_cached_input_tokens": 0,
+          "reported_output_tokens": 0,
+          "provider_rate_limited": false,
+          "provider_error_type": null
+        },
+        "provider_http_errors": 0,
+        "provider_requests": [
+          {
+            "path": "/v1/chat/completions",
+            "request_at_seconds": 0.372,
+            "compaction_summary": false,
+            "messages": 2,
+            "tool_count": 5,
+            "reasoning_effort": null,
+            "reasoning_characters": 9396,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "finish_reason": "length",
+            "usage": {
+              "prompt_tokens": 1776,
+              "completion_tokens": 2048,
+              "total_tokens": 3824
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 91.651
+          },
+          {
+            "path": "/v1/chat/completions",
+            "request_at_seconds": 92.121,
+            "compaction_summary": false,
+            "messages": 4,
+            "tool_count": 5,
+            "reasoning_effort": null,
+            "reasoning_characters": 3505,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "finish_reason": "tool_calls",
+            "usage": {
+              "prompt_tokens": 1818,
+              "completion_tokens": 696,
+              "total_tokens": 2514
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 28.135
+          },
+          {
+            "path": "/v1/chat/completions",
+            "request_at_seconds": 120.403,
+            "compaction_summary": false,
+            "messages": 6,
+            "tool_count": 5,
+            "reasoning_effort": null,
+            "reasoning_characters": 2567,
+            "visible_characters": 2278,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "ended": "downstream_closed",
+            "duration_seconds": 59.7
+          }
+        ],
+        "grade": {
+          "scope_exact": false,
+          "changed_files": [
+            "continuity-live-note.md",
+            "continuity-live-repro.py"
+          ],
+          "artifact_preserved": {
+            "continuity-live-note.md": true,
+            "continuity-live-repro.py": true
+          },
+          "repro": {
+            "exit": 1,
+            "assertion": true
+          },
+          "native": {
+            "tests/test_commands.py": {
+              "exit": 0,
+              "test_summary": [
+                "82 passed in 0.11s"
+              ]
+            },
+            "tests/test_options.py": {
+              "exit": 0,
+              "test_summary": [
+                "640 passed in 0.30s"
+              ]
+            }
+          },
+          "oracle_exit": 0,
+          "hidden_count": 45,
+          "hidden_disagreements": 16,
+          "hidden_first_disagreements": [
+            "command/' '/'Use the replacement'/37",
+            "command/' '/'Use the replacement'/80",
+            "command/' '/True/37",
+            "command/' '/True/80",
+            "command/''/'Use the replacement'/37",
+            "command/''/'Use the replacement'/80",
+            "command/''/True/37",
+            "command/''/True/80"
+          ],
+          "observed_oracle_sha256": "6f63a0b02109cd1d79d1d3b24b739973f2fc84a81445f391b13e195ded3125eb",
+          "source_sha256": {
+            "src/click/core.py": "090689d002f0e33cb2569e84ee03fa6bf1bcf1e8ae5c4f6607316720943e8a06"
+          },
+          "verified": false
+        }
+      }
+    ],
+    "packaging-quotes": [
+      {
+        "runtime": "opencode",
+        "checkpoint_sha256": "ec27ea2060eb55bd547f3853f416dda9740e0770367bc408272ffd58348a49f0",
+        "prompt_sha256": "4403a9c53aacf7dce1ac4716c3a4a9b6851518129db93bf2d626a0194286331b",
+        "restored_before_launch": true,
+        "worker": {
+          "exit_code": 0,
+          "timed_out": false,
+          "output_sha256": "b2477bc26856143da11cfe8f0a730dd023647a34b4c4b269a7013a04d7c81d4b",
+          "seconds": 74.2632,
+          "runtime_events": {
+            "step_start": 1
+          },
+          "runtime_timeline": [
+            {
+              "event": "step_start",
+              "ms": 0
+            }
+          ],
+          "reported_input_tokens": 0,
+          "reported_cached_input_tokens": 0,
+          "reported_output_tokens": 0,
+          "provider_rate_limited": false,
+          "provider_error_type": null
+        },
+        "provider_http_errors": 0,
+        "provider_requests": [
+          {
+            "path": "/v1/chat/completions",
+            "request_at_seconds": 0.425,
+            "compaction_summary": false,
+            "messages": 2,
+            "tool_count": 5,
+            "reasoning_effort": null,
+            "reasoning_characters": 7755,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "finish_reason": "stop",
+            "usage": {
+              "prompt_tokens": 1783,
+              "completion_tokens": 1743,
+              "total_tokens": 3526
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 73.735
+          }
+        ],
+        "grade": {
+          "scope_exact": false,
+          "changed_files": [
+            "continuity-live-note.md",
+            "continuity-live-repro.py"
+          ],
+          "artifact_preserved": {
+            "continuity-live-note.md": true,
+            "continuity-live-repro.py": true
+          },
+          "repro": {
+            "exit": 1,
+            "assertion": true
+          },
+          "native": {
+            "tests/test_markers.py": {
+              "exit": 0,
+              "test_summary": [
+                "2294 passed in 0.57s"
+              ]
+            },
+            "tests/test_requirements.py": {
+              "exit": 0,
+              "test_summary": [
+                "5320 passed in 1.50s"
+              ]
+            }
+          },
+          "oracle_exit": 0,
+          "hidden_count": 165,
+          "hidden_disagreements": 50,
+          "hidden_first_disagreements": [
+            "marker/compound/platform_release != '\"quoted\"'",
+            "marker/compound/platform_release != 'a\"b'",
+            "marker/compound/platform_release != 'multiple \"\" marks'",
+            "marker/compound/platform_release == '\"quoted\"'",
+            "marker/compound/platform_release == 'a\"b'",
+            "marker/compound/platform_release == 'multiple \"\" marks'",
+            "marker/compound/platform_version != '\"quoted\"'",
+            "marker/compound/platform_version != 'a\"b'"
+          ],
+          "observed_oracle_sha256": "8fd9e863662fd430948077a84f0d06af45a66f3f6863cacc37828c7dfa0a92f7",
+          "source_sha256": {
+            "src/packaging/_parser.py": "d0fde1798e7c65aefa4eae14b01f8709e2d93f758ac1ade7a54f48bae2a4916b"
+          },
+          "verified": false
+        }
+      },
+      {
+        "runtime": "codex",
+        "checkpoint_sha256": "ec27ea2060eb55bd547f3853f416dda9740e0770367bc408272ffd58348a49f0",
+        "prompt_sha256": "4403a9c53aacf7dce1ac4716c3a4a9b6851518129db93bf2d626a0194286331b",
+        "restored_before_launch": true,
+        "worker": {
+          "exit_code": 0,
+          "timed_out": false,
+          "output_sha256": "bfc0b5f249a44f4246e531580cd7f147a9506edd0e24f89900d2dc3b5ded9b69",
+          "seconds": 65.1275,
+          "runtime_events": {
+            "thread.started": 1,
+            "item.completed": 2,
+            "turn.started": 1,
+            "turn.completed": 1
+          },
+          "runtime_timeline": [],
+          "reported_input_tokens": 4439,
+          "reported_cached_input_tokens": 3672,
+          "reported_output_tokens": 1264,
+          "provider_rate_limited": false,
+          "provider_error_type": null
+        },
+        "provider_http_errors": 0,
+        "provider_requests": [
+          {
+            "path": "/v1/responses",
+            "request_at_seconds": 0.494,
+            "compaction_summary": false,
+            "messages": 0,
+            "tool_count": 8,
+            "reasoning_effort": null,
+            "reasoning_characters": 0,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "response_event": "response.completed",
+            "usage": {
+              "input_tokens": 4439,
+              "output_tokens": 1264,
+              "total_tokens": 5703
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 64.595
+          }
+        ],
+        "grade": {
+          "scope_exact": false,
+          "changed_files": [
+            "continuity-live-note.md",
+            "continuity-live-repro.py"
+          ],
+          "artifact_preserved": {
+            "continuity-live-note.md": true,
+            "continuity-live-repro.py": true
+          },
+          "repro": {
+            "exit": 1,
+            "assertion": true
+          },
+          "native": {
+            "tests/test_markers.py": {
+              "exit": 0,
+              "test_summary": [
+                "2294 passed in 0.53s"
+              ]
+            },
+            "tests/test_requirements.py": {
+              "exit": 0,
+              "test_summary": [
+                "5320 passed in 1.43s"
+              ]
+            }
+          },
+          "oracle_exit": 0,
+          "hidden_count": 165,
+          "hidden_disagreements": 50,
+          "hidden_first_disagreements": [
+            "marker/compound/platform_release != '\"quoted\"'",
+            "marker/compound/platform_release != 'a\"b'",
+            "marker/compound/platform_release != 'multiple \"\" marks'",
+            "marker/compound/platform_release == '\"quoted\"'",
+            "marker/compound/platform_release == 'a\"b'",
+            "marker/compound/platform_release == 'multiple \"\" marks'",
+            "marker/compound/platform_version != '\"quoted\"'",
+            "marker/compound/platform_version != 'a\"b'"
+          ],
+          "observed_oracle_sha256": "8fd9e863662fd430948077a84f0d06af45a66f3f6863cacc37828c7dfa0a92f7",
+          "source_sha256": {
+            "src/packaging/_parser.py": "d0fde1798e7c65aefa4eae14b01f8709e2d93f758ac1ade7a54f48bae2a4916b"
+          },
+          "verified": false
+        }
+      }
+    ],
+    "attrs-converter": [
+      {
+        "runtime": "codex",
+        "checkpoint_sha256": "d92e88d95c9ff0b7c985dff9e0604d29d8e955868c1235f982089153235061b7",
+        "prompt_sha256": "d26ca0a1bb9ff4d334d34dbbe890ffd47622ca5b6182339f7153bf24b27f18e7",
+        "restored_before_launch": true,
+        "worker": {
+          "exit_code": 0,
+          "timed_out": false,
+          "output_sha256": "b060a93175665d77e86f3fae2002c8deaf71d4ea9b6929d68088778555b4c79c",
+          "seconds": 90.4197,
+          "runtime_events": {
+            "thread.started": 1,
+            "item.completed": 2,
+            "turn.started": 1,
+            "turn.completed": 1
+          },
+          "runtime_timeline": [],
+          "reported_input_tokens": 4444,
+          "reported_cached_input_tokens": 3672,
+          "reported_output_tokens": 2048,
+          "provider_rate_limited": false,
+          "provider_error_type": null
+        },
+        "provider_http_errors": 0,
+        "provider_requests": [
+          {
+            "path": "/v1/responses",
+            "request_at_seconds": 0.224,
+            "compaction_summary": false,
+            "messages": 0,
+            "tool_count": 8,
+            "reasoning_effort": null,
+            "reasoning_characters": 0,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "response_event": "response.completed",
+            "usage": {
+              "input_tokens": 4444,
+              "output_tokens": 2048,
+              "total_tokens": 6492
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 90.153
+          }
+        ],
+        "grade": {
+          "scope_exact": false,
+          "changed_files": [
+            "continuity-live-note.md",
+            "continuity-live-repro.py"
+          ],
+          "artifact_preserved": {
+            "continuity-live-note.md": true,
+            "continuity-live-repro.py": true
+          },
+          "repro": {
+            "exit": 1,
+            "assertion": true
+          },
+          "native": {
+            "tests/test_converters.py": {
+              "exit": 0,
+              "test_summary": [
+                "30 passed in 0.02s"
+              ]
+            },
+            "tests/test_setattr.py": {
+              "exit": 0,
+              "test_summary": [
+                "35 passed, 1 xfailed in 0.04s"
+              ]
+            }
+          },
+          "oracle_exit": 0,
+          "hidden_count": 37,
+          "hidden_disagreements": 31,
+          "hidden_first_disagreements": [
+            "False/False/nested/adapter",
+            "False/False/nested/assignment",
+            "False/False/nested/constructor",
+            "False/False/pipe/adapter",
+            "False/False/pipe/assignment",
+            "False/False/plain/adapter",
+            "False/False/plain/assignment",
+            "False/True/nested/adapter"
+          ],
+          "observed_oracle_sha256": "936c944f7385b74884ffff51bf07fd08dd2737a4fb5bcac810be25bf85387614",
+          "source_sha256": {
+            "src/attr/_make.py": "6f6205dc128979cbe2c6e23ea028e01afd7df54ee11193accacf6f0ef35cb36f",
+            "src/attr/setters.py": "90098b6f4726f309bf4fba5001c2131ae8b5d5b979e75d7ace9aa122e2df0bb4"
+          },
+          "verified": false
+        }
+      },
+      {
+        "runtime": "opencode",
+        "checkpoint_sha256": "d92e88d95c9ff0b7c985dff9e0604d29d8e955868c1235f982089153235061b7",
+        "prompt_sha256": "d26ca0a1bb9ff4d334d34dbbe890ffd47622ca5b6182339f7153bf24b27f18e7",
+        "restored_before_launch": true,
+        "worker": {
+          "exit_code": 124,
+          "timed_out": true,
+          "output_sha256": "58d4ae8ec9ec80b6ad3fa1a85e6ffd9a689386c9e25afa5855650203416a00a4",
+          "seconds": 180.0146,
+          "runtime_events": {
+            "step_start": 4,
+            "step_finish": 3,
+            "tool_use": 4
+          },
+          "runtime_timeline": [
+            {
+              "event": "step_start",
+              "ms": 0
+            },
+            {
+              "event": "step_finish",
+              "ms": 82597,
+              "input": 1791,
+              "output": 2048,
+              "reasoning": 0
+            },
+            {
+              "event": "step_start",
+              "ms": 83052
+            },
+            {
+              "event": "tool_use",
+              "ms": 134120,
+              "tool": "edit",
+              "status": "error"
+            },
+            {
+              "event": "tool_use",
+              "ms": 134121,
+              "tool": "edit",
+              "status": "error"
+            },
+            {
+              "event": "step_finish",
+              "ms": 134156,
+              "input": 49,
+              "output": 1262,
+              "reasoning": 0
+            },
+            {
+              "event": "step_start",
+              "ms": 136166
+            },
+            {
+              "event": "tool_use",
+              "ms": 162087,
+              "tool": "edit",
+              "status": "error"
+            },
+            {
+              "event": "tool_use",
+              "ms": 162089,
+              "tool": "edit",
+              "status": "error"
+            },
+            {
+              "event": "step_finish",
+              "ms": 162134,
+              "input": 1340,
+              "output": 623,
+              "reasoning": 0
+            },
+            {
+              "event": "step_start",
+              "ms": 163371
+            }
+          ],
+          "reported_input_tokens": 0,
+          "reported_cached_input_tokens": 0,
+          "reported_output_tokens": 0,
+          "provider_rate_limited": false,
+          "provider_error_type": null
+        },
+        "provider_http_errors": 0,
+        "provider_requests": [
+          {
+            "path": "/v1/chat/completions",
+            "request_at_seconds": 0.362,
+            "compaction_summary": false,
+            "messages": 2,
+            "tool_count": 5,
+            "reasoning_effort": null,
+            "reasoning_characters": 10200,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "finish_reason": "length",
+            "usage": {
+              "prompt_tokens": 1793,
+              "completion_tokens": 2048,
+              "total_tokens": 3841
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 84.881
+          },
+          {
+            "path": "/v1/chat/completions",
+            "request_at_seconds": 85.347,
+            "compaction_summary": false,
+            "messages": 4,
+            "tool_count": 5,
+            "reasoning_effort": null,
+            "reasoning_characters": 6070,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "finish_reason": "tool_calls",
+            "usage": {
+              "prompt_tokens": 1835,
+              "completion_tokens": 1262,
+              "total_tokens": 3097
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 51.477
+          },
+          {
+            "path": "/v1/chat/completions",
+            "request_at_seconds": 136.902,
+            "compaction_summary": false,
+            "messages": 7,
+            "tool_count": 5,
+            "reasoning_effort": null,
+            "reasoning_characters": 2609,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "finish_reason": "tool_calls",
+            "usage": {
+              "prompt_tokens": 3176,
+              "completion_tokens": 623,
+              "total_tokens": 3799
+            },
+            "ended": "provider_eof",
+            "duration_seconds": 27.908
+          },
+          {
+            "path": "/v1/chat/completions",
+            "request_at_seconds": 164.877,
+            "compaction_summary": false,
+            "messages": 10,
+            "tool_count": 5,
+            "reasoning_effort": null,
+            "reasoning_characters": 1711,
+            "visible_characters": 0,
+            "requested_max_tokens": null,
+            "http_status": 200,
+            "ended": "downstream_closed",
+            "duration_seconds": 15.234
+          }
+        ],
+        "grade": {
+          "scope_exact": false,
+          "changed_files": [
+            "continuity-live-note.md",
+            "continuity-live-repro.py"
+          ],
+          "artifact_preserved": {
+            "continuity-live-note.md": true,
+            "continuity-live-repro.py": true
+          },
+          "repro": {
+            "exit": 1,
+            "assertion": true
+          },
+          "native": {
+            "tests/test_converters.py": {
+              "exit": 0,
+              "test_summary": [
+                "30 passed in 0.04s"
+              ]
+            },
+            "tests/test_setattr.py": {
+              "exit": 0,
+              "test_summary": [
+                "35 passed, 1 xfailed in 0.05s"
+              ]
+            }
+          },
+          "oracle_exit": 0,
+          "hidden_count": 37,
+          "hidden_disagreements": 31,
+          "hidden_first_disagreements": [
+            "False/False/nested/adapter",
+            "False/False/nested/assignment",
+            "False/False/nested/constructor",
+            "False/False/pipe/adapter",
+            "False/False/pipe/assignment",
+            "False/False/plain/adapter",
+            "False/False/plain/assignment",
+            "False/True/nested/adapter"
+          ],
+          "observed_oracle_sha256": "936c944f7385b74884ffff51bf07fd08dd2737a4fb5bcac810be25bf85387614",
+          "source_sha256": {
+            "src/attr/_make.py": "6f6205dc128979cbe2c6e23ea028e01afd7df54ee11193accacf6f0ef35cb36f",
+            "src/attr/setters.py": "90098b6f4726f309bf4fba5001c2131ae8b5d5b979e75d7ace9aa122e2df0bb4"
+          },
+          "verified": false
+        }
+      }
+    ]
+  },
+  "source_sha256": {
+    "evals/paired_continuation.py": "93373dc072da755aab56fef8e085eb3dedfede25b6ebac8cde5efcde8006ea4d",
+    "evals/paired_oracle.py": "be79276a1da33b73b576ad5e9d08989bf4aa542eaf1465bf678e941337644c2b",
+    "evals/provider_trace.py": "daacf8345ea63afdeea2adcb5caeaece25ba22417c96b0d642dd92a1e9edee41",
+    "evals/fixtures/paired/attrs-converter.py": "caebe6366fa40328fd75111e2369c1fc6377ecc06e7f60282cec5891a738f1c7",
+    "evals/fixtures/paired/cases.json": "fac730e43b09b683ea720a043014cf640013ede6e12d306101e6752d9cc9ea17",
+    "evals/fixtures/paired/click-help.py": "650b80135c544d06671d2081272bbcb7a4d9f336339e74b345e7a441ae2f0038",
+    "evals/fixtures/paired/packaging-quotes.py": "3332313453d5a3f7739a16ccfab0e658a4012851581405fac3ede80f59c53b0f"
+  }
+}

@@ -1,0 +1,198 @@
+{
+  "qualified": true,
+  "attempt": {
+    "runtime": "opencode",
+    "checkpoint_sha256": "084da77ad3dfe2a3a3e979af6207885b18ad7eb479850b990bc3219b004a5c4f",
+    "prompt_sha256": "ae634d9c9bc7ebf3f9faa350edc0635d9f480b88d2b9ca258e4859153dae3bef",
+    "restored_before_launch": true,
+    "worker": {
+      "exit_code": 0,
+      "timed_out": false,
+      "output_sha256": "bf4d3368c127884e3bdf4a5f2e23e95541913855c550b7183ff6773ff8994268",
+      "seconds": 65.0855,
+      "runtime_events": {
+        "step_start": 2,
+        "tool_use": 1,
+        "step_finish": 1,
+        "text": 1
+      },
+      "runtime_timeline": [
+        {
+          "event": "step_start",
+          "ms": 0
+        },
+        {
+          "event": "tool_use",
+          "ms": 89,
+          "tool": "read",
+          "status": "completed"
+        },
+        {
+          "event": "step_finish",
+          "ms": 99,
+          "input": 1775,
+          "output": 23,
+          "reasoning": 0
+        },
+        {
+          "event": "step_start",
+          "ms": 12536
+        },
+        {
+          "event": "text",
+          "ms": 61565
+        }
+      ],
+      "reported_input_tokens": 0,
+      "reported_cached_input_tokens": 0,
+      "reported_output_tokens": 0,
+      "provider_rate_limited": false,
+      "provider_error_type": null
+    },
+    "provider_http_errors": 0,
+    "provider_requests": [
+      {
+        "path": "/v1/chat/completions",
+        "request_at_seconds": 0.462,
+        "compaction_summary": false,
+        "messages": 2,
+        "tool_count": 5,
+        "reasoning_effort": "none",
+        "reasoning_characters": 0,
+        "visible_characters": 0,
+        "requested_max_tokens": null,
+        "http_status": 200,
+        "finish_reason": "tool_calls",
+        "usage": {
+          "prompt_tokens": 1776,
+          "completion_tokens": 23,
+          "total_tokens": 1799
+        },
+        "ended": "provider_eof",
+        "duration_seconds": 3.07
+      },
+      {
+        "path": "/v1/chat/completions",
+        "request_at_seconds": 3.559,
+        "compaction_summary": false,
+        "messages": 4,
+        "tool_count": 5,
+        "reasoning_effort": "none",
+        "reasoning_characters": 0,
+        "visible_characters": 5307,
+        "requested_max_tokens": null,
+        "http_status": 200,
+        "finish_reason": "stop",
+        "usage": {
+          "prompt_tokens": 8194,
+          "completion_tokens": 1062,
+          "total_tokens": 9256
+        },
+        "ended": "provider_eof",
+        "duration_seconds": 61.457
+      }
+    ],
+    "grade": {
+      "scope_exact": false,
+      "changed_files": [
+        "continuity-live-note.md",
+        "continuity-live-repro.py"
+      ],
+      "artifact_preserved": {
+        "continuity-live-note.md": true,
+        "continuity-live-repro.py": true
+      },
+      "repro": {
+        "exit": 1,
+        "assertion": true
+      },
+      "native": {
+        "tests/test_commands.py": {
+          "exit": 0,
+          "test_summary": [
+            "82 passed in 0.12s"
+          ]
+        },
+        "tests/test_options.py": {
+          "exit": 0,
+          "test_summary": [
+            "640 passed in 0.30s"
+          ]
+        }
+      },
+      "oracle_exit": 0,
+      "hidden_count": 45,
+      "hidden_disagreements": 16,
+      "hidden_first_disagreements": [
+        "command/' '/'Use the replacement'/37",
+        "command/' '/'Use the replacement'/80",
+        "command/' '/True/37",
+        "command/' '/True/80",
+        "command/''/'Use the replacement'/37",
+        "command/''/'Use the replacement'/80",
+        "command/''/True/37",
+        "command/''/True/80"
+      ],
+      "observed_oracle_sha256": "6f63a0b02109cd1d79d1d3b24b739973f2fc84a81445f391b13e195ded3125eb",
+      "source_sha256": {
+        "src/click/core.py": "090689d002f0e33cb2569e84ee03fa6bf1bcf1e8ae5c4f6607316720943e8a06"
+      },
+      "verified": false
+    }
+  },
+  "runner_sha256": "18d7aae78dc68b9c419b35b2dabe24d8c8f052da592fe9feaa83ccbd7c105106",
+  "paired_runner_sha256": "01c729bc9a8c242851b800f9e4169e9bb882f48fb0960e63b5eb79142980400a",
+  "model": {
+    "alias": "continuity-paired:8b",
+    "digest": "0b9d5fc41387def5f0c95d5ba7462a390c01569c3f6cff6f40ce4492a15be5c8",
+    "settings": "repeat_penalty                 1\nstop                           \"<|im_start|>\"\nstop                           \"<|im_end|>\"\ntemperature                    0.6\ntop_k                          20\ntop_p                          0.95\nnum_ctx                        16384\nnum_predict                    2048",
+    "family": "qwen3",
+    "quantization": "Q4_K_M",
+    "base_model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41"
+  },
+  "calibration": {
+    "id": "click-help",
+    "repository": "pallets/click",
+    "parent": "648d7c403829013ade629d63ddbfe808f6b2b770",
+    "reference": "29bacc773e817b2e49a75b6258399dc3e129b031",
+    "parent_repro": {
+      "exit": 1,
+      "assertion": true
+    },
+    "reference_repro": {
+      "exit": 0,
+      "assertion": false
+    },
+    "parent_native": {
+      "tests/test_commands.py": {
+        "exit": 0,
+        "test_summary": [
+          "82 passed in 0.09s"
+        ]
+      },
+      "tests/test_options.py": {
+        "exit": 0,
+        "test_summary": [
+          "640 passed in 0.28s"
+        ]
+      }
+    },
+    "reference_native": {
+      "tests/test_commands.py": {
+        "exit": 0,
+        "test_summary": [
+          "86 passed in 0.09s"
+        ]
+      },
+      "tests/test_options.py": {
+        "exit": 0,
+        "test_summary": [
+          "644 passed in 0.28s"
+        ]
+      }
+    },
+    "hidden_probe_count": 45,
+    "parent_hidden_disagreements": 16,
+    "reference_hidden_sha256": "76da363976cbda81601c87c61eed68000757eaf8b787412b00cd815fc71e7f0d"
+  }
+}

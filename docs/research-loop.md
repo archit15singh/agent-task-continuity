@@ -223,3 +223,20 @@ Qualify the oracle in the other direction. On each pinned reference, change the 
 ### H25 · Responses off on the frozen Codex Click arm
 
 The Responses smoke also returned the exact answer in three tokens, with zero reasoning items after the explicit off request. Run the corresponding Codex Click arm once after the OpenCode follow-up. Keep the prompt, artifact, model alias, and deadline fixed. Add only `reasoning.effort=none` to Responses requests. Grade the resulting workspace independently and compare to the Codex default attempt. As with H23, this is an exploratory one-pair diagnostic.
+
+## Round 5 results and next hypotheses
+
+Both model arms restored the intended checkpoint on all three new tasks. All six attempts left the implementation unchanged. Three exited zero and three reached the deadline. Hypothesis H19 separated three intentionally incomplete repairs from the gold implementations even though the visible reproduction and parent native modules passed. H24 confirmed that the same grader accepted all three sampled equivalent rewrites.
+
+H20 qualified one scripted edit on each runner. H22 found an API-level reasoning switch on this Qwen3 8B alias. Each off request returned the exact arithmetic answer on both smoke passes, while none of the defaults did. H23 and H25 replayed the two Click arms with the explicit off setting. Both exited before the deadline and both left the source unchanged. OpenCode's context reached 8,194 input tokens after one read, and Codex's reached 10,265 before its last request exhausted the output allowance. These grew within the measured attempts. A randomized or repeated comparison would be needed to estimate the effect of the setting on runtime.
+
+H21 killed the Git child after a text edit and deletion had landed. The binary file was empty and the note absent in all three. A prepared takeover refused each incomplete state, and a fresh worktree recovered every selected path and the saved digest.
+
+| Rank | Next experiment | Decision it would change |
+|---:|---|---|
+| 1 | Compare capped source slices with the default tool context on the frozen Click task, keeping reasoning off and the broader grader fixed | Whether context growth blocks a valid tool edit under the same time limit |
+| 2 | Compare one constrained edit response with a full tool loop over the same source slices and reference probes | Whether a direct edit contract is worth adding to a recovery adapter |
+| 3 | Qualify a stronger receiver on these same tasks, then compare live source-worker handoffs with artifact-only starts | Whether work-in-progress context helps once the receiver can solve the tasks |
+| 4 | Fault Git during worktree creation and exercise publication across a cooperating remote receiver | Which recovery and authority states survive a wider boundary |
+
+[Round 5 evidence index](../evidence/README.md)

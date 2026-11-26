@@ -1,0 +1,121 @@
+{
+  "utc": "2026-11-26T10:44:50+00:00",
+  "source_sha256": "f5852e608e37fbf6b46414de8dd39b4eb0be5ac0db433fe286657f53ac32ef26",
+  "trials": [
+    {
+      "runtime": "codex",
+      "version": "codex-cli 0.170.0",
+      "requests": [
+        {
+          "exec_command_offered": true,
+          "tool_result_present": false
+        },
+        {
+          "exec_command_offered": true,
+          "tool_result_present": true
+        }
+      ],
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "f7ace5d15d52582a7a7302a849cd896f77d5b0522a1262dbeaaf58df24eb2672",
+        "seconds": 0.9252,
+        "runtime_events": {
+          "thread.started": 1,
+          "item.completed": 3,
+          "turn.started": 1,
+          "item.started": 1,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 200,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 40,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "expected_bytes": true,
+      "source_sha256": "47d56f8e935652ea7b8b122166e18ffb7befefab4506a1558a883f87294b9ce6"
+    },
+    {
+      "runtime": "opencode",
+      "version": "opencode v2.1.2",
+      "requests": [
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "tool_calls"
+        },
+        {
+          "messages": 4,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": true,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        }
+      ],
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "647f3b5eebedd02ceb9438ea8e0935f4e3512df02e4bef6f711e771d0bbed8d9",
+        "seconds": 0.7622,
+        "runtime_events": {
+          "step_start": 2,
+          "tool_use": 1,
+          "step_finish": 1,
+          "text": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 9,
+            "tool": "edit",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 59,
+            "input": 200,
+            "output": 20,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 78
+          },
+          {
+            "event": "text",
+            "ms": 80
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "expected_bytes": true,
+      "source_sha256": "47d56f8e935652ea7b8b122166e18ffb7befefab4506a1558a883f87294b9ce6"
+    }
+  ]
+}

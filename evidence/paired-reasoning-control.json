@@ -1,0 +1,99 @@
+{
+  "utc": "2026-11-26T10:54:48+00:00",
+  "runner_sha256": "18d7aae78dc68b9c419b35b2dabe24d8c8f052da592fe9feaa83ccbd7c105106",
+  "model": {
+    "alias": "continuity-paired:8b",
+    "digest": "0b9d5fc41387def5f0c95d5ba7462a390c01569c3f6cff6f40ce4492a15be5c8",
+    "settings": "repeat_penalty                 1\nstop                           \"<|im_start|>\"\nstop                           \"<|im_end|>\"\ntemperature                    0.6\ntop_k                          20\ntop_p                          0.95\nnum_ctx                        16384\nnum_predict                    2048",
+    "family": "qwen3",
+    "quantization": "Q4_K_M",
+    "base_model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41"
+  },
+  "thinking": {
+    "values": [
+      false,
+      true
+    ],
+    "default": true
+  },
+  "prompt": "Calculate 6 multiplied by 7. Return exactly the number, with no other text.",
+  "cap": 32,
+  "trials": [
+    {
+      "path": "/api/chat",
+      "off_requested": false,
+      "http": 200,
+      "seconds": 1.341,
+      "end": "length",
+      "visible_characters": 0,
+      "reasoning_characters": 130,
+      "literal_think_tag": false,
+      "exact_answer": false,
+      "output_tokens": 32
+    },
+    {
+      "path": "/api/chat",
+      "off_requested": true,
+      "http": 200,
+      "seconds": 0.4381,
+      "end": "stop",
+      "visible_characters": 2,
+      "reasoning_characters": 0,
+      "literal_think_tag": false,
+      "exact_answer": true,
+      "output_tokens": 3
+    },
+    {
+      "path": "/v1/chat/completions",
+      "off_requested": false,
+      "http": 200,
+      "seconds": 1.2588,
+      "end": "length",
+      "visible_characters": 0,
+      "reasoning_characters": 130,
+      "literal_think_tag": false,
+      "exact_answer": false,
+      "output_tokens": 32
+    },
+    {
+      "path": "/v1/chat/completions",
+      "off_requested": true,
+      "http": 200,
+      "seconds": 0.1415,
+      "end": "stop",
+      "visible_characters": 2,
+      "reasoning_characters": 0,
+      "literal_think_tag": false,
+      "exact_answer": true,
+      "output_tokens": 3
+    },
+    {
+      "path": "/v1/responses",
+      "off_requested": false,
+      "http": 200,
+      "seconds": 1.193,
+      "reasoning_items": 1,
+      "reasoning_tokens": 0,
+      "end": "completed",
+      "visible_characters": 0,
+      "reasoning_characters": 130,
+      "literal_think_tag": false,
+      "exact_answer": false,
+      "output_tokens": 32
+    },
+    {
+      "path": "/v1/responses",
+      "off_requested": true,
+      "http": 200,
+      "seconds": 0.144,
+      "reasoning_items": 0,
+      "reasoning_tokens": 0,
+      "end": "completed",
+      "visible_characters": 2,
+      "reasoning_characters": 0,
+      "literal_think_tag": false,
+      "exact_answer": true,
+      "output_tokens": 3
+    }
+  ]
+}

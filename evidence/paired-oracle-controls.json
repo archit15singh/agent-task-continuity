@@ -1,0 +1,107 @@
+{
+  "utc": "2026-11-26T10:42:48+00:00",
+  "source_sha256": "2cc3c1acd329fa19aeab31cbbebf8e13186599737911c776f8f8d778060b2033",
+  "cases": [
+    {
+      "id": "click-help",
+      "visible": {
+        "exit": 0,
+        "assertion": false
+      },
+      "native": {
+        "tests/test_commands.py": {
+          "exit": 0,
+          "test_summary": [
+            "82 passed in 0.08s"
+          ]
+        },
+        "tests/test_options.py": {
+          "exit": 0,
+          "test_summary": [
+            "640 passed in 0.27s"
+          ]
+        }
+      },
+      "changed_file": "src/click/core.py",
+      "changed_sha256": "337739dbb2e5342007f2b6a2f3449ca4be3e61a5532cc165187de4b7b14f79c2",
+      "hidden_count": 45,
+      "hidden_disagreements": 12,
+      "first_disagreements": [
+        "command/' '/'Use the replacement'/37",
+        "command/' '/'Use the replacement'/80",
+        "command/' '/True/37",
+        "command/' '/True/80",
+        "command/''/'Use the replacement'/37",
+        "command/''/'Use the replacement'/80",
+        "command/''/True/37",
+        "command/''/True/80"
+      ],
+      "reference_hidden_sha256": "76da363976cbda81601c87c61eed68000757eaf8b787412b00cd815fc71e7f0d"
+    },
+    {
+      "id": "packaging-quotes",
+      "visible": {
+        "exit": 0,
+        "assertion": false
+      },
+      "native": {
+        "tests/test_markers.py": {
+          "exit": 0,
+          "test_summary": [
+            "2294 passed in 0.46s"
+          ]
+        },
+        "tests/test_requirements.py": {
+          "exit": 0,
+          "test_summary": [
+            "5320 passed in 1.28s"
+          ]
+        }
+      },
+      "changed_file": "src/packaging/_parser.py",
+      "changed_sha256": "7648df49d1d9b5474609091624772d40dfd48431c53ef214fb457fd7485b519f",
+      "hidden_count": 165,
+      "hidden_disagreements": 1,
+      "first_disagreements": [
+        "value/'both\\'\" '"
+      ],
+      "reference_hidden_sha256": "12e829cf0abc1be7638b7b003fb8dca37b29b086794c72e028ee5f123e247b66"
+    },
+    {
+      "id": "attrs-converter",
+      "visible": {
+        "exit": 0,
+        "assertion": false
+      },
+      "native": {
+        "tests/test_converters.py": {
+          "exit": 0,
+          "test_summary": [
+            "30 passed in 0.01s"
+          ]
+        },
+        "tests/test_setattr.py": {
+          "exit": 0,
+          "test_summary": [
+            "35 passed, 1 xfailed in 0.04s"
+          ]
+        }
+      },
+      "changed_file": "src/attr/setters.py",
+      "changed_sha256": "b9c6aee8fe770223c45a5e70830cff63c6411b415989c7b5b5f5f1c523d73adf",
+      "hidden_count": 37,
+      "hidden_disagreements": 29,
+      "first_disagreements": [
+        "False/False/nested/adapter",
+        "False/False/nested/assignment",
+        "False/False/nested/constructor",
+        "False/False/pipe/adapter",
+        "False/False/plain/adapter",
+        "False/False/plain/assignment",
+        "False/True/nested/adapter",
+        "False/True/nested/assignment"
+      ],
+      "reference_hidden_sha256": "2c0f20274ed655706c4521c669a06b730650ebc15ec5aa64f6bd99d841de3b4d"
+    }
+  ]
+}

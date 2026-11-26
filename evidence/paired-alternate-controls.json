@@ -1,0 +1,84 @@
+{
+  "utc": "2026-11-26T10:53:53+00:00",
+  "source_sha256": "c4e1892f823105ba7c1e200b7cc16bee895bad6457798a8799758db7080e3b13",
+  "cases": [
+    {
+      "id": "click-help",
+      "modified_file": "src/click/core.py",
+      "modified_sha256": "eae4fc55dbf3f7cd9dc0696ce9c69d92030004025118f42347399f20d2f8ceec",
+      "hidden_count": 45,
+      "reproduction": {
+        "exit": 0,
+        "assertion": false
+      },
+      "native": {
+        "tests/test_commands.py": {
+          "exit": 0,
+          "test_summary": [
+            "86 passed in 0.08s"
+          ]
+        },
+        "tests/test_options.py": {
+          "exit": 0,
+          "test_summary": [
+            "644 passed in 0.24s"
+          ]
+        }
+      },
+      "reference_hidden_sha256": "76da363976cbda81601c87c61eed68000757eaf8b787412b00cd815fc71e7f0d",
+      "alternate_hidden_sha256": "76da363976cbda81601c87c61eed68000757eaf8b787412b00cd815fc71e7f0d"
+    },
+    {
+      "id": "packaging-quotes",
+      "modified_file": "src/packaging/_parser.py",
+      "modified_sha256": "af5c06cd46a42a957eed1f85199b642d6067731b9ff4fc86c39c595b9aa6b359",
+      "hidden_count": 165,
+      "reproduction": {
+        "exit": 0,
+        "assertion": false
+      },
+      "native": {
+        "tests/test_markers.py": {
+          "exit": 0,
+          "test_summary": [
+            "2299 passed in 0.49s"
+          ]
+        },
+        "tests/test_requirements.py": {
+          "exit": 0,
+          "test_summary": [
+            "5321 passed in 1.53s"
+          ]
+        }
+      },
+      "reference_hidden_sha256": "12e829cf0abc1be7638b7b003fb8dca37b29b086794c72e028ee5f123e247b66",
+      "alternate_hidden_sha256": "12e829cf0abc1be7638b7b003fb8dca37b29b086794c72e028ee5f123e247b66"
+    },
+    {
+      "id": "attrs-converter",
+      "modified_file": "src/attr/_make.py",
+      "modified_sha256": "2900ec0f2ffd7310de403b5e2a772d6e5c45d88675c780d4c8fe9563f107de0f",
+      "hidden_count": 37,
+      "reproduction": {
+        "exit": 0,
+        "assertion": false
+      },
+      "native": {
+        "tests/test_converters.py": {
+          "exit": 0,
+          "test_summary": [
+            "31 passed in 0.02s"
+          ]
+        },
+        "tests/test_setattr.py": {
+          "exit": 0,
+          "test_summary": [
+            "36 passed, 1 xfailed in 0.05s"
+          ]
+        }
+      },
+      "reference_hidden_sha256": "2c0f20274ed655706c4521c669a06b730650ebc15ec5aa64f6bd99d841de3b4d",
+      "alternate_hidden_sha256": "2c0f20274ed655706c4521c669a06b730650ebc15ec5aa64f6bd99d841de3b4d"
+    }
+  ]
+}

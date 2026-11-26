@@ -196,3 +196,41 @@ ollama create continuity-coder:7b -f /tmp/continuity-coder-modelfile
 ```
 
 The worker and coordinator credentials are generated per trial and omitted from the receipt. The effect is a SQLite row in a cooperating loopback service. The checkout fault applies the tracked part of a multi-file patch and stops the coordinator before the selected note is applied.
+
+## Round 5 paired continuation and native Git interruption
+
+[Paired continuation](paired-continuation.json) records the parent and reference calibrations, matched checkpoint and prompt hashes, six live attempts, and provider and grader outcomes. The [frozen source](https://github.com/archit15singh/agent-task-continuity/commit/d630a70) includes the task definitions, repros, broader probes, and runtime configuration. The tests receive public revisions, while the replacement workspace contains a shallow historical parent and the carried artifacts.
+
+[Partial repair controls](paired-oracle-controls.json) show how a visible repro and its native modules can pass while broader behavior still disagrees. [Scripted tool controls](paired-tool-control.json) record a known-good local edit and returned tool result on each runtime. [Native Git crashes](git-restore-crash.json) show the path states before and after killing Git, and after restoring into a fresh checkout.
+
+Use the repository's Python environment and both runtime binaries. Start Ollama on loopback using port 14687 for these commands.
+
+```sh
+export OLLAMA_HOST=127.0.0.1:14687
+ollama pull qwen3:8b
+cat >/tmp/continuity-paired.Modelfile <<'MODEL'
+FROM qwen3:8b
+PARAMETER num_ctx 16384
+PARAMETER num_predict 2048
+MODEL
+ollama create continuity-paired:8b -f /tmp/continuity-paired.Modelfile
+.venv/bin/python -m evals.paired_continuation --verify-only --output /tmp/continuity-paired-calibration.json
+.venv/bin/python -m evals.paired_continuation --output /tmp/continuity-paired.json
+.venv/bin/python -m evals.paired_oracle_controls --output /tmp/continuity-paired-oracles.json
+.venv/bin/python -m evals.paired_tool_control --output /tmp/continuity-paired-tools.json
+.venv/bin/python -m evals.git_restore_crash --output /tmp/continuity-git-crashes.json
+```
+
+The timed model matrix uses one local inference server serially and preloads the model before starting each worker's clock. Model alias and base digests are recorded. Generated candidate source and raw prompts are represented by hashes and grading receipts. Local inference is stochastic, so the published observation is reproducible as a procedure with its inputs pinned.
+
+[Equivalent implementation controls](paired-alternate-controls.json) qualified the positive side of the same oracle. [First reasoning smoke](paired-reasoning-control.json) and its [repeat](paired-reasoning-repeat.json) check request-level reasoning off at the three Ollama endpoints. The [OpenCode](paired-click-reasoning-off.json) and [Codex](paired-codex-click-reasoning-off.json) follow-ups hold the Click checkpoint and prompt fixed and change the documented setting on the wire.
+
+```sh
+.venv/bin/python -m evals.paired_alternate_controls --output /tmp/continuity-paired-alternates.json
+.venv/bin/python -m evals.paired_reasoning_control \
+  --output /tmp/continuity-paired-reasoning.json \
+  --click-output /tmp/continuity-paired-click-off.json \
+  --codex-click-output /tmp/continuity-paired-codex-click-off.json
+```
+
+The original live matrix used the archived relay in `d630a70`. The OpenCode off repeat ran at `2047533` and the Codex off repeat at `f87f7c2`. The relay changes in the latter add support for the nested Responses reasoning field.
