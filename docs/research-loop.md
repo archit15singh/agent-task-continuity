@@ -72,3 +72,7 @@ Advance the fenced receiver to generation 2, then interrupt the activation seque
 ### H1 follow-up · Channel labels and answer quality
 
 The first arithmetic smoke moved hundreds of characters from the reasoning stream to ordinary content and still hit the cap. Repeat the identical two-request smoke with checks for an exact answer and literal think tags. These are observable output properties. A missing tag cannot reveal how the model used its generation budget.
+
+### H6 · Receiver death before or after commit
+
+Use a loopback receiver that writes a simulated effect row and a receipt in one SQLite transaction. Kill the receiver process immediately before or after that commit, before any acknowledgment. Restart a new process at the same endpoint. The before-commit condition should expose zero effects and zero receipts after death. The after-commit condition should expose one of each. In both conditions a replacement must reconcile to one durable effect and one matching receipt. Repeat three times per condition with separate receiver databases. This exercises a transactional stand-in for an effect that shares the receiver's database.
