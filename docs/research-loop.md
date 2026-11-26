@@ -183,3 +183,15 @@ H17 passed on Click, Packaging, and attrs. The tracked source and the source pre
 | 4 | Run the paired restart protocol with real operators | Whether managed recovery saves operator time after capture and verification |
 
 [Round 4 receipts](../evidence/authenticated-recovery.json)
+
+## Round 5 goal prompt
+
+Measure completion on three new historical changes with matched fresh Codex and OpenCode replacements and the same locally hosted model. Freeze the brief, visible reproduction, scope, and broader behavior probes first. Keep restoration, tool execution, native tests, and verified behavior separate.
+
+## Round 5 loop prompt
+
+Pin the historical parent and reference. Grade both before launching a worker. Freeze the checkpoint and expected probe outputs. Run one bounded attempt per runtime per task, reversing launch order on the middle case. Archive dispositions and differences for every attempt. If the two runtimes fail at different boundaries, qualify that boundary separately before changing model or prompt budget.
+
+### H18 · Paired continuation and independent verification
+
+Use the Click deprecated-help formatting change, Packaging marker quoting change, and attrs converter adapter change. The study author supplies a fixed brief and a narrow reproduction to both fresh runtimes. This controls the artifact and omits any live source-phase or transcript resumption. Require the parent to fail the visible reproduction and differ on at least one hidden probe, and require the reference to pass the reproduction and native test modules. The reference supplies the hidden outputs. Each runtime receives the historical parent without Git history, the same checkpoint and brief, 180 seconds, and the same Qwen3 8B alias via the installed Ollama service. Cap its model context at 16,384 and configured generation at 2,048 tokens per request. Run serially in Codex/OpenCode order for Click and attrs and OpenCode/Codex order for Packaging with no replacement retries. Both replacements should recover the exact same selected bytes. Compare successful visible reproductions with the broader probes, native checks, and edit scope. Report this as a pilot on one model and three tasks. Endpoint and tool-surface differences are part of the runtime configuration.

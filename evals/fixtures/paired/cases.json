@@ -1,0 +1,32 @@
+[
+  {
+    "id": "click-help",
+    "repository": "pallets/click",
+    "base": "648d7c403829013ade629d63ddbfe808f6b2b770",
+    "reference": "29bacc773e817b2e49a75b6258399dc3e129b031",
+    "source": ["src/click/core.py"],
+    "native_tests": ["tests/test_commands.py", "tests/test_options.py"],
+    "objective": "Render a deprecated command or option label at normal indentation when its help text is absent or empty. Keep the separator before the label when help is present, preserve custom reasons, and preserve formatting for ordinary non-deprecated help.",
+    "note": "Check how the command builds its help paragraph and how an option sets its help string. The attached reproduction covers one option with empty help. Also inspect the command path."
+  },
+  {
+    "id": "packaging-quotes",
+    "repository": "pypa/packaging",
+    "base": "2497782b2bb03812d2a12ae882a4390c61ec5061",
+    "reference": "5b583e309996a085ad3b5b045f3bf50a09c11b58",
+    "source": ["src/packaging/_parser.py"],
+    "native_tests": ["tests/test_markers.py", "tests/test_requirements.py"],
+    "objective": "Preserve quoted marker literal values across serialization and parsing for Marker and Requirement. Retain the canonical double-quoted representation when the value can use it, use single quotes for a value containing a double quote, and raise ValueError for a value containing both quote characters.",
+    "note": "Follow marker literal serialization to the Value node. The attached reproduction demonstrates one simple Marker round-trip, while requirement markers use the same underlying parser."
+  },
+  {
+    "id": "attrs-converter",
+    "repository": "python-attrs/attrs",
+    "base": "53e632c5218b729da6ac37a35b4b68379dc18999",
+    "reference": "6fda0a4e086b56d7058855e4c15112c8f58de74c",
+    "source": ["src/attr/_make.py", "src/attr/setters.py"],
+    "native_tests": ["tests/test_converters.py", "tests/test_setattr.py"],
+    "objective": "Make Converter usable as an adapter taking (value, instance, field), forwarding only the extra arguments it declares. Preserve the actual instance and field through converters.pipe and assignment-time setters.convert. Ordinary single-argument converters and existing construction behavior should continue to work.",
+    "note": "Constructor generation and assignment-time conversion are separate paths. The attached reproduction covers assigning a value through the default on-setattr conversion of a single-entry pipeline."
+  }
+]
