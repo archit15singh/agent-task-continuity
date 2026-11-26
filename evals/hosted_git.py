@@ -13,7 +13,7 @@ import sys
 from .run import PROJECT, sha
 
 
-REPOSITORY = "git@github.com:archit15singh/agent-task-continuity.git"
+REPOSITORY = "git@github.com:archit15singh/worktree-ledger.git"
 INTENDED = "899e0637b4bf68f89c54d119711795ea2f9d676a"
 DIFFERENT = "b289080180e4f8b5e9b93d9b6d70b62fb17831d4"
 

@@ -1,6 +1,6 @@
 # What research says about agent handoff and crash recovery
 
-Focused full-text review for Agent Task Continuity, November 26, 2026. Coverage follows the four proposed next steps. The sources include peer-reviewed research, research preprints, and one project-authored whitepaper, identified below. The project measurements come from the existing [paper](paper.md) and [experiment receipts](../evidence/README.md).
+Focused full-text review for Worktree Ledger, November 26, 2026. Coverage follows the four proposed next steps. The sources include peer-reviewed research, research preprints, and one project-authored whitepaper, identified below. The project measurements come from the existing [paper](paper.md) and [experiment receipts](../evidence/README.md).
 
 ## The project question
 

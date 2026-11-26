@@ -37,7 +37,7 @@ The original live runner recorded Git HEAD when writing the receipt. The Click p
 
 ## Reproduce
 
-From the repository root, follow the environment setup in the [README](../README.md). Run the development and held-out arms separately to keep their reports separate, or use `--set all` for the final mechanical matrix.
+From the repository root, install the pinned study dependencies using the commands above. Run the development and held-out arms separately to keep their reports separate, or use `--set all` for the final mechanical matrix.
 
 For the live held-out configuration, make the local Ollama registry available to OpenCode and create a bounded model variant. The recorded run used Qwen3 4B Q4_K_M. The Ollama base manifest digest was `359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7`; the derived manifest was `48c0fc34e0759fbccf94c03a62321d814d851e14368b1a4ad3c97da6f1012109`. Model registry tags and provider aliases can change.
 
@@ -209,7 +209,7 @@ ollama create continuity-coder:7b -f /tmp/continuity-coder-modelfile
 
 ## Round 4 authenticated recovery
 
-[Authenticated recovery receipts](authenticated-recovery.json) contain the six credential controls, 18 authenticated crash trials, and three interrupted checkout cases from Click, Packaging, and attrs. Positive publication requests record actual HTTP statuses and compare the returned receipt body. The restore cases report tracked and selected note hashes independently and run the source predicate before and after recovery. The JSON records the four source hashes at [the experiment implementation](https://github.com/archit15singh/agent-task-continuity/commit/f5bdc06).
+[Authenticated recovery receipts](authenticated-recovery.json) contain the six credential controls, 18 authenticated crash trials, and three interrupted checkout cases from Click, Packaging, and attrs. Positive publication requests record actual HTTP statuses and compare the returned receipt body. The restore cases report tracked and selected note hashes independently and run the source predicate before and after recovery. The JSON records the four source hashes at [the experiment implementation](https://github.com/archit15singh/worktree-ledger/commit/f5bdc06).
 
 ```sh
 .venv/bin/python -m evals.authenticated_recovery --output /tmp/continuity-authenticated-recovery.json
@@ -219,7 +219,7 @@ The worker and coordinator credentials are generated per trial and omitted from 
 
 ## Round 5 paired continuation and native Git interruption
 
-[Paired continuation](paired-continuation.json) records the parent and reference calibrations, matched checkpoint and prompt hashes, six live attempts, and provider and grader outcomes. The [frozen source](https://github.com/archit15singh/agent-task-continuity/commit/d630a70) includes the task definitions, repros, broader probes, and runtime configuration. The tests receive public revisions, while the replacement workspace contains a shallow historical parent and the carried artifacts.
+[Paired continuation](paired-continuation.json) records the parent and reference calibrations, matched checkpoint and prompt hashes, six live attempts, and provider and grader outcomes. The [frozen source](https://github.com/archit15singh/worktree-ledger/commit/d630a70) includes the task definitions, repros, broader probes, and runtime configuration. The tests receive public revisions, while the replacement workspace contains a shallow historical parent and the carried artifacts.
 
 [Partial repair controls](paired-oracle-controls.json) show how a visible repro and its native modules can pass while broader behavior still disagrees. [Scripted tool controls](paired-tool-control.json) record a known-good local edit and returned tool result on each runtime. [Native Git crashes](git-restore-crash.json) show the path states before and after killing Git, and after restoring into a fresh checkout.
 
@@ -265,6 +265,6 @@ The [capped-read matrix](capped-reads.json) records four frozen OpenCode Click a
 .venv/bin/python -m evals.receiver_qualification --output /tmp/continuity-receiver-qualification.json
 ```
 
-The local commands need the Qwen3 8B alias described in Round 5. The signed-in Codex command instead needs existing CLI account access. For hosted Git, `python -m evals.hosted_git --output /tmp/continuity-hosted-git.json` requires write access to this study repository. It creates and removes only disposable refs in `refs/heads/continuity-eval/`. The [hosted Git receipt](hosted-git.json) records separate remote readback. The [container receipt](hosted-receiver.json) comes from [the successful manually dispatched workflow](https://github.com/archit15singh/agent-task-continuity/actions/runs/45812920668). Its [first run](https://github.com/archit15singh/agent-task-continuity/actions/runs/45812722995) stopped before the first fault trial because the TCP port appeared before HTTP readiness. To reproduce the same hosted fixture locally, run `python -m evals.hosted_receiver --output /tmp/continuity-hosted-receiver.json` on a Docker host.
+The local commands need the Qwen3 8B alias described in Round 5. The signed-in Codex command instead needs existing CLI account access. For hosted Git, `python -m evals.hosted_git --output /tmp/continuity-hosted-git.json` requires write access to this study repository. It creates and removes only disposable refs in `refs/heads/continuity-eval/`. The [hosted Git receipt](hosted-git.json) records separate remote readback. The [container receipt](hosted-receiver.json) comes from [the successful manually dispatched workflow](https://github.com/archit15singh/worktree-ledger/actions/runs/45812920668). Its [first run](https://github.com/archit15singh/worktree-ledger/actions/runs/45812722995) stopped before the first fault trial because the TCP port appeared before HTTP readiness. To reproduce the same hosted fixture locally, run `python -m evals.hosted_receiver --output /tmp/continuity-hosted-receiver.json` on a Docker host.
 
 The [operator guide](../docs/operator-pilot.md) describes the consent and run procedures. The [first](operator-pilot-rehearsal.json) and [reversed-order](operator-pilot-reversed.json) instrument rehearsals publish automated results only.

@@ -1,5 +1,5 @@
 -- Keep repository links usable when the PDF is read outside the checkout.
-local repository = "https://github.com/archit15singh/agent-task-continuity/blob/"
+local repository = "https://github.com/archit15singh/worktree-ledger/blob/"
 local study = "b289080180e4f8b5e9b93d9b6d70b62fb17831d4"
 local round_six = "07db8bc7b07469e531f6d9b960be0c561cc1e345"
 local round_six_receipts = {

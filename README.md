@@ -1,72 +1,76 @@
-# Agent Task Continuity
+# Worktree Ledger
 
-Move an unfinished Git-backed task between coding agents. Restore the selected workspace, pass a concise brief, and transfer authority at the boundaries that accept checkpoints and publish verified results.
+Checkpoint unfinished coding-agent work and resume it in a fresh Git worktree. The local `continuity` CLI carries the selected files and handoff brief, transfers task ownership, and records which checks passed on the saved snapshot.
 
-## Why
+[Usage guide](docs/usage.md) · [Research paper](docs/paper.md) · [PDF](docs/paper.pdf) · [Evidence and reproduction](evidence/README.md)
 
-The artifact should own the history of the work. A conversation helps explain decisions. Git tells the next agent which bytes it has. A task record tells it what remains open, which checks refer to those bytes, and whether an external action already happened.
+## Why use it?
 
-Use a Git patch and copy the relevant untracked files when an operator can coordinate a planned switch. That baseline matched managed restoration in all three repositories. Add a task ledger and a controlled write path when a worker may die halfway through an action. The managed path reconciled six interrupted publications with one effect each and rejected stale owners on the tested boundaries. In three additional bare-Git trials, independent ref readback confirmed the published SHA after the client was killed. The same-SHA retry made zero additional ref updates and a different SHA was rejected. For a delayed request, the receiver must enforce the current generation at application time. The loopback fixture allowed the old request when its generation lagged and rejected it once the generation advanced. In six separate SQLite receiver crashes, retries converged on one effect and one receipt when both shared a transaction. The combined activation fixture rejected the delayed old generation and converged in 18/18 trials, including recovery after a detached worktree was prepared. [Publication evidence](evidence/delayed-publication.json)
+A transcript can explain a decision. The next worker still needs the exact files, the remaining checks, and a way to tell whether an external write already landed. Worktree Ledger stores the checkpoint in Git terms and keeps task authority, verification, and publication records in SQLite.
 
-Measure workspace recovery and verified task completion separately. The timeout investigation found a stale `PWD` that sent OpenCode to the wrong checkout. The launcher now aligns it with the restored workspace. Ollama was also serving requests for roughly 177 of 180 seconds during the original Packaging replay.
+For a planned handoff with someone coordinating it, a Git patch and a copy of the selected untracked files may be enough. That baseline restored every case in our comparison. The ledger earns its keep when a worker dies mid-task, a replacement needs to verify the recovered files, or a publication receipt goes missing.
 
-Check authority where the effect happens and verify the whole selected artifact before transferring it. The authenticated loopback receiver denied current-generation requests with retired, missing, or other-task credentials and confirmed one effect per operation in 18 crash trials. In Click, Packaging, and attrs the source check passed even when the restore was missing the selected note. The recovery coordinator retained each incomplete checkout and activated a fresh one only after its fingerprint matched. [Round 4 evidence](evidence/authenticated-recovery.json)
+## Quickstart
 
-With the launcher fixed, local Qwen3.5 9B preserved both handoff files in all three cases. It still completed **0/3** at the 180-second deadline. The attrs edit failed the change-specific checks. A separate Codex-to-Codex run completed Click. OpenCode's persisted record shows that the corrected 4B Packaging compaction failure hit the 1,500-token output cap. The frozen Packaging case produced zero verified fixes in two runs per compaction setting. Supplying a title removed one auxiliary request in the traced startup. A same-model Codex probe exited cleanly and also left the source unchanged. In the next round, a coding-tuned model returned a scoped edit that passed 238 native tests and failed both task-specific checks. A later body-only edit passed the initial checks and disagreed with upstream on 123 of 1,111 expanded inputs. Qualify a replacement with an independent behavior check before using it for unattended recovery. [Paper](docs/paper.md) · [Evidence](evidence/README.md)
-
-Test the grader before trusting a passing repair. On three new tasks, all six fresh Qwen3 8B Codex and OpenCode attempts restored the intended checkpoint and left the implementation unchanged. Each deliberately incomplete repair passed its carried reproduction and the parent native tests. Broader probes rejected all three and accepted three equivalent reference variants. We also stopped a native Git apply after it had changed some paths. In three trials the store refused the partial snapshot and a fresh worktree restored every selected path. [Paired attempts](evidence/paired-continuation.json) · [Grader controls](evidence/paired-oracle-controls.json) · [Git crash receipts](evidence/git-restore-crash.json)
-
-Qualify the receiver on the work it must finish. On the same frozen set, the signed-in Codex configuration passed independent checks in both attempts on each of the three tasks. The local read cap produced one edit and no verified fixes. For publication, GitHub preserved the intended ref in three interrupted trials. An authenticated fixture on a hosted VM confirmed one effect and receipt in nine container or coordinator fault trials. [Receiver qualification](evidence/receiver-qualification.json) · [Hosted Git](evidence/hosted-git.json) · [Hosted container](evidence/hosted-receiver.json)
-
-## Start and hand off a task
-
-Requires Python 3.11+, Git, and a Unix-like host. A runtime CLI is required only for automatic launch. Run these commands from the study checkout or install the package with `python -m pip install -e .`.
+Requires Python 3.11+, Git, and a Unix-like shell. The demo uses a disposable repository and runs without a model account.
 
 ```sh
-export CONTINUITY_DB="$HOME/.continuity/tasks.sqlite"
-python -m continuity start /absolute/path/to/repo \
-  --objective "Implement and verify the requested change"
+git clone https://github.com/archit15singh/worktree-ledger.git
+cd worktree-ledger
+python3 -m venv .venv
+.venv/bin/python -m pip install -e .
 ```
 
-Keep the returned task ID, owner token, and operator recovery key private. Set `TASK` to the ID and `CONTINUITY_OWNER` to the token. Save the checkpoint when concurrent edits have settled.
+Create a repository with an unfinished edit, save it, and take over from a fresh worktree.
 
 ```sh
-python -m continuity checkpoint "$TASK" --include notes.md \
-  --note "Implementation is in place. Run the targeted test and inspect edge cases."
-python -m continuity inspect "$TASK"
-python -m continuity manifest "$TASK"
+demo="$(mktemp -d)"
+git init -q "$demo/source"
+printf 'draft\n' > "$demo/source/change.txt"
+git -C "$demo/source" add change.txt
+git -C "$demo/source" -c user.name=Demo -c user.email=demo@example.invalid commit -qm "Start draft"
+printf 'ready\n' > "$demo/source/change.txt"
+printf 'Verify the updated text.\n' > "$demo/source/notes.md"
 
-python -m continuity continue "$TASK" --into /absolute/path/to/replacement
+export CONTINUITY_DB="$demo/tasks.sqlite"
+json_field() {
+  .venv/bin/python -c 'import json, sys; print(json.load(sys.stdin)[sys.argv[1]])' "$1"
+}
+started="$(.venv/bin/continuity start "$demo/source" --objective "Finish the draft")"
+task="$(printf '%s' "$started" | json_field task)"
+CONTINUITY_OWNER="$(printf '%s' "$started" | json_field token)"
+export CONTINUITY_OWNER
+unset started
+
+.venv/bin/continuity checkpoint "$task" --include notes.md \
+  --note "Check that change.txt contains ready and that notes.md survived."
+resumed="$(.venv/bin/continuity continue "$task" --into "$demo/replacement")"
+CONTINUITY_OWNER="$(printf '%s' "$resumed" | json_field token)"
+unset resumed
+cat "$demo/replacement/change.txt" "$demo/replacement/notes.md"
 ```
 
-Add `--constraint`, `--decision`, `--next`, and `--acceptance` to record structured context. The versioned manifest can include an optional Git patch via `--with-patch`. Review the patch and notes before sharing them.
+The last command prints `ready` and `Verify the updated text.` The demo sets the new owner token for later checkpoints and verification. The [usage guide](docs/usage.md) covers automatic Codex and OpenCode launch, recovery keys, and reconciliation after a lost publication acknowledgment.
 
-An omitted `--include` captures tracked changes only. Use one flag per selected untracked file. The continuation command returns a new owner token and the brief. Set `CONTINUITY_OWNER` to the new token for subsequent commands. For automatic launch, add `--runtime codex` or `--runtime opencode --model PROVIDER/MODEL`. Use `--log /path/to/new-log` to keep child output. Launch failure still returns the transferred task and new token.
+## What we measured
+
+| Question | Observed result |
+| --- | --- |
+| Did the selected files survive a handoff? | Managed restore and manual Git each passed **3/3** across Click, Packaging, and attrs. A brief alone passed **0/3**. [Transport receipts](evidence/mechanical-final.json) |
+| Did recovery handle interrupted writes? | The authenticated receiver fixture converged on one effect and one receipt in **18/18** local fault trials and **9/9** on a hosted VM. A separate GitHub test preserved the intended ref in **3/3** interrupted publications. [Local receiver](evidence/authenticated-recovery.json) · [Hosted receiver](evidence/hosted-receiver.json) · [GitHub refs](evidence/hosted-git.json) |
+| Did a replacement finish the change? | On three frozen tasks, a signed-in Codex configuration passed **6/6** attempts, two per task. A local Qwen3 8B configuration verified **0/6** across Codex and OpenCode on the same tasks. The provider and model configurations differed. [Codex qualification](evidence/receiver-qualification.json) · [Repeat](evidence/receiver-qualification-repeat.json) · [Local model](evidence/paired-continuation.json) |
+
+Restore success and task completion are separate outcomes. The research covers selected Git files at the last checkpoint and writes through the managed path with a cooperating receiver. Cross-host failover, real production side effects, and human time savings remain unmeasured. [Hypotheses, methods, and limitations](docs/paper.md)
+
+## Reproduce and cite
+
+From a full Git clone, verify the archived results and run the local tests. Both commands run without model credentials. The [reproduction guide](evidence/README.md#verify-the-artifact) covers rerunning the pinned repository cases and documents the requirements for live and hosted experiments.
 
 ```sh
-python -m continuity checkpoint "$TASK" --include notes.md \
-  --note "Candidate ready for verification"
-python -m continuity verify "$TASK" --command 'python -m pytest tests/test_feature.py'
+.venv/bin/python -m evals.audit_evidence
+.venv/bin/python -m unittest discover -s tests
 ```
 
-Use an absolute verifier path where the tool or virtual environment lives outside the snapshot. Verification runs against a disposable copy of the checkpoint. The returned evidence includes the snapshot fingerprint, exit status, output hash, and basic host details.
+Cite [Recovering Coding-Agent Work Across Runtime Boundaries](docs/paper.md) with the metadata in [CITATION.cff](CITATION.cff). Report reproduction issues with the commit, command, and observed result. [GitHub Issues](https://github.com/archit15singh/worktree-ledger/issues)
 
-## Recover a worker or reconcile a write
-
-- `supervise` runs a bounded initial command and automatically transfers to one replacement after an abnormal exit or timeout. Use `--first 'COMMAND'`, `--replacement 'COMMAND'`, and `--into /path/to/fresh-worktree`. Checkpoint first. The replacement receives `CONTINUITY_PROMPT`; trusted integration commands also receive task and owner variables.
-- `recover-owner` restores the last checkpoint into another worktree if the current owner token was lost. It requires the separately retained `CONTINUITY_RECOVERY_KEY`.
-- To exercise managed publication, start `python -m evals.publisher --drop-first` in another terminal. Use the returned endpoint and passing evidence ID with `publish "$TASK" --endpoint URL --name candidate --evidence EVIDENCE_ID`. If the first result is unknown, use `operations "$TASK"` and `reconcile "$TASK" OPERATION_ID`. Add `--retry-absent` only when the provider honors stable operation IDs.
-
-The gateway publishes a snapshot descriptor to a loopback HTTP endpoint. The fixture implements lookup and idempotent writes for that descriptor. The local trust boundary is SQLite and the controlled CLI. Use ordinary OS permissions to protect the database and tokens. The guarantees cover writes through the managed path, selected file contents under Git semantics, and changes durable at the last checkpoint. Runner and dependency setup, ignored files, staged-vs-unstaged state, and processes in other sessions require separate handling.
-
-## Reproduce the study
-
-```sh
-python3.13 -m venv .venv
-.venv/bin/python -m pip install -r evals/requirements.txt
-.venv/bin/python -m unittest discover -s tests -v
-.venv/bin/python -m evals.run --set all --output /tmp/continuity-study.json
-.venv/bin/python -m evals.authenticated_recovery --output /tmp/continuity-authenticated-recovery.json
-```
-
-See the [implementation plan](docs/plan.md), [preregistered protocol](docs/protocol.md), [research paper](docs/paper.md), [PDF](docs/paper.pdf), the [follow-up protocol](docs/research-loop.md), the [literature review](docs/handoff-literature-review.md), and [machine-readable evidence](evidence/README.md). The pinned cases use Click, Packaging, and attrs. The native tests and application code run locally. Study publication targets a controlled loopback service and a separate disposable bare Git receiver.
+Worktree Ledger is a public research prototype. The repository currently has no published license.

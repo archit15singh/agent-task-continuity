@@ -1,9 +1,14 @@
 [project]
 name = "agent-task-continuity"
 version = "0.1.0"
-description = "Local, cross-agent continuity for Git-backed coding work"
+description = "Worktree Ledger keeps checkpoints and verification records for coding-agent handoffs"
 requires-python = ">=3.11"
 readme = "README.md"
+
+[project.urls]
+Repository = "https://github.com/archit15singh/worktree-ledger"
+Documentation = "https://github.com/archit15singh/worktree-ledger/blob/main/docs/usage.md"
+Issues = "https://github.com/archit15singh/worktree-ledger/issues"
 
 [project.scripts]
 continuity = "continuity.__main__:main"

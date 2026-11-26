@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use Worktree Ledger in research, please cite this report."
+title: "Worktree Ledger"
+authors:
+  - family-names: Singh
+    given-names: Archit
+repository-code: "https://github.com/archit15singh/worktree-ledger"
+preferred-citation:
+  type: report
+  title: "Recovering Coding-Agent Work Across Runtime Boundaries"
+  authors:
+    - family-names: Singh
+      given-names: Archit
+  year: 2026
+  url: "https://github.com/archit15singh/worktree-ledger/blob/main/docs/paper.md"
