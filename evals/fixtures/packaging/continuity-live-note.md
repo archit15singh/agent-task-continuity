@@ -1,0 +1,1 @@
+The checkout is unchanged. Read the helpers immediately above cpython_tags in src/packaging/tags.py. The threaded decision should follow the first recognized version-specific ABI or abi3t. Ignore generic ABI entries before it. Run python continuity-live-repro.py after editing.

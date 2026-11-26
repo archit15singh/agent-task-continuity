@@ -1,0 +1,612 @@
+{
+  "utc": "2026-11-26T08:00:24+00:00",
+  "evaluation_code_sha256": "51c66a3907782c237397efc81911fcbabfb799b2f50d675c35e87668c6510af6",
+  "opencode": "opencode v2.1.2",
+  "click_base": "dd149eb3129d887a22202c3fafa5ceb0e0d7018d",
+  "edit": [
+    {
+      "arm": "inexact",
+      "auto_compaction": false,
+      "requests": [
+        {
+          "messages": 2,
+          "tools": [],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        },
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "tool_calls"
+        },
+        {
+          "messages": 4,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": true,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        }
+      ],
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "6682aadd936b80ab62189f88d2454eab03727a62036999f5fc709f6849d93091",
+        "seconds": 0.9462,
+        "runtime_events": {
+          "step_start": 2,
+          "tool_use": 1,
+          "step_finish": 1,
+          "text": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 14,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 29,
+            "input": 200,
+            "output": 20,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 71
+          },
+          {
+            "event": "text",
+            "ms": 73
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "source_changed": false,
+      "expected_bytes": true,
+      "historical_predicate_exit": 1
+    },
+    {
+      "arm": "exact",
+      "auto_compaction": false,
+      "requests": [
+        {
+          "messages": 2,
+          "tools": [],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        },
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "tool_calls"
+        },
+        {
+          "messages": 4,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": true,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        }
+      ],
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "e821e5264053d5a61246ff79dcd57f62b4c5121a80a166cfc4f1fd1cce991eb9",
+        "seconds": 0.9813,
+        "runtime_events": {
+          "step_start": 2,
+          "tool_use": 1,
+          "step_finish": 1,
+          "text": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 14,
+            "tool": "edit",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 72,
+            "input": 200,
+            "output": 20,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 99
+          },
+          {
+            "event": "text",
+            "ms": 101
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "source_changed": true,
+      "expected_bytes": true,
+      "historical_predicate_exit": 1
+    }
+  ],
+  "compaction": [
+    {
+      "arm": "low_usage",
+      "auto_compaction": true,
+      "requests": [
+        {
+          "messages": 2,
+          "tools": [],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        },
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "tool_calls"
+        },
+        {
+          "messages": 4,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": true,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        }
+      ],
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "be0ca9592c2ab78c28377d50e234fedadca990949c8a90228d2ed5eaf63595b7",
+        "seconds": 0.83,
+        "runtime_events": {
+          "step_start": 1,
+          "tool_use": 1,
+          "step_finish": 1,
+          "text": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 27,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 28,
+            "input": 200,
+            "output": 20,
+            "reasoning": 0
+          },
+          {
+            "event": "text",
+            "ms": 58
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      }
+    },
+    {
+      "arm": "high_usage_auto_off",
+      "auto_compaction": false,
+      "requests": [
+        {
+          "messages": 2,
+          "tools": [],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        },
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "tool_calls"
+        },
+        {
+          "messages": 4,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": true,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        }
+      ],
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "d646ea31f50281fb17f5d57b1285a2de23b77b54c237cea89ef4a4c9860cd598",
+        "seconds": 0.7989,
+        "runtime_events": {
+          "step_start": 1,
+          "tool_use": 1,
+          "step_finish": 1,
+          "text": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 13,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 14,
+            "input": 16000,
+            "output": 20,
+            "reasoning": 0
+          },
+          {
+            "event": "text",
+            "ms": 58
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      }
+    },
+    {
+      "arm": "high_usage_summary_ok",
+      "auto_compaction": true,
+      "requests": [
+        {
+          "messages": 2,
+          "tools": [],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        },
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "tool_calls"
+        },
+        {
+          "messages": 5,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": true,
+          "summary_present": false,
+          "compaction_request": true,
+          "scripted_response": "stop"
+        },
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": true,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        }
+      ],
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "9cbc1d5d783a3213d986f625d240a5cc8ced18bcf07cf573c5481835e19fbce3",
+        "seconds": 0.8753,
+        "runtime_events": {
+          "step_start": 1,
+          "tool_use": 1,
+          "step_finish": 1,
+          "text": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 14,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 16,
+            "input": 16000,
+            "output": 20,
+            "reasoning": 0
+          },
+          {
+            "event": "text",
+            "ms": 78
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      }
+    },
+    {
+      "arm": "high_usage_summary_error",
+      "auto_compaction": true,
+      "requests": [
+        {
+          "messages": 2,
+          "tools": [],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        },
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "tool_calls"
+        },
+        {
+          "messages": 5,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": true,
+          "summary_present": false,
+          "compaction_request": true,
+          "scripted_response": "http_400"
+        }
+      ],
+      "worker": {
+        "exit_code": 1,
+        "timed_out": false,
+        "output_sha256": "c3d49b4b3608f3122d0f31bb5211b278a25263d8cda1c4e2c8cba00efb1a34ad",
+        "seconds": 0.7754,
+        "runtime_events": {
+          "step_start": 1,
+          "tool_use": 1,
+          "step_finish": 1,
+          "error": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 14,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 16,
+            "input": 16000,
+            "output": 20,
+            "reasoning": 0
+          },
+          {
+            "event": "error",
+            "ms": 50
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": "provider.invalid-request"
+      }
+    },
+    {
+      "arm": "high_usage_summary_truncated",
+      "auto_compaction": true,
+      "requests": [
+        {
+          "messages": 2,
+          "tools": [],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        },
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "tool_calls"
+        },
+        {
+          "messages": 5,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": true,
+          "summary_present": false,
+          "compaction_request": true,
+          "scripted_response": "length"
+        }
+      ],
+      "worker": {
+        "exit_code": 1,
+        "timed_out": false,
+        "output_sha256": "ec9c11961a8f4d59fa5cb7f046ffd0063999d74fde2d5143c8f8520b475d2d8b",
+        "seconds": 0.7113,
+        "runtime_events": {
+          "step_start": 1,
+          "tool_use": 1,
+          "step_finish": 1,
+          "error": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 14,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 15,
+            "input": 16000,
+            "output": 20,
+            "reasoning": 0
+          },
+          {
+            "event": "error",
+            "ms": 49
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": "compaction.failed"
+      }
+    }
+  ]
+}
