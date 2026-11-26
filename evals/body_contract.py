@@ -84,7 +84,13 @@ def run_trial(workspace, original, contract, seed, args, *, feedback=None):
         receipt["disposition"] = "invalid_schema"
         return receipt
     try:
-        candidate = apply_code(original, value["code"], contract)
+        try:
+            candidate = apply_code(original, value["code"], contract)
+        except ValueError as error:
+            if not (args.normalize_wrapper and contract == "body" and reject_reason(error) == "nested_function"):
+                raise
+            candidate = apply_code(original, value["code"], "whole")
+            receipt["normalized_wrapper"] = True
     except (SyntaxError, ValueError) as error:
         receipt["disposition"] = reject_reason(error)
         return receipt
@@ -122,8 +128,11 @@ def main():
     arms = cli.add_mutually_exclusive_group()
     arms.add_argument("--repeat-seed", type=int)
     arms.add_argument("--refine", action="store_true")
+    cli.add_argument("--normalize-wrapper", action="store_true")
     args = cli.parse_args()
     use_oracle = args.expanded or args.refine
+    if args.normalize_wrapper and not args.refine:
+        cli.error("wrapper normalization applies only to --refine")
     if not args.endpoint and not args.dry_run:
         cli.error("live runs require --endpoint")
     report = {

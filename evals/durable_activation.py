@@ -18,7 +18,7 @@ from urllib.request import Request, urlopen
 
 from continuity.publish import json_text, request
 from continuity.store import Store
-from continuity.workspace import ContinuityError, git
+from continuity.workspace import ContinuityError, git, restore
 from .receiver_restart import SCHEMA, counts, receiver
 from .run import PROJECT, invoke, sha
 
@@ -27,7 +27,8 @@ ACTIVATION_ENV = "CONTINUITY_FIXTURE_ACTIVATION_KEY"
 INTENT = """
 CREATE TABLE IF NOT EXISTS intent (
     task TEXT PRIMARY KEY, old_owner TEXT NOT NULL, next_owner TEXT NOT NULL,
-    destination TEXT NOT NULL, expected INTEGER NOT NULL, complete INTEGER NOT NULL DEFAULT 0
+    destination TEXT NOT NULL, expected INTEGER NOT NULL, checkpoint TEXT NOT NULL,
+    complete INTEGER NOT NULL DEFAULT 0
 );
 """
 
@@ -144,7 +145,7 @@ def advance(endpoint, key, task, expected):
 
 def coordinate(directory, endpoint, fault, secret):
     with closing(sqlite3.connect(directory / "intent.db")) as db:
-        task, old, successor, destination, expected, complete = db.execute("SELECT * FROM intent").fetchone()
+        task, old, successor, destination, expected, checkpoint, complete = db.execute("SELECT * FROM intent").fetchone()
         if complete:
             return
         if fault == "intent":
@@ -156,10 +157,22 @@ def coordinate(directory, endpoint, fault, secret):
         with store.connection() as conn:
             current = store.task(conn, task)["generation"]
         if current == expected:
-            store.takeover(task, old, destination, replacement_token=successor)
+            if fault == "workspace":
+                with store.connection() as conn:
+                    owner = store.task(conn, task, old)
+                    snapshot = store.latest(conn, owner)
+                assert snapshot["id"] == checkpoint
+                restore(owner["workspace"], destination, snapshot["base"], snapshot["patch"])
+                os._exit(34)
+            store.takeover(
+                task, old, destination, replacement_token=successor, expected_checkpoint=checkpoint,
+                prepared=Path(destination).exists(),
+            )
         with store.connection() as conn:
             verified = store.task(conn, task, successor)
-            if verified["generation"] != target or verified["workspace"] != str(Path(destination).resolve()):
+            if (verified["generation"], verified["workspace"], verified["checkpoint"]) != (
+                target, str(Path(destination).resolve()), checkpoint,
+            ):
                 raise RuntimeError("Local generation or workspace differs from the intent")
         if fault == "local":
             os._exit(33)
@@ -207,11 +220,12 @@ def trial(root, stage):
         assert advance(endpoint, key, task_id, 0) == 1
         with closing(sqlite3.connect(root / "intent.db")) as db:
             db.executescript(INTENT)
-            db.execute("INSERT INTO intent VALUES (?, ?, ?, ?, ?, 0)",
-                       (task_id, old, successor, str(root / "replacement"), 1))
+            db.execute("INSERT INTO intent VALUES (?, ?, ?, ?, ?, ?, 0)",
+                       (task_id, old, successor, str(root / "replacement"), 1, saved["checkpoint"]))
             db.commit()
-        coordinator_exit = run_coordinator(stage if stage in ("intent", "receiver", "local") else "none")
+        coordinator_exit = run_coordinator(stage if stage in ("intent", "receiver", "workspace", "local") else "none")
         interrupted = read_epochs()
+        prepared_at_interruption = (root / "replacement" / ".git").is_file()
 
     effect_fault = stage if stage in ("before", "after") else "none"
     with receiver(database, port, effect_fault, module=MODULE, env=env) as (active, _):
@@ -245,7 +259,7 @@ def trial(root, stage):
         assert request(endpoint, op)["payload"] == json.loads(payload)
     return {
         "fault": stage, "coordinator_exit": coordinator_exit, "epochs_at_interruption": interrupted,
-        "epochs_after_restart_and_replay": generations, "invalid_activation_http": auth_control,
+        "epochs_after_restart_and_replay": generations, "worktree_prepared_at_interruption": prepared_at_interruption, "invalid_activation_http": auth_control,
         "delayed_old_generation_http": delayed_status, "effects_and_receipts_before_publish": before_publish,
         "first_publish_status": first["status"], "effect_receiver_exit": effect_exit,
         "effects_and_receipts_after_first_publish": after_first, "final_status": confirmed["status"],
@@ -261,6 +275,7 @@ def main():
     cli.add_argument("--port", type=int, default=0)
     cli.add_argument("--fault", default="none")
     cli.add_argument("--endpoint")
+    cli.add_argument("--workspace-only", action="store_true")
     args = cli.parse_args()
     if args.worker:
         serve(args.worker, args.port, args.fault, os.environ[ACTIVATION_ENV])
@@ -270,7 +285,7 @@ def main():
         return
     if not args.output:
         cli.error("--output is required")
-    stages = ("intent", "receiver", "local", "before", "after")
+    stages = ("workspace",) if args.workspace_only else ("intent", "receiver", "workspace", "local", "before", "after")
     with tempfile.TemporaryDirectory(prefix="continuity-durable-activation-") as directory:
         rows = [trial(Path(directory) / f"trial-{index}", stage) for index, stage in enumerate(stages * 3, 1)]
     args.output.write_text(json.dumps({
@@ -279,8 +294,10 @@ def main():
     }, indent=2) + "\n")
     for row in rows:
         stage = row["fault"]
-        assert row["coordinator_exit"] == {"intent": 31, "receiver": 32, "local": 33}.get(stage, 0), row
-        assert row["epochs_at_interruption"] == {"intent": [1, 1], "receiver": [1, 2]}.get(stage, [2, 2]), row
+        assert row["coordinator_exit"] == {"intent": 31, "receiver": 32, "workspace": 34, "local": 33}.get(stage, 0), row
+        assert row["epochs_at_interruption"] == {"intent": [1, 1], "receiver": [1, 2], "workspace": [1, 2]}.get(stage, [2, 2]), row
+        if stage == "workspace":
+            assert row["worktree_prepared_at_interruption"], row
         assert row["epochs_after_restart_and_replay"] == [2, 2], row
         assert row["invalid_activation_http"] == 403 and row["delayed_old_generation_http"] == 412, row
         assert row["effects_and_receipts_before_publish"] == [0, 0], row

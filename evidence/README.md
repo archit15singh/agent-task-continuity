@@ -158,3 +158,31 @@ ollama create continuity-coder:7b -f /tmp/continuity-coder-modelfile
 .venv/bin/python -m evals.bounded_receiver --seed-base-feedback --model continuity-coder:7b \
   --endpoint http://127.0.0.1:11434/v1 --output /tmp/bounded-seeded.json
 ```
+
+
+## Round 3 contracts, oracle expansion, and durable activation
+
+[The first contract matrix](packaging-body-contract.json) compared whole functions and bodies using one JSON schema and a shared checkpoint. [The expanded comparison](packaging-body-oracle.json) added a 1,111-input oracle on the same pinned upstream task. [The exact-request repeat](packaging-body-repeat.json) records the seed forwarded by the relay and the hashes of three independent responses.
+
+[The original activation fixture](durable-activation.json) covered five interruption points. [The final activation fixture](prepared-activation.json) added death after worktree creation. Its 18 trials include separate durable coordinator, local authority, and receiver stores. The receiver administration credential stays within the fixture.
+
+```sh
+.venv/bin/python -m evals.body_contract --dry-run --output /tmp/contract-controls.json
+.venv/bin/python -m evals.body_contract --endpoint http://127.0.0.1:11434/v1 \
+  --output /tmp/contracts.json
+.venv/bin/python -m evals.body_contract --expanded --endpoint http://127.0.0.1:11434/v1 \
+  --output /tmp/contracts-expanded.json
+.venv/bin/python -m evals.body_contract --expanded --repeat-seed 32 \
+  --endpoint http://127.0.0.1:11434/v1 --output /tmp/contracts-repeat.json
+.venv/bin/python -m evals.durable_activation --output /tmp/durable-activation.json
+```
+
+
+[The counterexample trial](packaging-body-refinement.json) supplied the first expanded-oracle disagreement to the candidate. [The normalization trial](packaging-wrapper-refinement.json) received the same response and applied it through the whole-function guard. The source hash identifies the resulting edit as identical to the earlier candidate.
+
+```sh
+.venv/bin/python -m evals.body_contract --refine --endpoint http://127.0.0.1:11434/v1 \
+  --output /tmp/refine.json
+.venv/bin/python -m evals.body_contract --refine --normalize-wrapper \
+  --endpoint http://127.0.0.1:11434/v1 --output /tmp/refine-wrapper.json
+```

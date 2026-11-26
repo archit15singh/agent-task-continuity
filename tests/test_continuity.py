@@ -2,6 +2,7 @@ import base64
 import concurrent.futures
 import json
 from pathlib import Path
+import secrets
 import sys
 import tempfile
 import unittest
@@ -9,7 +10,7 @@ import unittest
 from continuity.publish import publish, settle
 from continuity.runner import run, verify
 from continuity.store import Store
-from continuity.workspace import ContinuityError, fingerprint, git
+from continuity.workspace import ContinuityError, fingerprint, git, restore
 from evals.publisher import publisher
 
 
@@ -95,6 +96,39 @@ class ContinuityTests(unittest.TestCase):
         assert recovered["generation"] == 2
         with self.assertRaisesRegex(ContinuityError, "Stale"):
             self.store.takeover(self.task, self.owner, self.directory / "stale")
+
+    def test_prepared_takeover_preserves_unrelated_and_changed_destinations(self):
+        saved = self.checkpoint()
+        destination = self.directory / "prepared"
+        unrelated = self.directory / "unrelated"
+        unrelated.mkdir()
+        (unrelated / "keep").write_text("keep")
+        successor = secrets.token_urlsafe(32)
+        with self.assertRaisesRegex(ContinuityError, "active owner token"):
+            self.store.takeover(self.task, None, unrelated, prepared=True, replacement_token=successor)
+        with self.assertRaisesRegex(ContinuityError, "detached linked worktree"):
+            self.store.takeover(self.task, self.owner, unrelated, prepared=True, replacement_token=successor)
+        assert (unrelated / "keep").read_text() == "keep"
+        with self.store.connection() as conn:
+            owner = self.store.task(conn, self.task, self.owner)
+            snapshot = self.store.latest(conn, owner)
+            restore(self.source, destination, snapshot["base"], snapshot["patch"])
+        with self.assertRaisesRegex(ContinuityError, "differs from the prepared"):
+            self.store.takeover(self.task, self.owner, destination, prepared=True, expected_checkpoint="stale")
+        with self.assertRaisesRegex(ContinuityError, "different replacement token"):
+            self.store.takeover(self.task, self.owner, destination, prepared=True, replacement_token=self.owner)
+        (destination / "code.py").write_text("x = 3\n")
+        with self.assertRaisesRegex(ContinuityError, "differs from the saved"):
+            self.store.takeover(self.task, self.owner, destination, prepared=True, replacement_token=successor)
+        assert (destination / "code.py").read_text() == "x = 3\n"
+        assert self.store.inspect(self.task)["generation"] == 1
+        (destination / "code.py").write_text("x = 2\n")
+        result = self.store.takeover(self.task, self.owner, destination, prepared=True,
+                                     replacement_token=successor, expected_checkpoint=saved["checkpoint"])
+        assert result["token"] == successor and result["generation"] == 2
+        with self.assertRaisesRegex(ContinuityError, "Stale"):
+            self.store.takeover(self.task, self.owner, self.directory / "stale")
+        assert self.store.inspect(self.task)["clean_match"]
 
     def test_publish_reconciliation_and_revision_gate(self):
         self.checkpoint()

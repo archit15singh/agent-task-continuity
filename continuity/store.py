@@ -93,10 +93,18 @@ class Store:
                 "workspace": str(workspace), "generation": 1}
 
     def recover_owner(self, task, recovery, destination):
+        if not recovery:
+            raise ContinuityError("An operator recovery key is required")
         return self._takeover(task, destination, recovery=recovery)
 
-    def takeover(self, task, token, destination, *, replacement_token=None):
-        return self._takeover(task, destination, token=token, replacement_token=replacement_token)
+    def takeover(self, task, token, destination, *, replacement_token=None, expected_checkpoint=None,
+                 prepared=False):
+        if not token:
+            raise ContinuityError("An active owner token is required")
+        return self._takeover(
+            task, destination, token=token, replacement_token=replacement_token,
+            expected_checkpoint=expected_checkpoint, prepared=prepared,
+        )
 
     @staticmethod
     def _assert_recovery(row, recovery):
@@ -177,7 +185,8 @@ class Store:
                               "matches": row["digest"] == digest and not missing} for row in records],
         }
 
-    def _takeover(self, task, destination, *, token=None, recovery=None, replacement_token=None):
+    def _takeover(self, task, destination, *, token=None, recovery=None, replacement_token=None,
+                  expected_checkpoint=None, prepared=False):
         if replacement_token is not None and (
             not isinstance(replacement_token, str) or len(replacement_token) < 32
         ):
@@ -188,7 +197,18 @@ class Store:
             owner = self.task(conn, task, token)
             self._assert_recovery(owner, recovery)
             snapshot = self.latest(conn, owner)
-        destination = restore(owner["workspace"], destination, snapshot["base"], snapshot["patch"])
+        if expected_checkpoint is not None and snapshot["id"] != expected_checkpoint:
+            raise ContinuityError("The checkpoint differs from the prepared takeover intent")
+        if prepared:
+            destination = Path(destination).resolve()
+            registered = git(owner["workspace"], "worktree", "list", "--porcelain", "-z").split(b"\0\0")
+            path = os.fsencode(f"worktree {destination}") + b"\0"
+            detached = any(entry.startswith(path) and b"detached" in entry.split(b"\0") for entry in registered)
+            if (not destination.is_dir() or destination == Path(owner["workspace"])
+                    or not detached or root(destination) != destination):
+                raise ContinuityError("Prepared destination must be a detached linked worktree of this repository")
+        else:
+            destination = restore(owner["workspace"], destination, snapshot["base"], snapshot["patch"])
         replacement = replacement_token if replacement_token is not None else secrets.token_urlsafe(32)
         try:
             includes = json.loads(snapshot["includes"])
@@ -205,7 +225,8 @@ class Store:
                 )
                 manifest = self._manifest(conn, self.task(conn, task), snapshot)
         except BaseException:
-            git(owner["workspace"], "worktree", "remove", "--force", str(destination))
+            if not prepared:
+                git(owner["workspace"], "worktree", "remove", "--force", str(destination))
             raise
         context = manifest["context"]
         structured = "\n".join(

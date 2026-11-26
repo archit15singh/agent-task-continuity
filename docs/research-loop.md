@@ -135,3 +135,20 @@ Seed 32 produced different grades across rounds. Forward and record the requeste
 ### H14 · Counterexample from the expanded oracle
 
 The repeated body candidate was byte-identical to the initial apparent pass. Produce it again with seed 32, then give the model that candidate and the first minimal mismatch from the ordered upstream-oracle inputs. Test one correction with the same body contract and output allowance. Recheck the original gates and all 1,111 inputs. Record whether the sample was actually repaired and whether other differences remain. A successful correction would still only qualify the receiver on this diagnostic case.
+
+### H15 · Normalize a redundant function wrapper
+
+The counterexample correction returned a nested-function rejection under the body contract. Repeat that exact request with one normalizer. If the body fails because it contains a function definition, accept a complete wrapper only when it independently passes the existing whole-function guard, including the original signature and scoped AST. Keep the input, expected response, and oracle unchanged. Reject arbitrary nested definitions and score any normalized candidate against all behaviors.
+
+## Round 3 results and next hypotheses
+
+The requested seed was present at the relay, and the body output matched byte-for-byte across the repeat series and the initial success. The change in disposition came from adding a broader grader. The single counterexample correction returned a function wrapper. Normalization accepted the same response but yielded the unchanged candidate and the same 123 disagreements.
+
+The combined durable fixture converged in all 18 trials after testing six interruption points. The prepared checkout was adopted in three more specific trials without advancing past generation 2. The regression test confirms unrelated and changed destinations are preserved.
+
+| Rank | Next experiment | Decision it would change |
+|---:|---|---|
+| 1 | Predeclare broader hidden behavior oracles on new repository tasks before qualifying a replacement | Whether scoped edits succeed beyond a small task-specific check set |
+| 2 | Bind each remotely submitted generation to a per-task credential, then repeat delayed delivery and receiver restart | Whether the trusted loopback generation assertion can become an authenticated worker contract |
+| 3 | Stop Git restoration midway through applying a multi-file patch | Whether the coordinator can safely distinguish a verified prepared checkout from an incomplete one and resume it |
+| 4 | Run the paired restart protocol with operators | Whether managed recovery changes human active time |
