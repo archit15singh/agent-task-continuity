@@ -199,3 +199,7 @@ Use the Click deprecated-help formatting change, Packaging marker quoting change
 ### H19 · Visible-reproduction ceiling
 
 Before inspecting any replacement's result, construct a deliberately incomplete change for each parent. For Click, take the option-only part of the reference. For Packaging, choose a valid delimiter for representable literals and omit rejection of an unrepresentable literal. For attrs, handle the assignment path for the simple wrapped pipeline while leaving direct adapter and context forwarding behavior unchanged. The visible reproduction should pass in each case. Grade each against the same frozen oracle and parent native tests. This checks whether the broader probes reject plausible partial repairs even if the live attempts make no progress.
+
+### H20 · Tool execution control
+
+Qualify each harness with a scripted provider response that replaces one line in a disposable text file. Retain the same runtime flags and tool settings as H18. Check for the tool result on the next provider request and grade the file bytes independently. A passing control establishes that the harness can receive and apply a valid response under this configuration. The synthetic response does not establish live model tool quality.
