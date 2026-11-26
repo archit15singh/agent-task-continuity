@@ -103,3 +103,58 @@ The [follow-up protocol](../docs/research-loop.md) records controls, expected ou
   --model continuity-local/continuity-qwen3:4b --endpoint http://127.0.0.1:11434/v1 \
   --output /tmp/packaging-fixed-title.json
 ```
+
+
+## Round 2 follow-up
+
+[The round 2 prompts and hypotheses](../docs/research-loop.md) record controls and research decisions. The [delayed-publication receipt](delayed-publication.json) covers three trials for each receiver condition. The [receiver-first receipt](receiver-first-activation.json) covers three trials after interruption between receiver and local activation. The [handoff timing rehearsal](handoff-timing-rehearsal.json) contains scripted timings and no human observations.
+
+```sh
+.venv/bin/python -m evals.delayed_publication --output /tmp/delayed-publication.json
+.venv/bin/python -m evals.delayed_publication --receiver-first --output /tmp/receiver-first.json
+.venv/bin/python -m evals.handoff_timing --output /tmp/handoff-timing.json
+```
+
+
+[The transactional receiver restart receipt](receiver-restart.json) measures independent database readback immediately after death and after reconciliation. The receiver shares one SQLite transaction between the simulated effect and its receipt.
+
+```sh
+.venv/bin/python -m evals.receiver_restart --output /tmp/receiver-restart.json
+```
+
+
+[The reasoning matrix](packaging-reasoning-matrix.json) repeats four arms on one checkpoint. [The provider's advertised capabilities and model digests](reasoning-provider-metadata.json) and [initial arithmetic smoke](reasoning-smoke.json) identify the tested Ollama configuration. The request setting and the response channel counters are separate fields.
+
+```sh
+.venv/bin/python -m evals.frozen --reasoning-matrix \
+  --model continuity-local/continuity-qwen3:4b --endpoint http://127.0.0.1:11434/v1 \
+  --output /tmp/reasoning-matrix.json
+.venv/bin/python -m evals.reasoning_smoke --endpoint http://127.0.0.1:11434/v1 \
+  --output /tmp/reasoning-channel-check.json
+```
+
+
+[The follow-up arithmetic channel check](reasoning-channel-check.json) tests for exact output and literal think tags. [The bounded 4B receiver receipt](packaging-bounded-receiver.json) includes the splicer controls and the failed candidate.
+
+```sh
+.venv/bin/python -m evals.bounded_receiver --dry-run --output /tmp/bounded-controls.json
+.venv/bin/python -m evals.bounded_receiver --endpoint http://127.0.0.1:11434/v1 \
+  --output /tmp/bounded-4b.json
+```
+
+
+[The coding-model digests](coder-model-digests.json) identify the second local alias. [The bounded 7B trial](packaging-bounded-coder.json) applied a function that failed both change checks. [The adaptive trial](packaging-bounded-feedback.json) stopped at the guard before the feedback call. [The seeded trial](packaging-bounded-seeded-feedback.json) supplied a concrete failing input to the original helper. [The scripted control](packaging-feedback-scripted.json) returned the unchanged and upstream-equivalent functions in sequence and verifies the same feedback and grading path.
+
+```sh
+ollama pull qwen2.5-coder:7b
+printf '%s\n' 'FROM qwen2.5-coder:7b' 'PARAMETER num_ctx 16384' \
+  'PARAMETER num_predict 1500' > /tmp/continuity-coder-modelfile
+ollama create continuity-coder:7b -f /tmp/continuity-coder-modelfile
+
+.venv/bin/python -m evals.bounded_receiver --model continuity-coder:7b \
+  --endpoint http://127.0.0.1:11434/v1 --output /tmp/bounded-coder.json
+.venv/bin/python -m evals.bounded_receiver --feedback-once --model continuity-coder:7b \
+  --endpoint http://127.0.0.1:11434/v1 --output /tmp/bounded-feedback.json
+.venv/bin/python -m evals.bounded_receiver --seed-base-feedback --model continuity-coder:7b \
+  --endpoint http://127.0.0.1:11434/v1 --output /tmp/bounded-seeded.json
+```

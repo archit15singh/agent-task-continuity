@@ -1,0 +1,284 @@
+{
+  "utc": "2026-11-26T08:44:14+00:00",
+  "evaluation_code_sha256": "a96dfea0fd9c33598f4e1b0e46d139b58d5fcd5c859dfc248500b5ff2163bb2b",
+  "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+  "model": "continuity-coder:7b",
+  "mode": "live",
+  "seed": "unchanged_helper",
+  "checkpoint": "705aca0dcb56cf37faee7c3d70a323da1c454bbde891381c7a8d35d3b97045b8",
+  "unchanged_control": {
+    "files_restored": true,
+    "changed_files": [
+      "continuity-live-note.md",
+      "continuity-live-repro.py"
+    ],
+    "predicate_exit": 1,
+    "repro_exit": 1,
+    "native_exit": 0,
+    "native_summary": [
+      "238 passed in 0.17s"
+    ],
+    "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54"
+  },
+  "unchanged_behavior": [
+    {
+      "abis": [
+        "none",
+        "cp316t"
+      ],
+      "expected": true,
+      "observed": false
+    },
+    {
+      "abis": [
+        "abi3t"
+      ],
+      "expected": true,
+      "observed": false
+    },
+    {
+      "abis": [
+        "cp316",
+        "cp316t"
+      ],
+      "expected": false,
+      "observed": false
+    },
+    {
+      "abis": [
+        "abi3t",
+        "cp316"
+      ],
+      "expected": true,
+      "observed": false
+    },
+    {
+      "abis": [
+        "none",
+        "abi3"
+      ],
+      "expected": false,
+      "observed": false
+    },
+    {
+      "abis": [],
+      "expected": false,
+      "observed": false
+    }
+  ],
+  "upstream_function_control": {
+    "files_restored": true,
+    "changed_files": [
+      "continuity-live-note.md",
+      "continuity-live-repro.py",
+      "src/packaging/tags.py"
+    ],
+    "predicate_exit": 0,
+    "repro_exit": 0,
+    "native_exit": 0,
+    "native_summary": [
+      "238 passed in 0.17s"
+    ],
+    "source_sha256": "cb021177e6149f7fcb6d72b9ca53d0f5100dddecd9d10992c9ffb16d8684b529"
+  },
+  "upstream_behavior": [
+    {
+      "abis": [
+        "none",
+        "cp316t"
+      ],
+      "expected": true,
+      "observed": true
+    },
+    {
+      "abis": [
+        "abi3t"
+      ],
+      "expected": true,
+      "observed": true
+    },
+    {
+      "abis": [
+        "cp316",
+        "cp316t"
+      ],
+      "expected": false,
+      "observed": false
+    },
+    {
+      "abis": [
+        "abi3t",
+        "cp316"
+      ],
+      "expected": true,
+      "observed": true
+    },
+    {
+      "abis": [
+        "none",
+        "abi3"
+      ],
+      "expected": false,
+      "observed": false
+    },
+    {
+      "abis": [],
+      "expected": false,
+      "observed": false
+    }
+  ],
+  "candidate_applied": false,
+  "grade": {
+    "files_restored": true,
+    "changed_files": [
+      "continuity-live-note.md",
+      "continuity-live-repro.py"
+    ],
+    "predicate_exit": 1,
+    "repro_exit": 1,
+    "native_exit": 0,
+    "native_summary": [
+      "238 passed in 0.14s"
+    ],
+    "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54"
+  },
+  "complete": false,
+  "behavior": [
+    {
+      "abis": [
+        "none",
+        "cp316t"
+      ],
+      "expected": true,
+      "observed": false
+    },
+    {
+      "abis": [
+        "abi3t"
+      ],
+      "expected": true,
+      "observed": false
+    },
+    {
+      "abis": [
+        "cp316",
+        "cp316t"
+      ],
+      "expected": false,
+      "observed": false
+    },
+    {
+      "abis": [
+        "abi3t",
+        "cp316"
+      ],
+      "expected": true,
+      "observed": false
+    },
+    {
+      "abis": [
+        "none",
+        "abi3"
+      ],
+      "expected": false,
+      "observed": false
+    },
+    {
+      "abis": [],
+      "expected": false,
+      "observed": false
+    }
+  ],
+  "feedback": {
+    "prompt_sha256": "ba2b9bea8bc9e9e7f48c6f0cafcdd64e2326866eb07ac29862086c8e1f7f818b",
+    "provider_requests": [
+      {
+        "path": "/v1/chat/completions",
+        "request_at_seconds": 0.009,
+        "compaction_summary": false,
+        "messages": 1,
+        "tool_count": 0,
+        "reasoning_effort": "none",
+        "reasoning_characters": 0,
+        "visible_characters": 447,
+        "requested_max_tokens": 1500,
+        "http_status": 200,
+        "finish_reason": "stop",
+        "ended": "provider_eof",
+        "duration_seconds": 5.506
+      }
+    ],
+    "output_sha256": "06ae2d7a8d01c0be73d30c91af4cbf5a620ac9ef6217371f60c8fd21121dad08",
+    "candidate_applied": false,
+    "failure_type": "ValueError",
+    "counterexample": {
+      "abis": [
+        "none",
+        "cp316t"
+      ],
+      "expected": true,
+      "observed": false
+    },
+    "grade": {
+      "files_restored": true,
+      "changed_files": [
+        "continuity-live-note.md",
+        "continuity-live-repro.py"
+      ],
+      "predicate_exit": 1,
+      "repro_exit": 1,
+      "native_exit": 0,
+      "native_summary": [
+        "238 passed in 0.16s"
+      ],
+      "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54"
+    },
+    "behavior": [
+      {
+        "abis": [
+          "none",
+          "cp316t"
+        ],
+        "expected": true,
+        "observed": false
+      },
+      {
+        "abis": [
+          "abi3t"
+        ],
+        "expected": true,
+        "observed": false
+      },
+      {
+        "abis": [
+          "cp316",
+          "cp316t"
+        ],
+        "expected": false,
+        "observed": false
+      },
+      {
+        "abis": [
+          "abi3t",
+          "cp316"
+        ],
+        "expected": true,
+        "observed": false
+      },
+      {
+        "abis": [
+          "none",
+          "abi3"
+        ],
+        "expected": false,
+        "observed": false
+      },
+      {
+        "abis": [],
+        "expected": false,
+        "observed": false
+      }
+    ],
+    "complete": false
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "utc": "2026-11-26T08:40:47+00:00",
+  "evaluation_code_sha256": "f609f80cd7443f8f34f6d16c3e31dc645006699ed82480e940cd5799d8153ecc",
+  "model": "continuity-qwen3:4b",
+  "trials": [
+    {
+      "path": "/v1/chat/completions",
+      "request_at_seconds": 0.011,
+      "compaction_summary": false,
+      "messages": 1,
+      "tool_count": 0,
+      "reasoning_effort": null,
+      "reasoning_characters": 237,
+      "visible_characters": 0,
+      "requested_max_tokens": 64,
+      "http_status": 200,
+      "finish_reason": "length",
+      "ended": "provider_eof",
+      "duration_seconds": 1.465,
+      "literal_think_tag": false,
+      "exact_answer": false
+    },
+    {
+      "path": "/v1/chat/completions",
+      "request_at_seconds": 0.002,
+      "compaction_summary": false,
+      "messages": 1,
+      "tool_count": 0,
+      "reasoning_effort": "none",
+      "reasoning_characters": 0,
+      "visible_characters": 234,
+      "requested_max_tokens": 64,
+      "http_status": 200,
+      "finish_reason": "length",
+      "ended": "provider_eof",
+      "duration_seconds": 1.269,
+      "literal_think_tag": false,
+      "exact_answer": false
+    }
+  ]
+}

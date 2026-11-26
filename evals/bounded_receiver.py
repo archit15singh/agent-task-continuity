@@ -126,8 +126,11 @@ def main():
     cli.add_argument("--endpoint")
     cli.add_argument("--model", default="continuity-qwen3:4b")
     cli.add_argument("--dry-run", action="store_true")
-    cli.add_argument("--feedback-once", action="store_true")
+    feedback = cli.add_mutually_exclusive_group()
+    feedback.add_argument("--feedback-once", action="store_true")
+    feedback.add_argument("--seed-base-feedback", action="store_true")
     args = cli.parse_args()
+    measure_behavior = args.feedback_once or args.seed_base_feedback
     if not args.endpoint and not args.dry_run:
         cli.error("a live run requires an endpoint")
     report = {
@@ -136,6 +139,7 @@ def main():
         "base": CASE["base"],
         "model": args.model,
         "mode": "dry_run" if args.dry_run else "live",
+        **({"seed": "unchanged_helper"} if args.seed_base_feedback else {}),
     }
     with tempfile.TemporaryDirectory(prefix="continuity-bounded-") as directory:
         temp = Path(directory)
@@ -156,7 +160,7 @@ def main():
         report["checkpoint"] = checkpoint["digest"]
         assert splice(before, original) == before
         report["unchanged_control"] = grade(workspace)
-        if args.feedback_once:
+        if measure_behavior:
             report["unchanged_behavior"] = behavior(workspace)
             assert any(row["observed"] != row["expected"] for row in report["unchanged_behavior"])
         assert report["unchanged_control"]["predicate_exit"] == report["unchanged_control"]["repro_exit"] == 1
@@ -165,7 +169,7 @@ def main():
         upstream = upstream.replace("_CPYTHON_ABI_RE.match(", r're.match(r"cp\d+(.*)", ')
         source_path.write_text(splice(before, upstream))
         report["upstream_function_control"] = grade(workspace)
-        if args.feedback_once:
+        if measure_behavior:
             report["upstream_behavior"] = behavior(workspace)
             assert all(row["observed"] == row["expected"] for row in report["upstream_behavior"])
         assert all(report["upstream_function_control"][gate] == 0
@@ -179,15 +183,18 @@ def main():
                 "simple string or regex matching.\n\n"
                 f"```python\n{original}```\n"
             )
-            report.update(apply_completion(args.endpoint, args.model, prompt, source_path, before))
+            if args.seed_base_feedback:
+                report["candidate_applied"] = False
+            else:
+                report.update(apply_completion(args.endpoint, args.model, prompt, source_path, before))
             report["grade"] = grade(workspace)
             report["complete"] = finished(report)
-            if args.feedback_once:
+            if measure_behavior:
                 observed = behavior(workspace)
                 report["behavior"] = observed
                 failures = [item for item in observed or [] if item["observed"] != item["expected"]]
                 report["complete"] = report["complete"] and observed is not None and not failures
-                if report["candidate_applied"] and failures:
+                if (report["candidate_applied"] or args.seed_base_feedback) and failures:
                     first = failures[0]
                     revised = (
                         f"{TASKS['packaging']}\nA check of your replacement used {first['abis']!r} "

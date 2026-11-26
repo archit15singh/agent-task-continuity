@@ -1,0 +1,25 @@
+{
+  "utc": "2026-11-26T08:37:58+00:00",
+  "server": "0.40.6",
+  "model": "continuity-qwen3:4b",
+  "manifest_digests": {
+    "continuity-qwen3:4b": "48c0fc34e0759fbccf94c03a62321d814d851e14368b1a4ad3c97da6f1012109",
+    "qwen3:4b": "359d7dd4bcdab3d86b87d73ac27966f4dbb9f5efdfcc75d34a8764a09474fae7"
+  },
+  "thinking": {
+    "values": [
+      true
+    ],
+    "default": true
+  },
+  "capabilities": [
+    "completion",
+    "tools",
+    "thinking"
+  ],
+  "parameters": {
+    "num_ctx": "16384",
+    "num_predict": "1500",
+    "temperature": "0.6"
+  }
+}

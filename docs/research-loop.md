@@ -76,3 +76,30 @@ The first arithmetic smoke moved hundreds of characters from the reasoning strea
 ### H6 · Receiver death before or after commit
 
 Use a loopback receiver that writes a simulated effect row and a receipt in one SQLite transaction. Kill the receiver process immediately before or after that commit, before any acknowledgment. Restart a new process at the same endpoint. The before-commit condition should expose zero effects and zero receipts after death. The after-commit condition should expose one of each. In both conditions a replacement must reconcile to one durable effect and one matching receipt. Repeat three times per condition with separate receiver databases. This exercises a transactional stand-in for an effect that shares the receiver's database.
+
+### H4b · Coding-tuned local comparison
+
+Reuse the bounded receiver, prompt, checkpoint, output allowance, and graders with Qwen2.5-Coder 7B. Give it one attempt after the Qwen3 4B tests. The outcome decides whether there is a local configuration worth replicating on new tasks. This diagnostic changes the model family and size together and gives no model ranking. [Model card](https://huggingface.co/Qwen/Qwen2.5-Coder-7B-Instruct)
+
+### H7 · One behavioral counterexample
+
+The coding-tuned receiver applied a scoped function and failed both change checks, so use a single feedback turn. Repeat its initial bounded request. If a candidate applies and fails, test the helper against a fixed six-input behavior matrix and send only the first failing input, expected boolean, and observed boolean with the candidate function. Regrade with the original checks and all six cases. Stop after at most one feedback request. This is adaptive repair on a diagnostic task. The first and final outcomes are both retained, and any new pass still requires held-out replication.
+
+### H8 · Seeded feedback feasibility
+
+The adaptive repeat produced an output that the splice guard rejected, so it gave no feedback trial. Isolate the second turn with the original helper as a verified failing seed. Supply the same first failing example and request one correction from the coding-tuned model. Retain this receipt separately from the adaptive run. If the candidate applies, compare all six helper behaviors and both existing change-specific checks. This isolates whether the feedback prompt can produce a valid repair from a known source state.
+
+## Round 2 results and next hypotheses
+
+- H1 changed the reported output channels. Both settings produced zero verified fixes. The provider advertised thinking enabled as its sole supported value. Future reasoning experiments should qualify a demonstrated ability to switch modes before running repository tasks.
+- H2 and H5 isolated the local transfer-to-receiver gap and the temporary unavailability when the receiver advances first. H6 established the distinct effect-and-receipt commit boundary in SQLite. The next implementation hypothesis is that a durable, authenticated receiver generation can be combined with durable operation receipts and an interrupted activation record. Fault each boundary under process restart.
+- H3 validated the timing measurements on three public repositories. Participant observations are the next requirement for conclusions about operator effort.
+- H4, H7, and H8 separated output length, guard rejection, and behavioral failure. A scripted wrong-then-correct pair confirmed that a real counterexample reaches the second request and the same verifier can pass its replacement. Qualify a typed body or patch format on new tasks before broader model comparisons.
+
+| Rank | Next experiment | Decision it would change |
+|---:|---|---|
+| 1 | Hold the edit region fixed and compare a typed function body with a whole function, tracking the specific guard boundary on each attempt | Whether a smaller edit contract reduces rejection without sacrificing correctness |
+| 2 | Persist receiver epochs and activation intent, then repeat old-request delivery and restart at each transition | Whether remote authority survives interrupted activation and receiver restart together |
+| 3 | Choose new held-out repository tasks and repeat only receivers that first pass a fixed qualification case | Whether verified continuation generalizes beyond Packaging |
+| 4 | Run the paired restart protocol with actual operators | Whether managed recovery saves human active time after accounting for capture and review |
+| 5 | Exercise a cooperating hosted receiver with independent readback | Which external guarantees hold outside the loopback and bare-Git fixtures |
