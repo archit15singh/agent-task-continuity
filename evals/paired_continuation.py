@@ -174,7 +174,7 @@ def grade(case, destination, expected):
     }
 
 
-def attempt(case, root, runtime, endpoint, expected):
+def attempt(case, root, runtime, endpoint, expected, *, reasoning_effort=None):
     root.mkdir()
     source = download(case, root / "parent", reference=False)
     seed(case, source)
@@ -196,7 +196,7 @@ def attempt(case, root, runtime, endpoint, expected):
     state = root / "worker-state"
     state.mkdir()
     warm_provider(endpoint)
-    with trace_provider(endpoint) as (relay, requests):
+    with trace_provider(endpoint, reasoning_effort=reasoning_effort) as (relay, requests):
         command, environment = worker_command(runtime, handoff["prompt"], relay, state)
         outcome = run(command, destination, environment=environment, seconds=TIMEOUT, log=log)
     summary = read_summary(log)

@@ -211,3 +211,7 @@ Use a disposable repository with a text edit, a binary edit, a deletion, and a s
 ### H22 · Qualify reasoning control on the measured alias
 
 The Click OpenCode attempt emitted reasoning despite the prompt directive. After the serial live matrix, send the same short arithmetic prompt to the native chat, Chat Completions, and Responses endpoints. Compare each default with its documented API-level off request at a 32-token output allowance and zero temperature. Record metadata, exact-answer pass, lengths, reasoning output, and provider status. Treat this as an endpoint qualification. A positive result licenses a separately frozen repository comparison of the setting.
+
+### H23 · Endpoint-level off on the frozen Click pair
+
+If the Chat Completions off request in H22 returns the exact answer with no reasoning content or literal think tags, repeat the OpenCode Click arm once. Keep the saved checkpoint, prompt, model, runtime, permissions, and 180-second deadline fixed. Set only `reasoning_effort=none` at the relay. Record whether the wire-level change persists on the task and whether the visible repro and broader checks pass. Compare to the earlier default Click attempt as an exploratory one-pair diagnostic.
