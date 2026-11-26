@@ -72,7 +72,7 @@ def mock_server(replies):
     return ThreadingHTTPServer(("127.0.0.1", 0), Handler), requests
 
 
-def run_arm(workspace, temp, label, replies, *, auto, prompt):
+def run_arm(workspace, temp, label, replies, *, auto, prompt, title=None):
     server, requests = mock_server(replies)
     thread = Thread(target=server.serve_forever, daemon=True)
     thread.start()
@@ -83,7 +83,10 @@ def run_arm(workspace, temp, label, replies, *, auto, prompt):
         config["compaction"] = {"auto": auto, "background": False, "buffer": "50%", "keep": {"tokens": 0}}
         env["OPENCODE_CONFIG_CONTENT"] = json.dumps(config)
         log = temp / f"{label}.log"
-        output = run(runtime_command("opencode", prompt, MODEL), workspace, seconds=35, log=log, environment=env)
+        command = runtime_command("opencode", prompt, MODEL)
+        if title is not None:
+            command[-1:-1] = ["--title", title]
+        output = run(command, workspace, seconds=35, log=log, environment=env)
         output.update(read_summary(log))
     finally:
         server.shutdown()
@@ -141,9 +144,23 @@ def compaction_arms(temp):
     return reports
 
 
+def title_arms(temp):
+    reports = []
+    for label, title in (("auto_title", None), ("fixed_title", "Continuity title fixture")):
+        workspace = temp / label
+        workspace.mkdir()
+        git(workspace, "init", "--quiet")
+        reports.append(run_arm(
+            workspace, temp, label, [{"text": "Fixture ready"}] * 2, auto=False,
+            prompt="Say ready without tools.", title=title,
+        ))
+    return reports
+
+
 def main():
     cli = argparse.ArgumentParser(description=__doc__)
     cli.add_argument("--output", type=Path, required=True)
+    cli.add_argument("--title-probe", action="store_true")
     args = cli.parse_args()
     with tempfile.TemporaryDirectory(prefix="continuity-boundary-") as directory:
         temp = Path(directory)
@@ -151,11 +168,16 @@ def main():
             "utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "evaluation_code_sha256": sha(Path(__file__).read_bytes()),
             "opencode": execute(["opencode", "--version"]).stdout.decode().strip(),
-            "click_base": CLICK["base"],
-            "edit": click_arms(temp),
-            "compaction": compaction_arms(temp),
+            **({"title": title_arms(temp)} if args.title_probe else {
+                "click_base": CLICK["base"], "edit": click_arms(temp), "compaction": compaction_arms(temp),
+            }),
         }
     args.output.write_text(json.dumps(report, indent=2) + "\n")
+    if args.title_probe:
+        request_patterns = [[bool(request["tools"]) for request in arm["requests"]] for arm in report["title"]]
+        if request_patterns != [[False, True], [True]] or any(arm["worker"]["exit_code"] for arm in report["title"]):
+            raise RuntimeError(f"Title probe differed from expectations: {request_patterns}")
+        return
     if [item["source_changed"] for item in report["edit"]] != [False, True] or not all(
         item["expected_bytes"] and item["historical_predicate_exit"] == 1 for item in report["edit"]
     ):

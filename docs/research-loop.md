@@ -24,3 +24,7 @@ Then try a minimal Codex Responses turn against the same local model. If it pass
 ## Independent Git publication probe
 
 Use a disposable bare Git receiver as a second publication target. Hold the first push open in the receiver's post-receive hook after the new ref is visible. Kill the publishing client before it returns, verify the ref by independent readback, and replay the same candidate. A second control must reject a different candidate with the same expected-absent lease, leaving the first SHA intact. Repeat three times with fresh receivers. The probe measures Git ref convergence and changes recorded by post-receive. It does not test GitHub, remote fencing, or general exactly-once delivery.
+
+## Iteration after the provider trace
+
+The trace identified an auxiliary title request that ran concurrently with the first task request and consumed the same 1,500-token allowance. Test explicit titles against the scripted provider first. If supplying a title removes the tool-free startup request, add a single live traced attempt with a fixed title and the same checkpoint, provider and timeout. A reduction in calls verifies a mechanism on this setup. A single timed attempt is exploratory for latency and repair quality.

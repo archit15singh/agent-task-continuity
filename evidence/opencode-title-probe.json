@@ -1,0 +1,105 @@
+{
+  "utc": "2026-11-26T08:12:29+00:00",
+  "evaluation_code_sha256": "40f6052b46c36aca2d08d6c4c8cc9eff376e14452b5e48651243a6133bd428a6",
+  "opencode": "opencode v2.1.2",
+  "title": [
+    {
+      "arm": "auto_title",
+      "auto_compaction": false,
+      "requests": [
+        {
+          "messages": 2,
+          "tools": [],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        },
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        }
+      ],
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "dbc63e02b7a919d46bebbe2629661ea563b7a027993cc6648b6102b2a31f88a1",
+        "seconds": 0.7734,
+        "runtime_events": {
+          "step_start": 1,
+          "text": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "text",
+            "ms": 1
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      }
+    },
+    {
+      "arm": "fixed_title",
+      "auto_compaction": false,
+      "requests": [
+        {
+          "messages": 2,
+          "tools": [
+            "edit",
+            "glob",
+            "grep",
+            "read",
+            "write"
+          ],
+          "tool_result_present": false,
+          "summary_present": false,
+          "compaction_request": false,
+          "scripted_response": "stop"
+        }
+      ],
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "8f9038e2238e9272983beb3e3b3b6fdfe38af296c7ba103f0f2bccb44a153037",
+        "seconds": 0.6117,
+        "runtime_events": {
+          "step_start": 1,
+          "text": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "text",
+            "ms": 1
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      }
+    }
+  ]
+}

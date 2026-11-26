@@ -46,10 +46,14 @@ def main():
     cli.add_argument("--dry-run", action="store_true")
     cli.add_argument("--trace-single-auto", action="store_true",
                      help="Run one additional auto-compaction arm through a metadata-only provider trace")
+    cli.add_argument("--fixed-title", action="store_true",
+                     help="Provide a fixed OpenCode title on the single traced attempt")
     cli.add_argument("--timeout", type=int, default=180)
     args = cli.parse_args()
     if not args.dry_run and (not args.endpoint or not args.model):
         cli.error("live runs need --endpoint and --model")
+    if args.fixed_title and not args.trace_single_auto:
+        cli.error("--fixed-title requires --trace-single-auto")
     if args.endpoint and not args.endpoint.startswith("http://127.0.0.1:"):
         cli.error("use a loopback provider")
     report = {
@@ -62,6 +66,7 @@ def main():
         "opencode": execute(["opencode", "--version"]).stdout.decode().strip(),
         "model": args.model,
         "timeout": args.timeout,
+        **({"fixed_title": True} if args.fixed_title else {}),
         "fixture_hashes": {name: sha((FIXTURE / name).read_bytes()) for name in (NOTE, REPRO)},
         "arms": [],
     }
@@ -107,8 +112,11 @@ def main():
                 config["compaction"] = {"auto": auto}
                 env["OPENCODE_CONFIG_CONTENT"] = json.dumps(config)
                 log = temp / f"attempt-{index}.log"
+                command = runtime_command("opencode", handoff["prompt"], args.model)
+                if args.fixed_title:
+                    command[-1:-1] = ["--title", "Frozen Packaging handoff"]
                 worker = run(
-                    runtime_command("opencode", handoff["prompt"], args.model),
+                    command,
                     destination, seconds=args.timeout, environment=env, log=log,
                 )
             worker.update(read_summary(log))
