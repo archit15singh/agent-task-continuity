@@ -127,3 +127,7 @@ The first four edit-contract trials accepted one candidate per arm; only the bod
 ### H12 · Interrupted worktree preparation
 
 The first activation matrix interrupted the coordinator on either side of ownership commit. Add the earlier boundary after successful Git restoration and before local authority changes. Resume with the same staged token and prepared path. The takeover should adopt only a verified linked worktree from the same repository and keep the generation monotonic. A mismatched or unrelated path must be rejected and preserved.
+
+### H13 · Exact-request repeatability
+
+Seed 32 produced different grades across rounds. Forward and record the requested seed explicitly and run the identical body request three times. Keep the expanded oracle and compare response hashes as well as verified behavior. A match within this series establishes observed repeatability for this run; a difference establishes that the request seed alone was insufficient to reproduce the output on this setup.

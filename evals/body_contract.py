@@ -109,6 +109,7 @@ def main():
     cli.add_argument("--model", default="continuity-coder:7b")
     cli.add_argument("--dry-run", action="store_true")
     cli.add_argument("--expanded", action="store_true")
+    cli.add_argument("--repeat-seed", type=int)
     args = cli.parse_args()
     if not args.endpoint and not args.dry_run:
         cli.error("live runs require --endpoint")
@@ -136,6 +137,8 @@ def main():
             assert isinstance(expected, list) and len(expected) == 1111
         first, second = (32, 33) if args.expanded else (31, 32)
         orders = (("whole", first), ("body", first), ("body", second), ("whole", second))
+        if args.repeat_seed is not None:
+            orders = (("body", args.repeat_seed),) * 3
         for index, (contract, seed) in enumerate(orders, 1):
             db = temp / f"task-{index}.db"
             task = invoke(db, "start", source, "--objective", replacement_objective(CASE, True))
@@ -144,7 +147,7 @@ def main():
             workspace = temp / f"case-{index}"
             invoke(db, "continue", task["task"], "--into", workspace, owner=task["token"])
             path = workspace / CASE["source"]
-            if index < 3:
+            if contract not in report.get("controls", {}):
                 negative = grade(workspace)
                 assert negative["predicate_exit"] == negative["repro_exit"] == 1
                 try:

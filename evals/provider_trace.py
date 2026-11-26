@@ -39,6 +39,7 @@ def trace_provider(endpoint, *, reasoning_effort=None):
                 "messages": len(messages),
                 "tool_count": len(body.get("tools") or []),
                 "reasoning_effort": body.get("reasoning_effort"),
+                **({"seed_forwarded": body["seed"]} if "seed" in body else {}),
                 "reasoning_characters": 0,
                 "visible_characters": 0,
                 "requested_max_tokens": body.get("max_tokens", body.get("max_output_tokens")),
