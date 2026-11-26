@@ -68,12 +68,14 @@ def splice(source, code):
     return "".join(lines[:original.lineno - 1]) + code.rstrip() + "\n" + "".join(lines[original.end_lineno:])
 
 
-def completion(endpoint, model, prompt, *, effort="none", max_tokens=1500):
+def completion(endpoint, model, prompt, *, effort="none", max_tokens=1500, response_format=None, seed=None):
     started = monotonic()
     with trace_provider(endpoint, reasoning_effort=effort) as (relay, provider_records):
         body = json.dumps({
             "model": model, "messages": [{"role": "user", "content": prompt}], "stream": True,
             "max_tokens": max_tokens,
+            **({"response_format": response_format} if response_format is not None else {}),
+            **({"seed": seed} if seed is not None else {}),
         }).encode()
         request = Request(relay + "/chat/completions", data=body, headers={"Content-Type": "application/json"})
         chunks = []

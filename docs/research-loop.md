@@ -103,3 +103,19 @@ The adaptive repeat produced an output that the splice guard rejected, so it gav
 | 3 | Choose new held-out repository tasks and repeat only receivers that first pass a fixed qualification case | Whether verified continuation generalizes beyond Packaging |
 | 4 | Run the paired restart protocol with actual operators | Whether managed recovery saves human active time after accounting for capture and review |
 | 5 | Exercise a cooperating hosted receiver with independent readback | Which external guarantees hold outside the loopback and bare-Git fixtures |
+
+## Round 3 goal prompt
+
+Measure whether restricting the model to a replacement function body improves edit acceptance and correctness on the frozen Packaging task. Combine durable receiver ownership with durable effect receipts and test recovery across both processes. Preserve results that contradict the hypotheses. Update the paper and promote only claims supported by independent checks.
+
+## Round 3 loop prompt
+
+Read the previous result. Pick a boundary where competing explanations predict different outcomes. Freeze inputs, state the expected observation, and run the negative and positive controls before inference or fault injection. Record request disposition, action application, and final correctness separately. Repeat the smallest test that resolves remaining uncertainty, then publish the receipts and rank the next questions.
+
+### H9 · Body-only edit contract
+
+Keep the task, original helper, checkpoint, provider, output budget, guard, and graders fixed. Ask for JSON with a single code string in both arms. One string contains the whole helper and the other contains only its body. For the body, the receiver supplies the original signature. Predict fewer signature rejections and no loss of behavioral correctness. Run whole, body, body, whole with paired seeds 31 and 32. A scripted wrong-signature control must fail independently of syntax. Use the unchanged and upstream-equivalent helpers as behavioral controls. Treat this as a one-task diagnostic.
+
+### H10 · Durable activation and effects
+
+Write activation intent durably before advancing the receiver. Authenticate the receiver's generation update using a separate coordinator credential. Persist the receiver generation across process restart and check it in the same transaction that applies effects and stores receipts. Exercise process death after writing the intent, after advancing the receiver, after local transfer, and before or after the receiver effect commit. After reopening both stores, replay the activation intent and test delayed generation-1 delivery. Predict a stale rejection after recovered activation and exactly one final effect. A generation header in this loopback fixture is a trusted-client assertion. The coordinator credential protects activation only.
