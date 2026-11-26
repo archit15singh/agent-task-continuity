@@ -1,0 +1,238 @@
+{
+  "started_utc": "2026-11-26T08:12:52+00:00",
+  "evaluation_code_sha256": "f4eb2538ed33ffde7eb8d283c49f0c68b325af9c68f3fb493225491adf525354",
+  "continuity_head": "584df15fe6c02b96442bea5f47aaf3bbdd8cf325",
+  "case": "packaging",
+  "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+  "reference": "cf2cdf099375f7e208168cd2d8880699aeef0583",
+  "opencode": "opencode v2.1.2",
+  "model": "continuity-local/continuity-qwen3:4b",
+  "timeout": 180,
+  "fixed_title": true,
+  "fixture_hashes": {
+    "continuity-live-note.md": "8cd95481e605977c8b2fe525bb3836ea0becfb521060eebcca06ff56fd750c20",
+    "continuity-live-repro.py": "84800e08b02147414a6c52ea04fbf4a87699e713f587d37e3cba662ee2b9ad19"
+  },
+  "arms": [
+    {
+      "attempt": 1,
+      "auto_compaction": true,
+      "checkpoint_sha256": "705aca0dcb56cf37faee7c3d70a323da1c454bbde891381c7a8d35d3b97045b8",
+      "worker": {
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "b9577554695a1988455b1b00dbd83496566f6003490b51170d045db6c608555a",
+        "seconds": 180.0164,
+        "runtime_events": {
+          "step_start": 4,
+          "step_finish": 4,
+          "tool_use": 2
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "step_finish",
+            "ms": 36308,
+            "input": 1836,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 36447
+          },
+          {
+            "event": "step_finish",
+            "ms": 74368,
+            "input": 44,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 74503
+          },
+          {
+            "event": "tool_use",
+            "ms": 89623,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 89657,
+            "input": 44,
+            "output": 629,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 125095
+          },
+          {
+            "event": "tool_use",
+            "ms": 136844,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 136876,
+            "input": 401,
+            "output": 491,
+            "reasoning": 0
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "files_restored": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ],
+        "predicate_exit": 1,
+        "repro_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.26s"
+        ],
+        "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54",
+        "complete": false
+      },
+      "provider_requests": [
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 0.472,
+          "compaction_summary": false,
+          "messages": 2,
+          "tool_count": 5,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 3186,
+            "completion_tokens": 1500,
+            "total_tokens": 4686
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 40.148
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 40.658,
+          "compaction_summary": false,
+          "messages": 4,
+          "tool_count": 5,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "length",
+          "usage": {
+            "prompt_tokens": 3228,
+            "completion_tokens": 1500,
+            "total_tokens": 4728
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 37.998
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 78.713,
+          "compaction_summary": false,
+          "messages": 6,
+          "tool_count": 5,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 3270,
+            "completion_tokens": 629,
+            "total_tokens": 3899
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 15.225
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 93.998,
+          "compaction_summary": true,
+          "messages": 3,
+          "tool_count": 5,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 4257,
+            "completion_tokens": 1314,
+            "total_tokens": 5571
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 34.978
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 128.991,
+          "compaction_summary": false,
+          "messages": 2,
+          "tool_count": 5,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 3284,
+            "completion_tokens": 491,
+            "total_tokens": 3775
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 12.168
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 141.215,
+          "compaction_summary": false,
+          "messages": 4,
+          "tool_count": 5,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "ended": "downstream_closed",
+          "duration_seconds": 38.856
+        }
+      ]
+    }
+  ],
+  "negative_control": {
+    "files_restored": true,
+    "changed_files": [
+      "continuity-live-note.md",
+      "continuity-live-repro.py"
+    ],
+    "predicate_exit": 1,
+    "repro_exit": 1,
+    "native_exit": 0,
+    "native_summary": [
+      "238 passed in 0.18s"
+    ],
+    "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54"
+  },
+  "positive_control": {
+    "files_restored": true,
+    "changed_files": [
+      "continuity-live-note.md",
+      "continuity-live-repro.py"
+    ],
+    "predicate_exit": 0,
+    "repro_exit": 0,
+    "native_exit": 0,
+    "native_summary": [
+      "240 passed in 0.16s"
+    ],
+    "source_sha256": "fd10aeb10311d9cdaddd40c1041ed9ad13cdf022142e5fe0f2993b92dddf2fed"
+  }
+}

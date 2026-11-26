@@ -1,0 +1,57 @@
+{
+  "extracted_utc": "2026-11-26T08:09:12+00:00",
+  "matched_receipt": "packaging-frozen.json",
+  "selection_utc": [
+    "2026-11-26T07:56:46+00:00",
+    "2026-11-26T08:08:23+00:00"
+  ],
+  "attempts": [
+    {
+      "attempt": 1,
+      "version": "2.1.2",
+      "auto_compaction": true,
+      "selected_messages": [
+        {
+          "type": "compaction",
+          "utc": "2026-11-26 07:58:36",
+          "status": "completed",
+          "error_type": null,
+          "output_tokens": 1280
+        },
+        {
+          "type": "compaction",
+          "utc": "2026-11-26 07:59:31",
+          "status": "failed",
+          "error_type": "compaction.interrupted",
+          "output_tokens": null
+        }
+      ]
+    },
+    {
+      "attempt": 2,
+      "version": "2.1.2",
+      "auto_compaction": false,
+      "selected_messages": []
+    },
+    {
+      "attempt": 3,
+      "version": "2.1.2",
+      "auto_compaction": false,
+      "selected_messages": []
+    },
+    {
+      "attempt": 4,
+      "version": "2.1.2",
+      "auto_compaction": true,
+      "selected_messages": [
+        {
+          "type": "idle",
+          "utc": "2026-11-26 08:08:18",
+          "status": null,
+          "error_type": "output-limit",
+          "output_tokens": null
+        }
+      ]
+    }
+  ]
+}

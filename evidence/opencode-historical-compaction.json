@@ -1,0 +1,52 @@
+{
+  "extracted_utc": "2026-11-26T08:08:20+00:00",
+  "matched_receipt": "opencode-4b-workspace-fix.json",
+  "selection_utc": [
+    "2026-11-26 06:46:00",
+    "2026-11-26 06:53:00"
+  ],
+  "matching_sessions": 1,
+  "session_started_utc": "2026-11-26 06:49:50",
+  "opencode_version": "2.1.2",
+  "match_checks": {
+    "assistant_turn_output_tokens": [
+      1500,
+      1139
+    ],
+    "worker_error_type": "compaction.failed"
+  },
+  "selected_messages": [
+    {
+      "type": "assistant",
+      "utc": "2026-11-26 06:49:51",
+      "status": null,
+      "error_type": null,
+      "cause": null,
+      "output_tokens": 1500
+    },
+    {
+      "type": "assistant",
+      "utc": "2026-11-26 06:51:04",
+      "status": null,
+      "error_type": null,
+      "cause": null,
+      "output_tokens": 1139
+    },
+    {
+      "type": "compaction",
+      "utc": "2026-11-26 06:51:32",
+      "status": "failed",
+      "error_type": "compaction.failed",
+      "cause": "summary_output_token_limit",
+      "output_tokens": 1500
+    },
+    {
+      "type": "idle",
+      "utc": "2026-11-26 06:52:12",
+      "status": null,
+      "error_type": "compaction.failed",
+      "cause": "summary_output_token_limit",
+      "output_tokens": null
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+{
+  "utc": "2026-11-26T08:10:59+00:00",
+  "evaluation_code_sha256": "edf6dddf82cf7e77d94bad162947aab754ca5d067b12f2eea90e7989c668a140",
+  "codex": "codex-cli 0.170.0",
+  "model": "continuity-qwen3:4b",
+  "smoke": {
+    "worker": {
+      "exit_code": 0,
+      "timed_out": false,
+      "output_sha256": "474fab155bfb02248c25451d5079887445017e865c069b068f69113ae87dd41e",
+      "seconds": 11.6189,
+      "runtime_events": {
+        "thread.started": 1,
+        "item.completed": 3,
+        "turn.started": 1,
+        "turn.completed": 1
+      },
+      "runtime_timeline": [],
+      "reported_input_tokens": 4179,
+      "reported_cached_input_tokens": 3,
+      "reported_output_tokens": 285,
+      "provider_rate_limited": false,
+      "provider_error_type": null
+    },
+    "provider_requests": [
+      {
+        "path": "/v1/responses",
+        "request_at_seconds": 0.315,
+        "compaction_summary": false,
+        "messages": 0,
+        "tool_count": 8,
+        "requested_max_tokens": null,
+        "http_status": 200,
+        "response_event": "response.completed",
+        "usage": {
+          "input_tokens": 4179,
+          "output_tokens": 285,
+          "total_tokens": 4464
+        },
+        "ended": "provider_eof",
+        "duration_seconds": 10.989
+      }
+    ],
+    "ready_text_present": true
+  },
+  "packaging": {
+    "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+    "checkpoint_sha256": "705aca0dcb56cf37faee7c3d70a323da1c454bbde891381c7a8d35d3b97045b8",
+    "worker": {
+      "exit_code": 0,
+      "timed_out": false,
+      "output_sha256": "56bb45a039540ec5254bf9aa9d1d72e6d5211ebc9738e341abd39edd72cc4f6a",
+      "seconds": 42.6834,
+      "runtime_events": {
+        "thread.started": 1,
+        "item.completed": 2,
+        "turn.started": 1,
+        "turn.completed": 1
+      },
+      "runtime_timeline": [],
+      "reported_input_tokens": 4457,
+      "reported_cached_input_tokens": 3673,
+      "reported_output_tokens": 1500,
+      "provider_rate_limited": false,
+      "provider_error_type": null
+    },
+    "provider_requests": [
+      {
+        "path": "/v1/responses",
+        "request_at_seconds": 0.257,
+        "compaction_summary": false,
+        "messages": 0,
+        "tool_count": 8,
+        "requested_max_tokens": null,
+        "http_status": 200,
+        "response_event": "response.completed",
+        "usage": {
+          "input_tokens": 4457,
+          "output_tokens": 1500,
+          "total_tokens": 5957
+        },
+        "ended": "provider_eof",
+        "duration_seconds": 42.178
+      }
+    ],
+    "ready_text_present": false,
+    "grade": {
+      "files_restored": true,
+      "changed_files": [
+        "continuity-live-note.md",
+        "continuity-live-repro.py"
+      ],
+      "predicate_exit": 1,
+      "repro_exit": 1,
+      "native_exit": 0,
+      "native_summary": [
+        "238 passed in 0.22s"
+      ],
+      "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54",
+      "complete": false
+    }
+  }
+}

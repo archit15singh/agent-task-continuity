@@ -63,3 +63,43 @@ ollama create continuity-qwen35:9b -f /tmp/continuity-model-9b
 [The corrected Qwen3.5 9B matrix](opencode-9b-rerun.json) preserves all three deadline failures and their out-of-band grades. [The sanitized Click and Packaging tool traces](opencode-9b-tool-errors.json) record the edit and lookup error categories.
 
 [The corrected 4B Packaging control](opencode-4b-workspace-fix.json) completed a read, then exited in 142.6 seconds with `compaction.failed` before a scoped edit.
+
+
+## Frozen Packaging and boundary diagnostics
+
+The [follow-up protocol](../docs/research-loop.md) records controls, expected outcomes, and the order of the runs. The frozen note and failing reproduction live in [the fixtures directory](../evals/fixtures/packaging). The oracle checkout contains the upstream fix and is used only for grading controls.
+
+```sh
+.venv/bin/python -m evals.frozen --dry-run --output /tmp/frozen-dry.json
+.venv/bin/python -m evals.opencode_boundary --output /tmp/opencode-boundaries.json
+.venv/bin/python -m evals.git_publication --output /tmp/git-publication.json
+```
+
+[The scripted OpenCode receipt](opencode-boundaries.json) reports the edit match outcomes and compaction request sequence under controlled provider responses. [The Git publication receipt](git-publication.json) records three separate bare-repository trials. The Git experiment uses the local Git executable and does not contact GitHub.
+
+[The frozen Packaging receipt](packaging-frozen.json) holds the four repeated live arms and their controls. All four use the same snapshot fingerprint. The Qwen3 4B base and bounded model digests match the values in the reproduction instructions above. Ollama was version 0.40.6 and OpenCode was 2.1.2.
+
+[The historical diagnosis](opencode-historical-compaction.json) and [the frozen session audit](packaging-compaction-events.json) are sanitized projections of OpenCode's local SQLite session records via a read-only connection. The historical query selected one Packaging replacement worktree and matched the preceding assistant output counts to the earlier receipt. The frozen query selected the four attempt worktrees within the matrix window. Only event types, timestamps, status, error categories, and token counts are retained.
+
+[The default OpenCode provider trace](packaging-provider-trace.json) records HTTP status, request timing, finish reason, and token usage for one repeated Packaging run. [The Codex comparison](codex-local-provider.json) includes its same-model Responses smoke and exploratory trial on the same Packaging checkpoint. Tool schemas, prompts, and completion semantics can differ between the two HTTP endpoints.
+
+```sh
+.venv/bin/python -m evals.frozen --model continuity-local/continuity-qwen3:4b \
+  --endpoint http://127.0.0.1:11434/v1 --output /tmp/packaging-frozen.json
+
+.venv/bin/python -m evals.frozen --trace-single-auto --model continuity-local/continuity-qwen3:4b \
+  --endpoint http://127.0.0.1:11434/v1 --output /tmp/packaging-trace.json
+
+.venv/bin/python -m evals.codex_local --model continuity-qwen3:4b \
+  --endpoint http://127.0.0.1:11434/v1 --output /tmp/packaging-codex.json
+```
+
+[The scripted title probe](opencode-title-probe.json) verifies that an explicit title suppresses the auxiliary request on OpenCode 2.1.2. [The fixed-title live trace](packaging-fixed-title.json) records the same option against the frozen Packaging task.
+
+```sh
+.venv/bin/python -m evals.opencode_boundary --title-probe --output /tmp/opencode-title.json
+
+.venv/bin/python -m evals.frozen --trace-single-auto --fixed-title \
+  --model continuity-local/continuity-qwen3:4b --endpoint http://127.0.0.1:11434/v1 \
+  --output /tmp/packaging-fixed-title.json
+```

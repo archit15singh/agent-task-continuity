@@ -1,0 +1,358 @@
+{
+  "started_utc": "2026-11-26T07:56:46+00:00",
+  "evaluation_code_sha256": "9ad1b650a2805fd381823b6bfb8a77cde289175b1bf7ace49450a65d3b813aa8",
+  "continuity_head": "eb31fb9564fce3cb2a86e3b4f7adbf3782e40c0d",
+  "case": "packaging",
+  "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+  "reference": "cf2cdf099375f7e208168cd2d8880699aeef0583",
+  "opencode": "opencode v2.1.2",
+  "model": "continuity-local/continuity-qwen3:4b",
+  "timeout": 180,
+  "fixture_hashes": {
+    "continuity-live-note.md": "8cd95481e605977c8b2fe525bb3836ea0becfb521060eebcca06ff56fd750c20",
+    "continuity-live-repro.py": "84800e08b02147414a6c52ea04fbf4a87699e713f587d37e3cba662ee2b9ad19"
+  },
+  "arms": [
+    {
+      "attempt": 1,
+      "auto_compaction": true,
+      "checkpoint_sha256": "705aca0dcb56cf37faee7c3d70a323da1c454bbde891381c7a8d35d3b97045b8",
+      "worker": {
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "2d342ede924b6589ef25f30b14e90e1d0bfdd1ded946196100c51825fc653a89",
+        "seconds": 180.0052,
+        "runtime_events": {
+          "step_start": 3,
+          "step_finish": 3,
+          "tool_use": 2
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "step_finish",
+            "ms": 36403,
+            "input": 3179,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 36526
+          },
+          {
+            "event": "tool_use",
+            "ms": 68525,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 68541,
+            "input": 44,
+            "output": 1305,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 102581
+          },
+          {
+            "event": "tool_use",
+            "ms": 123847,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 123861,
+            "input": 387,
+            "output": 887,
+            "reasoning": 0
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "files_restored": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ],
+        "predicate_exit": 1,
+        "repro_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.22s"
+        ],
+        "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54",
+        "complete": false
+      }
+    },
+    {
+      "attempt": 2,
+      "auto_compaction": false,
+      "checkpoint_sha256": "705aca0dcb56cf37faee7c3d70a323da1c454bbde891381c7a8d35d3b97045b8",
+      "worker": {
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "4e8cdae88da5aacbb19d7955ce50a984a846ae6eda0119ab331e1bff22800985",
+        "seconds": 180.0463,
+        "runtime_events": {
+          "step_start": 4,
+          "step_finish": 3,
+          "tool_use": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "step_finish",
+            "ms": 38167,
+            "input": 1826,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 38287
+          },
+          {
+            "event": "tool_use",
+            "ms": 75019,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 75038,
+            "input": 44,
+            "output": 1489,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 83693
+          },
+          {
+            "event": "step_finish",
+            "ms": 131132,
+            "input": 8190,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 137384
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "files_restored": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ],
+        "predicate_exit": 1,
+        "repro_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.24s"
+        ],
+        "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54",
+        "complete": false
+      }
+    },
+    {
+      "attempt": 3,
+      "auto_compaction": false,
+      "checkpoint_sha256": "705aca0dcb56cf37faee7c3d70a323da1c454bbde891381c7a8d35d3b97045b8",
+      "worker": {
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "9493bea8b75a8081e553b89a3055bc3c34bdfbb3e74afb6a09fbbb01152067d0",
+        "seconds": 180.0151,
+        "runtime_events": {
+          "step_start": 4,
+          "step_finish": 3,
+          "tool_use": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "step_finish",
+            "ms": 39903,
+            "input": 1826,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 40050
+          },
+          {
+            "event": "tool_use",
+            "ms": 65410,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 65421,
+            "input": 44,
+            "output": 1064,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 70639
+          },
+          {
+            "event": "step_finish",
+            "ms": 115733,
+            "input": 1,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 116077
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "files_restored": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ],
+        "predicate_exit": 1,
+        "repro_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.21s"
+        ],
+        "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54",
+        "complete": false
+      }
+    },
+    {
+      "attempt": 4,
+      "auto_compaction": true,
+      "checkpoint_sha256": "705aca0dcb56cf37faee7c3d70a323da1c454bbde891381c7a8d35d3b97045b8",
+      "worker": {
+        "exit_code": 1,
+        "timed_out": false,
+        "output_sha256": "bbeab8652ea080d4c7b3dabbda2276b86faad47d375110cef836dd74eafb9f42",
+        "seconds": 146.2588,
+        "runtime_events": {
+          "step_start": 3,
+          "step_finish": 2,
+          "error": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "step_finish",
+            "ms": 36159,
+            "input": 1826,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 36304
+          },
+          {
+            "event": "step_finish",
+            "ms": 73646,
+            "input": 44,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 73773
+          },
+          {
+            "event": "error",
+            "ms": 111135
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": "output-limit"
+      },
+      "grade": {
+        "files_restored": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ],
+        "predicate_exit": 1,
+        "repro_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.22s"
+        ],
+        "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54",
+        "complete": false
+      }
+    }
+  ],
+  "negative_control": {
+    "files_restored": true,
+    "changed_files": [
+      "continuity-live-note.md",
+      "continuity-live-repro.py"
+    ],
+    "predicate_exit": 1,
+    "repro_exit": 1,
+    "native_exit": 0,
+    "native_summary": [
+      "238 passed in 0.18s"
+    ],
+    "source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54"
+  },
+  "positive_control": {
+    "files_restored": true,
+    "changed_files": [
+      "continuity-live-note.md",
+      "continuity-live-repro.py"
+    ],
+    "predicate_exit": 0,
+    "repro_exit": 0,
+    "native_exit": 0,
+    "native_summary": [
+      "240 passed in 0.16s"
+    ],
+    "source_sha256": "fd10aeb10311d9cdaddd40c1041ed9ad13cdf022142e5fe0f2993b92dddf2fed"
+  }
+}

@@ -6,11 +6,11 @@ Move an unfinished Git-backed task between coding agents. Restore the selected w
 
 The artifact should own the history of the work. A conversation helps explain decisions. Git tells the next agent which bytes it has. A task record tells it what remains open, which checks refer to those bytes, and whether an external action already happened.
 
-Use a Git patch and copy the relevant untracked files when an operator can coordinate a planned switch. That baseline matched managed restoration in all three repositories. Add a task ledger and a controlled write path when a worker may die halfway through an action. The managed path reconciled six interrupted publications with one effect each, and rejected stale owners on the tested boundaries.
+Use a Git patch and copy the relevant untracked files when an operator can coordinate a planned switch. That baseline matched managed restoration in all three repositories. Add a task ledger and a controlled write path when a worker may die halfway through an action. The managed path reconciled six interrupted publications with one effect each and rejected stale owners on the tested boundaries. In three additional bare-Git trials, independent ref readback confirmed the published SHA after the client was killed. The same-SHA retry made zero additional ref updates and a different SHA was rejected.
 
 Measure workspace recovery and verified task completion separately. The timeout investigation found a stale `PWD` that sent OpenCode to the wrong checkout. The launcher now aligns it with the restored workspace. Ollama was also serving requests for roughly 177 of 180 seconds during the original Packaging replay.
 
-With the launcher fixed, local Qwen3.5 9B preserved both handoff files in all three cases. It still completed **0/3** at the 180-second deadline. The attrs edit failed the change-specific checks. A separate Codex-to-Codex run completed Click. [Paper and evidence](docs/paper.md)
+With the launcher fixed, local Qwen3.5 9B preserved both handoff files in all three cases. It still completed **0/3** at the 180-second deadline. The attrs edit failed the change-specific checks. A separate Codex-to-Codex run completed Click. OpenCode's persisted record shows that the corrected 4B Packaging compaction failure hit the 1,500-token output cap. The frozen Packaging case produced zero verified fixes in two runs per compaction setting. Supplying a title removed one auxiliary request in the traced startup. A same-model Codex probe exited cleanly and also left the source unchanged. Qualify a replacement with an independent behavior check before using it for unattended recovery. [Paper](docs/paper.md) · [Evidence](evidence/README.md)
 
 ## Start and hand off a task
 
@@ -62,4 +62,4 @@ python3.13 -m venv .venv
 .venv/bin/python -m evals.run --set all --output /tmp/continuity-study.json
 ```
 
-See the [implementation plan](docs/plan.md), [preregistered protocol](docs/protocol.md), [research paper](docs/paper.md), [PDF](docs/paper.pdf), and [machine-readable evidence](evidence/README.md). The pinned cases use Click, Packaging, and attrs. The native tests and application code run locally. Study publication targets a controlled loopback fixture.
+See the [implementation plan](docs/plan.md), [preregistered protocol](docs/protocol.md), [research paper](docs/paper.md), [PDF](docs/paper.pdf), the [follow-up protocol](docs/research-loop.md), the [literature review](docs/handoff-literature-review.md), and [machine-readable evidence](evidence/README.md). The pinned cases use Click, Packaging, and attrs. The native tests and application code run locally. Study publication targets a controlled loopback service and a separate disposable bare Git receiver.
