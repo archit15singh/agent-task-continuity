@@ -1,0 +1,1175 @@
+{
+  "utc": "2026-11-26T06:37:58+00:00",
+  "candidate_commit": "96f0e6c8068d3ce2ab03e9c286c492c50a0bfbc6",
+  "set": "all",
+  "python": "3.13.18",
+  "source_model_requested": "gpt-6.2-sol",
+  "replacement_runtime": "opencode",
+  "replacement_model_requested": "continuity-local/continuity-qwen35:9b",
+  "worker_timeout_seconds": 180,
+  "local_no_think": true,
+  "local_reasoning_effort": "none",
+  "codex": "codex-cli 0.170.0",
+  "opencode": "opencode v2.1.2",
+  "cases": [
+    {
+      "id": "click",
+      "split": "development",
+      "base": "dd149eb3129d887a22202c3fafa5ceb0e0d7018d",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "aaab7cdb261a49b9ab9bd987acd46fe7f6c78f5607142f65d3bd9b03f8106a26",
+        "seconds": 25.2447,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 6,
+          "item.started": 4,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 111377,
+        "reported_cached_input_tokens": 95488,
+        "reported_output_tokens": 702,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "9d852732c3b2fca6b33586a2c9d3f8d8264dd5d514abd0016b17e3cd3c3b8388",
+        "seconds": 14.8521,
+        "runtime_events": {
+          "step_start": 5,
+          "tool_use": 5,
+          "step_finish": 4,
+          "text": 2
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 1360,
+            "tool": "run",
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 1369,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 1436,
+            "input": 3551,
+            "output": 89,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 2933
+          },
+          {
+            "event": "tool_use",
+            "ms": 2941,
+            "tool": "execute",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 2957,
+            "input": 214,
+            "output": 55,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 3250
+          },
+          {
+            "event": "text",
+            "ms": 4462
+          },
+          {
+            "event": "tool_use",
+            "ms": 4470,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 4485,
+            "input": 108,
+            "output": 52,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 4795
+          },
+          {
+            "event": "text",
+            "ms": 6277
+          },
+          {
+            "event": "tool_use",
+            "ms": 6308,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 6319,
+            "input": 106,
+            "output": 60,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 7145
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "task_completed": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "c1925007b09aed5c23327abe8dd2dcf8704ab7a7e186cd6e06cca5a7ca8a8a1a",
+        "note_sha256": "679033313d57896f16360fbb888866dcfbf9d1a1422a40b230389f6ccbb2dfb8",
+        "checkpoint_sha256": "b1f847dee68ea9f3bcd85f4d6727cb83453e86f6432f34e71de207b6c057d704",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": false,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "cff755a419b2503dc3c3ea8d2f4783d30bf8c8a92a4903e940e353496e36623f",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "52 passed, 1 skipped in 0.21s"
+        ],
+        "changed_source_sha256": "d4c02aeae8220db36facabe5c6eff11e2041e72c1dac748ef350eedfabefe2ff"
+      }
+    },
+    {
+      "id": "packaging",
+      "split": "held-out",
+      "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "18d3966c006e1b7f5d7d1ac9b087c3d22541c46663c6c4d05635014d919b2741",
+        "seconds": 32.598,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 6,
+          "item.started": 4,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 140331,
+        "reported_cached_input_tokens": 124288,
+        "reported_output_tokens": 844,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "0382fd0383ae784efe3a2a50a3ab4f526483878f90c461466101e693a0b281b6",
+        "seconds": 28.7572,
+        "runtime_events": {
+          "step_start": 7,
+          "tool_use": 6,
+          "step_finish": 6,
+          "text": 3
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 96,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 152,
+            "input": 466,
+            "output": 65,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 1698
+          },
+          {
+            "event": "tool_use",
+            "ms": 1748,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 1770,
+            "input": 120,
+            "output": 49,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 2895
+          },
+          {
+            "event": "tool_use",
+            "ms": 3111,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 3762,
+            "input": 71,
+            "output": 38,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 5615
+          },
+          {
+            "event": "tool_use",
+            "ms": 5777,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 5945,
+            "input": 77,
+            "output": 60,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 7533
+          },
+          {
+            "event": "text",
+            "ms": 9732
+          },
+          {
+            "event": "tool_use",
+            "ms": 9747,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 9760,
+            "input": 1152,
+            "output": 83,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 10346
+          },
+          {
+            "event": "text",
+            "ms": 12561
+          },
+          {
+            "event": "tool_use",
+            "ms": 12571,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 12581,
+            "input": 351,
+            "output": 86,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 14394
+          },
+          {
+            "event": "text",
+            "ms": 16763
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "task_completed": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "2780ff7b50fc43ba38e4932158389d8a08b75aadf64a8490b4340a7bf5ef6a21",
+        "note_sha256": "69d6530598197e0c850e4ad9f31503c2fa44510485961d4a63e242430e19e86e",
+        "checkpoint_sha256": "4d7113a13c37f6470fbbed0743c19e6d91ec905518896ec092c1b543992b54c3",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": false,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "83f7f529a614f142929aead69c1cf3d32b8e677885e30a5c4839bc72c5246e14",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.34s"
+        ],
+        "changed_source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54"
+      }
+    },
+    {
+      "id": "attrs",
+      "split": "held-out",
+      "base": "f830e60f9c6485aa7037a52f03fdd28428dfbfc4",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "c948b060615ad100c4a5374a30084fb6cd028bccb95989a8fd8bf3cc8f163b23",
+        "seconds": 40.0178,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 6,
+          "item.started": 4,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 148157,
+        "reported_cached_input_tokens": 130176,
+        "reported_output_tokens": 1381,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "d991dba4492e124e920916bfed941d20c8d652344169a12afce4db21ce6f3b1e",
+        "seconds": 180.0331,
+        "runtime_events": {
+          "step_start": 38,
+          "tool_use": 41,
+          "step_finish": 38,
+          "text": 22
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 791,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 792,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 802,
+            "input": 420,
+            "output": 69,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 1143
+          },
+          {
+            "event": "text",
+            "ms": 3342
+          },
+          {
+            "event": "tool_use",
+            "ms": 3348,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 3350,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 3361,
+            "input": 133,
+            "output": 94,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 4347
+          },
+          {
+            "event": "tool_use",
+            "ms": 5192,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "tool_use",
+            "ms": 5194,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 5203,
+            "input": 215,
+            "output": 58,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 5471
+          },
+          {
+            "event": "text",
+            "ms": 6451
+          },
+          {
+            "event": "tool_use",
+            "ms": 6456,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 6466,
+            "input": 88,
+            "output": 44,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 7488
+          },
+          {
+            "event": "tool_use",
+            "ms": 7496,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 7506,
+            "input": 130,
+            "output": 36,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 8731
+          },
+          {
+            "event": "tool_use",
+            "ms": 8748,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 8757,
+            "input": 105,
+            "output": 47,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 10157
+          },
+          {
+            "event": "tool_use",
+            "ms": 10172,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 10183,
+            "input": 170,
+            "output": 48,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 12127
+          },
+          {
+            "event": "tool_use",
+            "ms": 12142,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 12189,
+            "input": 316,
+            "output": 69,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 13307
+          },
+          {
+            "event": "tool_use",
+            "ms": 13321,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 13334,
+            "input": 218,
+            "output": 38,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 18824
+          },
+          {
+            "event": "text",
+            "ms": 20116
+          },
+          {
+            "event": "tool_use",
+            "ms": 20122,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 20137,
+            "input": 4496,
+            "output": 60,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 21948
+          },
+          {
+            "event": "tool_use",
+            "ms": 21968,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 21977,
+            "input": 110,
+            "output": 66,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 22327
+          },
+          {
+            "event": "text",
+            "ms": 24047
+          },
+          {
+            "event": "tool_use",
+            "ms": 24054,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 24099,
+            "input": 132,
+            "output": 61,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 25316
+          },
+          {
+            "event": "text",
+            "ms": 28035
+          },
+          {
+            "event": "tool_use",
+            "ms": 28039,
+            "tool": "glob",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 28050,
+            "input": 789,
+            "output": 93,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 28428
+          },
+          {
+            "event": "text",
+            "ms": 30261
+          },
+          {
+            "event": "tool_use",
+            "ms": 30268,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 30280,
+            "input": 145,
+            "output": 72,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 32067
+          },
+          {
+            "event": "tool_use",
+            "ms": 32173,
+            "tool": "execute",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 32186,
+            "input": 270,
+            "output": 52,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 32478
+          },
+          {
+            "event": "text",
+            "ms": 34465
+          },
+          {
+            "event": "tool_use",
+            "ms": 34485,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 34496,
+            "input": 105,
+            "output": 69,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 34811
+          },
+          {
+            "event": "text",
+            "ms": 38977
+          },
+          {
+            "event": "tool_use",
+            "ms": 38991,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 39000,
+            "input": 91,
+            "output": 140,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 39345
+          },
+          {
+            "event": "text",
+            "ms": 42220
+          },
+          {
+            "event": "tool_use",
+            "ms": 42231,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 42240,
+            "input": 162,
+            "output": 98,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 64835
+          },
+          {
+            "event": "text",
+            "ms": 67231
+          },
+          {
+            "event": "tool_use",
+            "ms": 67235,
+            "tool": "execute",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 67286,
+            "input": 3654,
+            "output": 87,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 68448
+          },
+          {
+            "event": "tool_use",
+            "ms": 68457,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 68467,
+            "input": 140,
+            "output": 34,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 68710
+          },
+          {
+            "event": "text",
+            "ms": 70131
+          },
+          {
+            "event": "tool_use",
+            "ms": 70138,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 70146,
+            "input": 73,
+            "output": 51,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 71519
+          },
+          {
+            "event": "tool_use",
+            "ms": 71542,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 71551,
+            "input": 137,
+            "output": 47,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 72663
+          },
+          {
+            "event": "tool_use",
+            "ms": 72755,
+            "tool": "glob",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 72765,
+            "input": 170,
+            "output": 35,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 74158
+          },
+          {
+            "event": "tool_use",
+            "ms": 74173,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 74183,
+            "input": 122,
+            "output": 48,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 75208
+          },
+          {
+            "event": "tool_use",
+            "ms": 75218,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 75227,
+            "input": 70,
+            "output": 38,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 80786
+          },
+          {
+            "event": "text",
+            "ms": 82203
+          },
+          {
+            "event": "tool_use",
+            "ms": 82210,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 82221,
+            "input": 4496,
+            "output": 55,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 88067
+          },
+          {
+            "event": "text",
+            "ms": 89522
+          },
+          {
+            "event": "tool_use",
+            "ms": 89529,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 89540,
+            "input": 4459,
+            "output": 63,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 90569
+          },
+          {
+            "event": "text",
+            "ms": 93550
+          },
+          {
+            "event": "tool_use",
+            "ms": 93568,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 93577,
+            "input": 615,
+            "output": 117,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 114512
+          },
+          {
+            "event": "text",
+            "ms": 116634
+          },
+          {
+            "event": "tool_use",
+            "ms": 116639,
+            "tool": "execute",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 116650,
+            "input": 739,
+            "output": 86,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 117871
+          },
+          {
+            "event": "tool_use",
+            "ms": 117885,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 117896,
+            "input": 139,
+            "output": 39,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 118790
+          },
+          {
+            "event": "text",
+            "ms": 120332
+          },
+          {
+            "event": "tool_use",
+            "ms": 120338,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 120350,
+            "input": 591,
+            "output": 53,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 120638
+          },
+          {
+            "event": "text",
+            "ms": 123048
+          },
+          {
+            "event": "tool_use",
+            "ms": 123071,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 123086,
+            "input": 92,
+            "output": 95,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 123392
+          },
+          {
+            "event": "text",
+            "ms": 125238
+          },
+          {
+            "event": "tool_use",
+            "ms": 125254,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 125268,
+            "input": 117,
+            "output": 64,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 127548
+          },
+          {
+            "event": "text",
+            "ms": 129027
+          },
+          {
+            "event": "tool_use",
+            "ms": 129036,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 129048,
+            "input": 1534,
+            "output": 60,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 131424
+          },
+          {
+            "event": "text",
+            "ms": 133106
+          },
+          {
+            "event": "tool_use",
+            "ms": 133111,
+            "tool": "list_path",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 133123,
+            "input": 1484,
+            "output": 53,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 134645
+          },
+          {
+            "event": "tool_use",
+            "ms": 134674,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 134687,
+            "input": 107,
+            "output": 49,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 135704
+          },
+          {
+            "event": "text",
+            "ms": 137492
+          },
+          {
+            "event": "tool_use",
+            "ms": 137507,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 137520,
+            "input": 542,
+            "output": 54,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 144818
+          },
+          {
+            "event": "text",
+            "ms": 146542
+          },
+          {
+            "event": "tool_use",
+            "ms": 146564,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 146593,
+            "input": 4512,
+            "output": 54,
+            "reasoning": 0
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "task_completed": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "3d999a7be35bbbd216a37a1e1efb81bf14da1fba4861fd04ff848bb197ba1b1a",
+        "note_sha256": "e98856cb566238ab410b3d08f6889cd20856b4d3154551c7f709501062eaf588",
+        "checkpoint_sha256": "34264f0391a09dda2ff816e82f30d583d877a33a0c4759fa02b45eedb1a65917",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": false,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "5c4227b3b7d71bf730163c3fd09573cf9704a0cc59f52115c9dc7ac71c95aa19",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "53 passed in 1.56s"
+        ],
+        "changed_source_sha256": "eb6623ffeb7a3052483a39635fda25da4ebbe36e4ca6d8dfe66d6e02d8ed9b88"
+      }
+    }
+  ],
+  "comparison_valid": false,
+  "diagnostic_only_reason": "The launcher inherited PWD from the study checkout. The workspace probe showed OpenCode used that path in its main request."
+}

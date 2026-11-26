@@ -1,0 +1,115 @@
+{
+  "utc": "2026-11-26T06:52:13+00:00",
+  "candidate_commit": "24ac9a908ff8806b3e6729fbe8492cde57ddff1c",
+  "set": "held-out",
+  "python": "3.13.18",
+  "source_model_requested": "gpt-6.2-sol",
+  "replacement_runtime": "opencode",
+  "replacement_model_requested": "continuity-local/continuity-qwen3:4b",
+  "worker_timeout_seconds": 180,
+  "local_no_think": true,
+  "local_reasoning_effort": null,
+  "codex": "codex-cli 0.170.0",
+  "opencode": "opencode v2.1.2",
+  "cases": [
+    {
+      "id": "packaging",
+      "split": "held-out",
+      "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "e587b49a73d1229b2dae01fbd39752d13fd949f36ffc131a617301e04bb64e27",
+        "seconds": 36.4858,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 6,
+          "item.started": 4,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 143764,
+        "reported_cached_input_tokens": 113536,
+        "reported_output_tokens": 996,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 1,
+        "timed_out": false,
+        "output_sha256": "4cebf4be278a25da3294b70e95696a77f72e1d8e5a00bcdc4af21b16b78de799",
+        "seconds": 142.6336,
+        "runtime_events": {
+          "step_start": 2,
+          "step_finish": 2,
+          "tool_use": 1,
+          "error": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "step_finish",
+            "ms": 36113,
+            "input": 3287,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 36234
+          },
+          {
+            "event": "tool_use",
+            "ms": 63903,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 63913,
+            "input": 44,
+            "output": 1139,
+            "reasoning": 0
+          },
+          {
+            "event": "error",
+            "ms": 103746
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": "compaction.failed"
+      },
+      "grade": {
+        "complete": false,
+        "task_completed": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "5c9f3619be0600150686ae5fa6c35e5896baa35344ed34ad3d1ba98577462b95",
+        "note_sha256": "626cc09ea1e53e451aca9f7ebc056bd803e9f50b68cc3dff3e19ddb1c71f3bc9",
+        "checkpoint_sha256": "8783f17ec016ccf9c36b712dfe5b52a63fca7c6fd709a6fce37270b4277dd8a0",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": false,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "83f7f529a614f142929aead69c1cf3d32b8e677885e30a5c4839bc72c5246e14",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.24s"
+        ],
+        "changed_source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54"
+      }
+    }
+  ]
+}

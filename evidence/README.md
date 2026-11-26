@@ -34,3 +34,32 @@ ollama create continuity-qwen3:4b -f /tmp/continuity-model
 ```
 
 The live arm needs authenticated Codex CLI access, OpenCode, and the local model. It reads only the selected public project at its pinned parent and supplies the prompts in [the live runner](../evals/live.py). It downloads no upstream candidate patch. The reference and parent SHAs are in [the case manifest](../evals/cases.json).
+
+## OpenCode timeout follow-up
+
+- [Qwen3 4B Packaging replay](opencode-4b-replay.json) records the original configuration with added step and tool timing.
+- [Ollama timing and availability probes](opencode-provider-timing.json) record the overlapping local request windows, the canceled request, the hosted free-model quota errors, and a synthetic check of the reasoning parameter.
+- [Workspace probe](opencode-workspace-probe.json) compares the checkout named in OpenCode's project prompt under inherited, matched, and unset `PWD`.
+
+To reproduce the original Packaging replay, use the original 4B variant above and add `--case packaging` to the held-out command. A current checkout includes the workspace fix. The historical launcher is at `96f0e6c`; run it only from a disposable study checkout for the pre-fix diagnostic. Ollama's server logs provide request durations and generation counts. The live receipt supplies OpenCode step timing and grading.
+
+The corrected comparison uses Qwen3.5 9B through Ollama 0.40.6 with its MLX runner. The base manifest digest was `d63f830f28d515fefea546f213fca7a75e9dd5176ef51a6deabc952d1c99a911` and the bounded alias digest was `5cb0679029eb4c3e13d020bec7e3489e973b47dd948456155e0d5c6c04695598`. [Qwen3.5 9B model card](https://huggingface.co/Qwen/Qwen3.5-9B) · [Ollama reasoning control](https://docs.ollama.com/api/openai-compatibility#v1chatcompletions)
+
+```sh
+ollama pull qwen3.5:9b
+printf '%s\n' 'FROM qwen3.5:9b' 'PARAMETER num_ctx 16384' \
+  'PARAMETER num_predict 1500' > /tmp/continuity-model-9b
+ollama create continuity-qwen35:9b -f /tmp/continuity-model-9b
+
+.venv/bin/python -m evals.live --set all \
+  --model continuity-local/continuity-qwen35:9b \
+  --local-endpoint http://127.0.0.1:11434/v1 \
+  --local-no-think --local-reasoning-effort none \
+  --output /tmp/continuity-opencode-9b.json
+```
+
+[The pre-fix 9B batch](opencode-9b-pre-fix.json) is retained as a workspace diagnostic. [The mechanical regression rerun](mechanical-workspace-fix.json) records passes across Click, Packaging, and attrs after the launch fix.
+
+[The corrected Qwen3.5 9B matrix](opencode-9b-rerun.json) preserves all three deadline failures and their out-of-band grades. [The sanitized Click and Packaging tool traces](opencode-9b-tool-errors.json) record the edit and lookup error categories.
+
+[The corrected 4B Packaging control](opencode-4b-workspace-fix.json) completed a read, then exited in 142.6 seconds with `compaction.failed` before a scoped edit.

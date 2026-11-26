@@ -8,7 +8,9 @@ The artifact should own the history of the work. A conversation helps explain de
 
 Use a Git patch and copy the relevant untracked files when an operator can coordinate a planned switch. That baseline matched managed restoration in all three repositories. Add a task ledger and a controlled write path when a worker may die halfway through an action. The managed path reconciled six interrupted publications with one effect each, and rejected stale owners on the tested boundaries.
 
-Choose the replacement agent separately from the recovery mechanism. The Codex-to-OpenCode trials restored both handoff files in all three cases, but the local OpenCode model timed out every time. A Codex-to-Codex comparison completed the Click change. Reliable state transfer lets you see where recovery ends and the replacement's coding ability begins. [Paper and evidence](docs/paper.md)
+Measure workspace recovery and verified task completion separately. The timeout investigation found a stale `PWD` that sent OpenCode to the wrong checkout. The launcher now aligns it with the restored workspace. Ollama was also serving requests for roughly 177 of 180 seconds during the original Packaging replay.
+
+With the launcher fixed, local Qwen3.5 9B preserved both handoff files in all three cases. It still completed **0/3** at the 180-second deadline. The attrs edit failed the change-specific checks. A separate Codex-to-Codex run completed Click. [Paper and evidence](docs/paper.md)
 
 ## Start and hand off a task
 

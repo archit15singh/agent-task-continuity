@@ -1,0 +1,132 @@
+{
+  "utc": "2026-11-26T06:32:06+00:00",
+  "candidate_commit": "e5f67893177a3ce50afe0dc56c60b17e4c4f5787",
+  "set": "held-out",
+  "python": "3.13.18",
+  "source_model_requested": "gpt-6.2-sol",
+  "replacement_runtime": "opencode",
+  "replacement_model_requested": "continuity-local/continuity-qwen3:4b",
+  "worker_timeout_seconds": 180,
+  "local_no_think": true,
+  "local_reasoning_effort": null,
+  "codex": "codex-cli 0.170.0",
+  "opencode": "opencode v2.1.2",
+  "cases": [
+    {
+      "id": "packaging",
+      "split": "held-out",
+      "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "684c2154bcaa7fb43ac9668c01e3ae545b63f85f9107b422984a423cfabc239f",
+        "seconds": 28.2355,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 5,
+          "item.started": 3,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 111350,
+        "reported_cached_input_tokens": 95488,
+        "reported_output_tokens": 751,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "7fe95f04586e8272b2ceaedb7701fa7a819b9e1b6f0c119c206253d2e651aba2",
+        "seconds": 180.0125,
+        "runtime_events": {
+          "step_start": 4,
+          "step_finish": 3,
+          "tool_use": 2
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "step_finish",
+            "ms": 40484,
+            "input": 3192,
+            "output": 1500,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 40644
+          },
+          {
+            "event": "tool_use",
+            "ms": 70667,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 70702,
+            "input": 44,
+            "output": 1066,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 72119
+          },
+          {
+            "event": "tool_use",
+            "ms": 95112,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 95146,
+            "input": 1102,
+            "output": 801,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 96233
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "task_completed": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "c261307eb32109cc770fc0cc662f31ca19560c0ada351341af917741ae6bd795",
+        "note_sha256": "de83aa0ed57bf2e9da5b611b36043fa93d449ffef3c452749deec663397077b7",
+        "checkpoint_sha256": "1194a63fc210c47e7b8a3facd6d360ba9b45fafea8785e7555a1b5d9c4375f3a",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": false,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "83f7f529a614f142929aead69c1cf3d32b8e677885e30a5c4839bc72c5246e14",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.33s"
+        ],
+        "changed_source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54"
+      }
+    }
+  ],
+  "harness_instrumentation_commit": "96f0e6c8068d3ce2ab03e9c286c492c50a0bfbc6"
+}

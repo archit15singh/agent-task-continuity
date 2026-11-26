@@ -1,0 +1,70 @@
+{
+  "ollama": "0.40.6",
+  "model": {
+    "alias": "continuity-qwen3:4b",
+    "digest": "48c0fc34e0759fbccf94c03a62321d814d851e14368b1a4ad3c97da6f1012109",
+    "context_tokens": 16384,
+    "max_generated_tokens_per_call": 1500
+  },
+  "evidence": "Local Ollama access and generation summaries during the Packaging replay. End times rounded to seconds by Ollama. Intervals overlap.",
+  "requests": [
+    {
+      "start_seconds_approx": 0.0,
+      "end_seconds_approx": 43.52,
+      "http_status": 200,
+      "duration_seconds": 43.519244
+    },
+    {
+      "start_seconds_approx": 0.52,
+      "end_seconds_approx": 87.52,
+      "http_status": 200,
+      "duration_seconds": 87.0
+    },
+    {
+      "start_seconds_approx": 87.39,
+      "end_seconds_approx": 117.52,
+      "http_status": 200,
+      "duration_seconds": 30.128454
+    },
+    {
+      "start_seconds_approx": 117.17,
+      "end_seconds_approx": 141.52,
+      "http_status": 200,
+      "duration_seconds": 24.350126
+    },
+    {
+      "start_seconds_approx": 141.5,
+      "end_seconds_approx": 176.52,
+      "http_status": 200,
+      "duration_seconds": 35.023706
+    }
+  ],
+  "generated_tokens_in_finished_slot_logs": [
+    1500,
+    1500,
+    1066,
+    801
+  ],
+  "provider_cancel_observed": true,
+  "hosted_availability_probes": [
+    {
+      "id": "deepseek-v4.1-flash-free",
+      "http_status": 429
+    },
+    {
+      "id": "mimo-v2.6-flash-free",
+      "http_status": 429
+    },
+    {
+      "id": "nemotron-3.5-lightning-free",
+      "http_status": 429
+    }
+  ],
+  "synthetic_wire_probe": {
+    "model_option": "reasoningEffort",
+    "configured_value": "none",
+    "received_field": "reasoning_effort",
+    "received_value": "none",
+    "occurrences": 2
+  }
+}

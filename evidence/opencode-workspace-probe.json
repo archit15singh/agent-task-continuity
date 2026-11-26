@@ -1,0 +1,138 @@
+{
+  "opencode": "opencode v2.1.2",
+  "procedure": "Run standalone OpenCode three times with the same OS working directory and a local mock provider. For each arm record whether the request containing project context names the parent study checkout or the temporary fixture workspace.",
+  "arms": {
+    "inherited_parent_pwd": {
+      "parent_checkout_named": true,
+      "fixture_workspace_named": false
+    },
+    "matched_child_pwd": {
+      "parent_checkout_named": false,
+      "fixture_workspace_named": true
+    },
+    "unset_pwd": {
+      "parent_checkout_named": false,
+      "fixture_workspace_named": true
+    }
+  },
+  "regression_test": "tests/test_continuity.py::ContinuityTests::test_runner_aligns_pwd_with_the_child_workspace",
+  "regression_exit_before_fix": 1,
+  "regression_exit_after_fix": 0,
+  "synthetic_edit": {
+    "inherited_pwd": {
+      "exit_code": 0,
+      "timed_out": false,
+      "output_sha256": "9efd4885cd0e05a8a852d62a8ff6e8893f8033260c7c4372f0209d4a7e8b683f",
+      "seconds": 18.9905,
+      "runtime_events": {
+        "step_start": 3,
+        "text": 3,
+        "tool_use": 2,
+        "step_finish": 2
+      },
+      "runtime_timeline": [
+        {
+          "event": "step_start",
+          "ms": 0
+        },
+        {
+          "event": "text",
+          "ms": 1713
+        },
+        {
+          "event": "tool_use",
+          "ms": 1728,
+          "tool": "read",
+          "status": "error"
+        },
+        {
+          "event": "step_finish",
+          "ms": 1749,
+          "input": 3186,
+          "output": 63,
+          "reasoning": 0
+        },
+        {
+          "event": "step_start",
+          "ms": 2040
+        },
+        {
+          "event": "text",
+          "ms": 3324
+        },
+        {
+          "event": "tool_use",
+          "ms": 3359,
+          "tool": "glob",
+          "status": "completed"
+        },
+        {
+          "event": "step_finish",
+          "ms": 3372,
+          "input": 114,
+          "output": 53,
+          "reasoning": 0
+        },
+        {
+          "event": "step_start",
+          "ms": 3646
+        },
+        {
+          "event": "text",
+          "ms": 6084
+        }
+      ],
+      "reported_input_tokens": 0,
+      "reported_cached_input_tokens": 0,
+      "reported_output_tokens": 0,
+      "provider_rate_limited": false,
+      "provider_error_type": null,
+      "expected_file": false
+    },
+    "matched_pwd": {
+      "exit_code": 0,
+      "timed_out": false,
+      "output_sha256": "17a969a52c2f57ed008fbd0323bbb691a9de517a27663be7df8af2648d3d1679",
+      "seconds": 8.913,
+      "runtime_events": {
+        "step_start": 2,
+        "tool_use": 1,
+        "step_finish": 1,
+        "text": 1
+      },
+      "runtime_timeline": [
+        {
+          "event": "step_start",
+          "ms": 0
+        },
+        {
+          "event": "tool_use",
+          "ms": 22,
+          "tool": "edit",
+          "status": "completed"
+        },
+        {
+          "event": "step_finish",
+          "ms": 24,
+          "input": 3252,
+          "output": 50,
+          "reasoning": 0
+        },
+        {
+          "event": "step_start",
+          "ms": 324
+        },
+        {
+          "event": "text",
+          "ms": 876
+        }
+      ],
+      "reported_input_tokens": 0,
+      "reported_cached_input_tokens": 0,
+      "reported_output_tokens": 0,
+      "provider_rate_limited": false,
+      "provider_error_type": null,
+      "expected_file": true
+    }
+  }
+}

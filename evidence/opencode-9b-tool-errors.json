@@ -1,0 +1,24 @@
+{
+  "packaging": {
+    "counts": {
+      "completed_target_reads": 6
+    },
+    "error_categories": {
+      "permission_denied": 4,
+      "other": 1,
+      "file_not_found": 5,
+      "unregistered_tool": 2
+    }
+  },
+  "click": {
+    "counts": {
+      "completed_target_reads": 3,
+      "edit_attempts": 2
+    },
+    "error_categories": {
+      "unregistered_tool": 1,
+      "permission_denied": 1,
+      "exact_text_mismatch": 2
+    }
+  }
+}

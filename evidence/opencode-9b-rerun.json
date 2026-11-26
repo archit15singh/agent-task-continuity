@@ -1,0 +1,1228 @@
+{
+  "utc": "2026-11-26T06:49:11+00:00",
+  "candidate_commit": "24ac9a908ff8806b3e6729fbe8492cde57ddff1c",
+  "set": "all",
+  "python": "3.13.18",
+  "source_model_requested": "gpt-6.2-sol",
+  "replacement_runtime": "opencode",
+  "replacement_model_requested": "continuity-local/continuity-qwen35:9b",
+  "worker_timeout_seconds": 180,
+  "local_no_think": true,
+  "local_reasoning_effort": "none",
+  "codex": "codex-cli 0.170.0",
+  "opencode": "opencode v2.1.2",
+  "cases": [
+    {
+      "id": "click",
+      "split": "development",
+      "base": "dd149eb3129d887a22202c3fafa5ceb0e0d7018d",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "9556602066c323e988935ab0a02b9ab7087c0a690714f96752e5620ed6cf6b2e",
+        "seconds": 29.1885,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 7,
+          "item.started": 5,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 141710,
+        "reported_cached_input_tokens": 125312,
+        "reported_output_tokens": 832,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "2c7a585c000e6ad58fb887030f231f4e4f0a99999a90a2cdb24eeec70d0c9bf7",
+        "seconds": 180.1552,
+        "runtime_events": {
+          "step_start": 8,
+          "text": 4,
+          "tool_use": 10,
+          "step_finish": 8
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "text",
+            "ms": 3893
+          },
+          {
+            "event": "tool_use",
+            "ms": 3909,
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 3925,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 3980,
+            "input": 990,
+            "output": 122,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 4632
+          },
+          {
+            "event": "text",
+            "ms": 6929
+          },
+          {
+            "event": "tool_use",
+            "ms": 6950,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "tool_use",
+            "ms": 6954,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 6969,
+            "input": 254,
+            "output": 66,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 22246
+          },
+          {
+            "event": "text",
+            "ms": 29977
+          },
+          {
+            "event": "tool_use",
+            "ms": 30006,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 30020,
+            "input": 10727,
+            "output": 227,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 60336
+          },
+          {
+            "event": "tool_use",
+            "ms": 60382,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 60412,
+            "input": 1091,
+            "output": 75,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 75075
+          },
+          {
+            "event": "text",
+            "ms": 77943
+          },
+          {
+            "event": "tool_use",
+            "ms": 77949,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 77964,
+            "input": 10540,
+            "output": 100,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 102136
+          },
+          {
+            "event": "tool_use",
+            "ms": 102182,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 102197,
+            "input": 536,
+            "output": 190,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 104700
+          },
+          {
+            "event": "tool_use",
+            "ms": 104721,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 104735,
+            "input": 294,
+            "output": 75,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 153679
+          },
+          {
+            "event": "tool_use",
+            "ms": 153728,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 153750,
+            "input": 10540,
+            "output": 1183,
+            "reasoning": 0
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "task_completed": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "7ec8dfc9d2610d5cd10fcb678daec6501b3e7f57853f0cbf2f9dd27797aeee80",
+        "note_sha256": "fa4cce9a2fd538c0a6e779a53df8936c0d16bddf2e37b923b85d82584c3fb082",
+        "checkpoint_sha256": "1976575246d742d005dd7b8b8304ee4f0808bd0e88effe0006c7feb3fba800a1",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": false,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "cff755a419b2503dc3c3ea8d2f4783d30bf8c8a92a4903e940e353496e36623f",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "52 passed, 1 skipped in 0.24s"
+        ],
+        "changed_source_sha256": "d4c02aeae8220db36facabe5c6eff11e2041e72c1dac748ef350eedfabefe2ff"
+      }
+    },
+    {
+      "id": "packaging",
+      "split": "held-out",
+      "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "5e4e6116b2cf6e472c4149724472979e1992b33d501d204e08d041be5c0f369e",
+        "seconds": 26.4006,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 7,
+          "item.started": 5,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 111410,
+        "reported_cached_input_tokens": 95488,
+        "reported_output_tokens": 805,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "9d8aacd2aa82331c8429f37797b692902840085b162a04a29f46fba8a5af9efb",
+        "seconds": 180.1127,
+        "runtime_events": {
+          "step_start": 17,
+          "tool_use": 24,
+          "step_finish": 17,
+          "text": 11
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 17,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 31,
+            "input": 938,
+            "output": 34,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 1312
+          },
+          {
+            "event": "tool_use",
+            "ms": 2334,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 2337,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 2364,
+            "input": 73,
+            "output": 67,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 2889
+          },
+          {
+            "event": "text",
+            "ms": 5919
+          },
+          {
+            "event": "tool_use",
+            "ms": 5934,
+            "tool": "glob",
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 5937,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 5958,
+            "input": 131,
+            "output": 83,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 6457
+          },
+          {
+            "event": "text",
+            "ms": 8300
+          },
+          {
+            "event": "tool_use",
+            "ms": 8304,
+            "tool": "execute",
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 8308,
+            "tool": "execute",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 8326,
+            "input": 157,
+            "output": 66,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 9526
+          },
+          {
+            "event": "tool_use",
+            "ms": 9538,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 9552,
+            "input": 158,
+            "output": 24,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 9943
+          },
+          {
+            "event": "text",
+            "ms": 11345
+          },
+          {
+            "event": "tool_use",
+            "ms": 11390,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 11403,
+            "input": 63,
+            "output": 36,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 20065
+          },
+          {
+            "event": "text",
+            "ms": 27368
+          },
+          {
+            "event": "tool_use",
+            "ms": 27378,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 27379,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 27380,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 27395,
+            "input": 5770,
+            "output": 255,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 28355
+          },
+          {
+            "event": "text",
+            "ms": 32583
+          },
+          {
+            "event": "tool_use",
+            "ms": 32599,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 32618,
+            "input": 504,
+            "output": 103,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 36078
+          },
+          {
+            "event": "tool_use",
+            "ms": 36118,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 36134,
+            "input": 272,
+            "output": 77,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 65791
+          },
+          {
+            "event": "text",
+            "ms": 74977
+          },
+          {
+            "event": "tool_use",
+            "ms": 74998,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "tool_use",
+            "ms": 75002,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "tool_use",
+            "ms": 75004,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 75021,
+            "input": 458,
+            "output": 266,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 103893
+          },
+          {
+            "event": "text",
+            "ms": 106107
+          },
+          {
+            "event": "tool_use",
+            "ms": 106114,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 106127,
+            "input": 670,
+            "output": 69,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 125638
+          },
+          {
+            "event": "text",
+            "ms": 127419
+          },
+          {
+            "event": "tool_use",
+            "ms": 127428,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 127440,
+            "input": 586,
+            "output": 59,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 151257
+          },
+          {
+            "event": "text",
+            "ms": 154531
+          },
+          {
+            "event": "tool_use",
+            "ms": 154541,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 154553,
+            "input": 598,
+            "output": 118,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 155008
+          },
+          {
+            "event": "text",
+            "ms": 157272
+          },
+          {
+            "event": "tool_use",
+            "ms": 157298,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 157310,
+            "input": 157,
+            "output": 43,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 160096
+          },
+          {
+            "event": "tool_use",
+            "ms": 160122,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 160132,
+            "input": 117,
+            "output": 91,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 162533
+          },
+          {
+            "event": "text",
+            "ms": 165521
+          },
+          {
+            "event": "tool_use",
+            "ms": 165535,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 165546,
+            "input": 1652,
+            "output": 111,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 169327
+          },
+          {
+            "event": "tool_use",
+            "ms": 169345,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 169358,
+            "input": 235,
+            "output": 105,
+            "reasoning": 0
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "task_completed": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "ee3b2b8decaaa659882e577fcd59c55444a114ca923689c38ea577ba4d8c2055",
+        "note_sha256": "d783c1d1f753702f213c7445cd41a29c41e9c4397a945aea7ca72fa2b59cc9a3",
+        "checkpoint_sha256": "6889e016e4f74aa1cd795768c94f1d15fb4537d730dd8c666c036db6a2f508a6",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": false,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "83f7f529a614f142929aead69c1cf3d32b8e677885e30a5c4839bc72c5246e14",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.31s"
+        ],
+        "changed_source_sha256": "7c1832ec00bd2d71a72ba8f11e58d6b8b76bf39f26c2c6fcab188523e1bcbc54"
+      }
+    },
+    {
+      "id": "attrs",
+      "split": "held-out",
+      "base": "f830e60f9c6485aa7037a52f03fdd28428dfbfc4",
+      "source": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "84bbf0d19e5df506109a5d1e71c110c15b5b57985987480ec82b6af842e081cc",
+        "seconds": 32.3973,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 7,
+          "item.started": 5,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 142151,
+        "reported_cached_input_tokens": 110720,
+        "reported_output_tokens": 952,
+        "provider_rate_limited": false,
+        "provider_error_type": null,
+        "artifacts": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ]
+      },
+      "replacement": {
+        "runtime": "opencode",
+        "exit_code": 124,
+        "timed_out": true,
+        "output_sha256": "b2dd8d0906429778896dbd2345c8c31b0cafc3d063526ec94e18b0398c49224a",
+        "seconds": 180.0293,
+        "runtime_events": {
+          "step_start": 24,
+          "text": 15,
+          "tool_use": 26,
+          "step_finish": 23
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "text",
+            "ms": 4124
+          },
+          {
+            "event": "tool_use",
+            "ms": 4135,
+            "tool": "execute",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 4200,
+            "input": 918,
+            "output": 115,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 5723
+          },
+          {
+            "event": "tool_use",
+            "ms": 6596,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 6612,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 6621,
+            "input": 168,
+            "output": 69,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 7942
+          },
+          {
+            "event": "tool_use",
+            "ms": 10028,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "tool_use",
+            "ms": 10030,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 10041,
+            "input": 168,
+            "output": 109,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 12972
+          },
+          {
+            "event": "tool_use",
+            "ms": 12979,
+            "tool": "execute",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 12994,
+            "input": 226,
+            "output": 84,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 13916
+          },
+          {
+            "event": "text",
+            "ms": 16373
+          },
+          {
+            "event": "tool_use",
+            "ms": 16378,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 16390,
+            "input": 137,
+            "output": 86,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 17772
+          },
+          {
+            "event": "tool_use",
+            "ms": 17779,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 17789,
+            "input": 178,
+            "output": 34,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 20182
+          },
+          {
+            "event": "tool_use",
+            "ms": 20192,
+            "tool": "glob",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 20205,
+            "input": 73,
+            "output": 83,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 22710
+          },
+          {
+            "event": "tool_use",
+            "ms": 22718,
+            "tool": "glob",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 22731,
+            "input": 170,
+            "output": 84,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 23193
+          },
+          {
+            "event": "text",
+            "ms": 28269
+          },
+          {
+            "event": "tool_use",
+            "ms": 28316,
+            "tool": "glob",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 28374,
+            "input": 171,
+            "output": 149,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 33171
+          },
+          {
+            "event": "text",
+            "ms": 38753
+          },
+          {
+            "event": "tool_use",
+            "ms": 38768,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "tool_use",
+            "ms": 38771,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 38783,
+            "input": 3270,
+            "output": 180,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 47855
+          },
+          {
+            "event": "text",
+            "ms": 67200
+          },
+          {
+            "event": "tool_use",
+            "ms": 67214,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 67230,
+            "input": 6276,
+            "output": 618,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 103510
+          },
+          {
+            "event": "text",
+            "ms": 107091
+          },
+          {
+            "event": "tool_use",
+            "ms": 107109,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 107123,
+            "input": 1316,
+            "output": 124,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 111054
+          },
+          {
+            "event": "text",
+            "ms": 119045
+          },
+          {
+            "event": "tool_use",
+            "ms": 119067,
+            "tool": "edit",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 119142,
+            "input": 718,
+            "output": 256,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 125437
+          },
+          {
+            "event": "tool_use",
+            "ms": 125448,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 125460,
+            "input": 286,
+            "output": 209,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 126029
+          },
+          {
+            "event": "text",
+            "ms": 129555
+          },
+          {
+            "event": "tool_use",
+            "ms": 129568,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 129579,
+            "input": 314,
+            "output": 120,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 130305
+          },
+          {
+            "event": "text",
+            "ms": 135257
+          },
+          {
+            "event": "tool_use",
+            "ms": 135261,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 135272,
+            "input": 405,
+            "output": 168,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 135826
+          },
+          {
+            "event": "text",
+            "ms": 139356
+          },
+          {
+            "event": "tool_use",
+            "ms": 139362,
+            "tool": "read",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 139374,
+            "input": 273,
+            "output": 116,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 139781
+          },
+          {
+            "event": "text",
+            "ms": 143241
+          },
+          {
+            "event": "tool_use",
+            "ms": 143248,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 143263,
+            "input": 155,
+            "output": 121,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 145622
+          },
+          {
+            "event": "text",
+            "ms": 150468
+          },
+          {
+            "event": "tool_use",
+            "ms": 150475,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 150488,
+            "input": 457,
+            "output": 154,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 151693
+          },
+          {
+            "event": "text",
+            "ms": 159481
+          },
+          {
+            "event": "tool_use",
+            "ms": 159488,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 159502,
+            "input": 588,
+            "output": 261,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 160278
+          },
+          {
+            "event": "text",
+            "ms": 163974
+          },
+          {
+            "event": "tool_use",
+            "ms": 163983,
+            "tool": "grep",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 163993,
+            "input": 366,
+            "output": 117,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 167214
+          },
+          {
+            "event": "tool_use",
+            "ms": 167237,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 167248,
+            "input": 156,
+            "output": 97,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 167674
+          },
+          {
+            "event": "text",
+            "ms": 171983
+          },
+          {
+            "event": "tool_use",
+            "ms": 171992,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 172004,
+            "input": 192,
+            "output": 141,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 172924
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "complete": false,
+        "task_completed": false,
+        "repro_baseline_exit": 1,
+        "repro_sha256": "9dc19958bcfbfccad5e0c62a2ba4e76edc9a6c84c98fb567a4b24bf3eeebc522",
+        "note_sha256": "1b3df24f8d76b3360432be0373a14e11590d0d57c3dd0ab9efbc24e93f914c44",
+        "checkpoint_sha256": "60e6d185b5c9487599be64b8d5ad534f2dd65dbb6c38cd2249f6d3f59f8380e4",
+        "restored_repro": true,
+        "restored_note": true,
+        "scope_exact": true,
+        "source_predicate_exit": 1,
+        "source_predicate_log_sha256": "89388bd017031842f3f8c71f7852619ebc9f4d184c3be09382bb686f8917ebb1",
+        "repro_after_exit": 1,
+        "native_exit": 0,
+        "native_summary": [
+          "53 passed in 1.57s"
+        ],
+        "changed_source_sha256": "9be5ad7e0fea9c2cac65652bad71ccf5dc85217286fcd9b03692664698b3b861"
+      }
+    }
+  ]
+}
