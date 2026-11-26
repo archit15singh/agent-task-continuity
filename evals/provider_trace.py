@@ -27,8 +27,11 @@ def trace_provider(endpoint, *, reasoning_effort=None):
                 return
             payload = self.rfile.read(int(self.headers["Content-Length"]))
             body = json.loads(payload)
-            if reasoning_effort is not None and self.path == "/v1/chat/completions":
-                body["reasoning_effort"] = reasoning_effort
+            if reasoning_effort is not None:
+                if self.path == "/v1/chat/completions":
+                    body["reasoning_effort"] = reasoning_effort
+                else:
+                    body["reasoning"] = {**(body.get("reasoning") or {}), "effort": reasoning_effort}
                 payload = json.dumps(body).encode()
             messages = body.get("messages", [])
             compact = "you must summarize the conversation above" in json.dumps(messages).lower()
@@ -38,7 +41,7 @@ def trace_provider(endpoint, *, reasoning_effort=None):
                 "compaction_summary": compact,
                 "messages": len(messages),
                 "tool_count": len(body.get("tools") or []),
-                "reasoning_effort": body.get("reasoning_effort"),
+                "reasoning_effort": body.get("reasoning_effort", (body.get("reasoning") or {}).get("effort")),
                 **({"seed_forwarded": body["seed"]} if "seed" in body else {}),
                 "reasoning_characters": 0,
                 "visible_characters": 0,

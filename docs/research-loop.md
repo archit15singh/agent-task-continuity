@@ -219,3 +219,7 @@ If the Chat Completions off request in H22 returns the exact answer with no reas
 ### H24 · Equivalent-implementation controls
 
 Qualify the oracle in the other direction. On each pinned reference, change the implementation's control flow while preserving its inputs, outputs, and public interface. Use branches instead of Click's inline formatting conditional, a delimiter variable for Packaging, and explicit branches in place of attrs' adapter dispatch table. Require the original reproduction, native checks, and all frozen probes to pass. This samples whether the oracle accepts an alternate implementation, without proving that its outputs characterize every valid repair.
+
+### H25 · Responses off on the frozen Codex Click arm
+
+The Responses smoke also returned the exact answer in three tokens, with zero reasoning items after the explicit off request. Run the corresponding Codex Click arm once after the OpenCode follow-up. Keep the prompt, artifact, model alias, and deadline fixed. Add only `reasoning.effort=none` to Responses requests. Grade the resulting workspace independently and compare to the Codex default attempt. As with H23, this is an exploratory one-pair diagnostic.

@@ -9,7 +9,7 @@ from time import monotonic
 from urllib.error import HTTPError
 from urllib.request import Request, urlopen
 
-from . import paired_continuation
+from . import paired_continuation, provider_trace
 from .paired_continuation import CASES, MODEL, attempt as run_worker, calibrate, local_provider_metadata, warm_provider
 from .run import sha
 
@@ -75,6 +75,7 @@ def main():
     parser.add_argument("--endpoint", default="http://127.0.0.1:14687/v1")
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--click-output", type=Path)
+    parser.add_argument("--codex-click-output", type=Path)
     args = parser.parse_args()
     model = local_provider_metadata(args.endpoint)
     root = args.endpoint.removesuffix("/v1")
@@ -88,25 +89,33 @@ def main():
         "runner_sha256": sha(Path(__file__).read_bytes()), "model": model, "thinking": info.get("thinking"),
         "prompt": PROMPT, "cap": CAP, "trials": rows,
     }, indent=2) + "\n")
-    if args.click_output is None:
-        return
-    chat_off = next(row for row in rows if row["path"] == "/v1/chat/completions" and row["off_requested"])
-    qualified = (chat_off["http"] == 200 and chat_off["exact_answer"] and not chat_off["reasoning_characters"]
-                 and not chat_off["literal_think_tag"])
+    for runtime, route, output in (
+        ("opencode", "/v1/chat/completions", args.click_output),
+        ("codex", "/v1/responses", args.codex_click_output),
+    ):
+        if output is not None:
+            off = next(row for row in rows if row["path"] == route and row["off_requested"])
+            click_followup(args.endpoint, model, runtime, off, output)
+
+
+def click_followup(endpoint, model, runtime, smoke, output):
+    qualified = (smoke["http"] == 200 and smoke["exact_answer"] and not smoke["reasoning_characters"]
+                 and not smoke["literal_think_tag"] and not smoke.get("reasoning_items"))
     followup = {"qualified": qualified, "attempt": None,
                 "runner_sha256": sha(Path(__file__).read_bytes()),
-                "paired_runner_sha256": sha(Path(paired_continuation.__file__).read_bytes()), "model": model}
-    args.click_output.write_text(json.dumps(followup, indent=2) + "\n")
+                "paired_runner_sha256": sha(Path(paired_continuation.__file__).read_bytes()),
+                "relay_sha256": sha(Path(provider_trace.__file__).read_bytes()), "model": model}
+    output.write_text(json.dumps(followup, indent=2) + "\n")
     if not qualified:
         return
     case = next(item for item in CASES if item["id"] == "click-help")
     with tempfile.TemporaryDirectory(prefix="continuity-paired-off-") as directory:
         root = Path(directory).resolve()
         expected, followup["calibration"] = calibrate(case, root / "controls")
-        print("Qualified Chat Completions off: running the matched Click follow-up", flush=True)
-        followup["attempt"] = run_worker(case, root / "opencode", "opencode", args.endpoint, expected,
+        print(f"Qualified reasoning off: running the matched {runtime} Click follow-up", flush=True)
+        followup["attempt"] = run_worker(case, root / runtime, runtime, endpoint, expected,
                                          reasoning_effort="none")
-    args.click_output.write_text(json.dumps(followup, indent=2) + "\n")
+    output.write_text(json.dumps(followup, indent=2) + "\n")
 
 
 if __name__ == "__main__":
