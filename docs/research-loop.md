@@ -215,3 +215,7 @@ The Click OpenCode attempt emitted reasoning despite the prompt directive. After
 ### H23 · Endpoint-level off on the frozen Click pair
 
 If the Chat Completions off request in H22 returns the exact answer with no reasoning content or literal think tags, repeat the OpenCode Click arm once. Keep the saved checkpoint, prompt, model, runtime, permissions, and 180-second deadline fixed. Set only `reasoning_effort=none` at the relay. Record whether the wire-level change persists on the task and whether the visible repro and broader checks pass. Compare to the earlier default Click attempt as an exploratory one-pair diagnostic.
+
+### H24 · Equivalent-implementation controls
+
+Qualify the oracle in the other direction. On each pinned reference, change the implementation's control flow while preserving its inputs, outputs, and public interface. Use branches instead of Click's inline formatting conditional, a delimiter variable for Packaging, and explicit branches in place of attrs' adapter dispatch table. Require the original reproduction, native checks, and all frozen probes to pass. This samples whether the oracle accepts an alternate implementation, without proving that its outputs characterize every valid repair.
