@@ -174,18 +174,21 @@ def grade(case, destination, expected):
     }
 
 
-def attempt(case, root, runtime, endpoint, expected, *, reasoning_effort=None, read_limit=None):
-    root.mkdir()
-    source = download(case, root / "parent", reference=False)
-    seed(case, source)
-    objective = (
+def task_objective(case):
+    return (
         "/no_think\n" + case["objective"]
         + "\nEdit only " + ", ".join(case["source"]) + ". Read the saved note and reproduction first. "
         "Apply the requested fix in this workspace. Preserve both handoff files exactly. "
         "Do not inspect Git history, contact any external endpoint, or open files outside the checkout."
     )
+
+
+def attempt(case, root, runtime, endpoint, expected, *, reasoning_effort=None, read_limit=None):
+    root.mkdir()
+    source = download(case, root / "parent", reference=False)
+    seed(case, source)
     db = root / "state.db"
-    task = invoke(db, "start", source, "--objective", objective)
+    task = invoke(db, "start", source, "--objective", task_objective(case))
     checkpoint = invoke(db, "checkpoint", task["task"], "--include", NOTE, "--include", REPRO,
                         "--note", case["note"], owner=task["token"])
     destination = root / "replacement"
