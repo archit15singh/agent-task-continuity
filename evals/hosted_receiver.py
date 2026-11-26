@@ -6,10 +6,11 @@ from datetime import datetime, timezone
 import json
 import os
 from pathlib import Path
-import socket
 import subprocess
 import tempfile
 import time
+from urllib.error import HTTPError
+from urllib.request import urlopen
 
 from .durable_activation import ACTIVATION_ENV, AUTH_ENV, trial
 from .run import PROJECT, sha
@@ -47,8 +48,12 @@ def docker_receiver(database, port, fault, *, module, env):
         deadline = time.monotonic() + 10
         while True:
             try:
-                with socket.create_connection(("127.0.0.1", bound_port), timeout=0.3):
-                    break
+                with urlopen(f"http://127.0.0.1:{bound_port}/events/" + "0" * 64, timeout=0.5):
+                    raise RuntimeError("The readiness receipt unexpectedly exists")
+            except HTTPError as error:
+                if error.code != 404:
+                    raise
+                break
             except OSError:
                 if time.monotonic() >= deadline:
                     raise RuntimeError("Receiver failed to bind: " + docker("logs", container))
