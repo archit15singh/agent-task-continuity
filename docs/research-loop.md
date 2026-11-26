@@ -131,3 +131,7 @@ The first activation matrix interrupted the coordinator on either side of owners
 ### H13 · Exact-request repeatability
 
 Seed 32 produced different grades across rounds. Forward and record the requested seed explicitly and run the identical body request three times. Keep the expanded oracle and compare response hashes as well as verified behavior. A match within this series establishes observed repeatability for this run; a difference establishes that the request seed alone was insufficient to reproduce the output on this setup.
+
+### H14 · Counterexample from the expanded oracle
+
+The repeated body candidate was byte-identical to the initial apparent pass. Produce it again with seed 32, then give the model that candidate and the first minimal mismatch from the ordered upstream-oracle inputs. Test one correction with the same body contract and output allowance. Recheck the original gates and all 1,111 inputs. Record whether the sample was actually repaired and whether other differences remain. A successful correction would still only qualify the receiver on this diagnostic case.

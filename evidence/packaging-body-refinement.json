@@ -1,0 +1,164 @@
+{
+  "utc": "2026-11-26T09:26:17+00:00",
+  "model": "continuity-coder:7b",
+  "base": "f91ea7931fa551eb498ca2cdf5644dbbf20bcbc6",
+  "evaluation_code_sha256": "3dcb2f2d2e4114bd2b748f0c90cde2afa6776221bda429f60100d194c755f84d",
+  "trials": [
+    {
+      "checkpoint": "705aca0dcb56cf37faee7c3d70a323da1c454bbde891381c7a8d35d3b97045b8",
+      "contract": "body",
+      "seed_requested": 32,
+      "prompt_sha256": "de83f7f42e6fe1deee906200a6495d533c7926b8dc5ffb7495c2816df511edb7",
+      "candidate_applied": true,
+      "complete": false,
+      "output_sha256": "63431ca4523cec81dee5f213986240555423abe096f4903fb30d2dca39b067b6",
+      "provider_requests": [
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 0.009,
+          "compaction_summary": false,
+          "messages": 1,
+          "tool_count": 0,
+          "reasoning_effort": "none",
+          "seed_forwarded": 32,
+          "reasoning_characters": 0,
+          "visible_characters": 125,
+          "requested_max_tokens": 1500,
+          "http_status": 200,
+          "finish_reason": "stop",
+          "ended": "provider_eof",
+          "duration_seconds": 1.47
+        }
+      ],
+      "disposition": "applied",
+      "grade": {
+        "files_restored": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py",
+          "src/packaging/tags.py"
+        ],
+        "predicate_exit": 0,
+        "repro_exit": 0,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.12s"
+        ],
+        "source_sha256": "ac4ad973cedbf46235894927040430291647db97b35154724bf215570038fb5a"
+      },
+      "behavior": [
+        {
+          "abis": [
+            "none",
+            "cp316t"
+          ],
+          "expected": true,
+          "observed": true
+        },
+        {
+          "abis": [
+            "abi3t"
+          ],
+          "expected": true,
+          "observed": true
+        },
+        {
+          "abis": [
+            "cp316",
+            "cp316t"
+          ],
+          "expected": false,
+          "observed": false
+        },
+        {
+          "abis": [
+            "abi3t",
+            "cp316"
+          ],
+          "expected": true,
+          "observed": true
+        },
+        {
+          "abis": [
+            "none",
+            "abi3"
+          ],
+          "expected": false,
+          "observed": false
+        },
+        {
+          "abis": [],
+          "expected": false,
+          "observed": false
+        }
+      ],
+      "expanded_oracle": {
+        "examples": 1111,
+        "mismatches": 123,
+        "first_mismatch": {
+          "input": [
+            "other"
+          ],
+          "observed": true,
+          "expected": false
+        }
+      },
+      "feedback": {
+        "contract": "body",
+        "seed_requested": 32,
+        "prompt_sha256": "3211d5e90d5472ceb385960c6ef67fc386f48a85fee9529ee9c10ae53303f28d",
+        "candidate_applied": false,
+        "complete": false,
+        "output_sha256": "472bfc4db160a1d6e1ceeafa80f2588408d0b33a013a64e03a11f27575186661",
+        "provider_requests": [
+          {
+            "path": "/v1/chat/completions",
+            "request_at_seconds": 0.002,
+            "compaction_summary": false,
+            "messages": 1,
+            "tool_count": 0,
+            "reasoning_effort": "none",
+            "seed_forwarded": 32,
+            "reasoning_characters": 0,
+            "visible_characters": 177,
+            "requested_max_tokens": 1500,
+            "http_status": 200,
+            "finish_reason": "stop",
+            "ended": "provider_eof",
+            "duration_seconds": 2.123
+          }
+        ],
+        "disposition": "nested_function"
+      }
+    }
+  ],
+  "controls": {
+    "body": {
+      "wrong_signature_rejected": true,
+      "positive": {
+        "files_restored": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py",
+          "src/packaging/tags.py"
+        ],
+        "predicate_exit": 0,
+        "repro_exit": 0,
+        "native_exit": 0,
+        "native_summary": [
+          "238 passed in 0.12s"
+        ],
+        "source_sha256": "cb021177e6149f7fcb6d72b9ca53d0f5100dddecd9d10992c9ffb16d8684b529"
+      },
+      "baseline_rejected": true,
+      "negative_oracle": {
+        "examples": 1111,
+        "mismatches": 279
+      },
+      "positive_oracle": {
+        "examples": 1111,
+        "mismatches": 0
+      }
+    }
+  }
+}

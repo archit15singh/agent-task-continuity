@@ -11,6 +11,7 @@ from textwrap import dedent, indent
 from continuity.workspace import git
 from .bounded_receiver import CASE, FIXTURE, behavior, completion, finished, grade, section, splice, target
 from .live import NOTE, REPRO, TASKS, replacement_objective
+from .packaging_behavior import expanded_inputs
 from .run import EVALS, download, execute, invoke, sha
 
 
@@ -49,7 +50,7 @@ def reject_reason(error):
     return "edit_scope"
 
 
-def run_trial(workspace, original, contract, seed, args):
+def run_trial(workspace, original, contract, seed, args, *, feedback=None):
     requirement = {
         "whole": "The code string must contain the entire replacement function with its original signature.",
         "body": "The code string must contain only the function body, without a def line. The receiver attaches the original signature.",
@@ -58,7 +59,12 @@ def run_trial(workspace, original, contract, seed, args):
         f"{TASKS['packaging']}\nFrozen note: {(FIXTURE / NOTE).read_text()}\n"
         "Return exactly one JSON object with a code string. " + requirement
         + "\nThe module imports re. Use local variables and simple string or regex matching.\n"
-        + section(original)
+        + (section(original) if feedback is None else (
+            f"The candidate below returned {feedback['observed']!r} for "
+            f"{feedback['input']!r}; upstream returns {feedback['expected']!r}. "
+            "Correct the candidate and preserve the other task behavior.\n"
+            + section((workspace / CASE["source"]).read_text())
+        ))
     )
     receipt = {"contract": contract, "seed_requested": seed, "prompt_sha256": sha(prompt.encode()),
                "candidate_applied": False, "complete": False}
@@ -90,16 +96,20 @@ def run_trial(workspace, original, contract, seed, args):
     return receipt
 
 
-def expanded(workspace, expected):
+def expanded(workspace, expected, *, first_mismatch=False):
     result = execute([sys.executable, str(EVALS / "packaging_behavior.py"), "--expanded"], cwd=workspace)
     if result.returncode != 0:
         return {"examples": len(expected) if expected else None, "mismatches": None}
     observed = json.loads(result.stdout)
     if expected is None:
         return observed
-    return {"examples": len(expected), "mismatches": sum(
-        left != right for left, right in zip(observed, expected, strict=True)
-    )}
+    incorrect = [
+        {"input": list(abis), "observed": actual, "expected": wanted}
+        for abis, actual, wanted in zip(expanded_inputs(), observed, expected, strict=True)
+        if actual != wanted
+    ]
+    return {"examples": len(expected), "mismatches": len(incorrect),
+            **({"first_mismatch": incorrect[0]} if incorrect and first_mismatch else {})}
 
 
 def main():
@@ -109,8 +119,11 @@ def main():
     cli.add_argument("--model", default="continuity-coder:7b")
     cli.add_argument("--dry-run", action="store_true")
     cli.add_argument("--expanded", action="store_true")
-    cli.add_argument("--repeat-seed", type=int)
+    arms = cli.add_mutually_exclusive_group()
+    arms.add_argument("--repeat-seed", type=int)
+    arms.add_argument("--refine", action="store_true")
     args = cli.parse_args()
+    use_oracle = args.expanded or args.refine
     if not args.endpoint and not args.dry_run:
         cli.error("live runs require --endpoint")
     report = {
@@ -132,11 +145,13 @@ def main():
         upstream = section((oracle / CASE["source"]).read_text()).replace(
             "_CPYTHON_ABI_RE.match(", r're.match(r"cp\d+(.*)", ',
         )
-        expected = expanded(oracle, None) if args.expanded else None
-        if args.expanded:
+        expected = expanded(oracle, None) if use_oracle else None
+        if use_oracle:
             assert isinstance(expected, list) and len(expected) == 1111
-        first, second = (32, 33) if args.expanded else (31, 32)
+        first, second = (32, 33) if use_oracle else (31, 32)
         orders = (("whole", first), ("body", first), ("body", second), ("whole", second))
+        if args.refine:
+            orders = (("body", 32),)
         if args.repeat_seed is not None:
             orders = (("body", args.repeat_seed),) * 3
         for index, (contract, seed) in enumerate(orders, 1):
@@ -156,7 +171,7 @@ def main():
                     assert reject_reason(error) == "signature"
                 else:
                     raise AssertionError("Wrong signature was accepted")
-                negative_oracle = expanded(workspace, expected) if args.expanded else None
+                negative_oracle = expanded(workspace, expected) if use_oracle else None
                 path.write_text(apply_code(original, upstream if contract == "whole" else body_from(upstream), contract))
                 positive = grade(workspace)
                 assert all(positive[gate] == 0 for gate in ("predicate_exit", "repro_exit", "native_exit"))
@@ -164,7 +179,7 @@ def main():
                 report.setdefault("controls", {})[contract] = {
                     "wrong_signature_rejected": True, "positive": positive, "baseline_rejected": True,
                 }
-                if args.expanded:
+                if use_oracle:
                     positive_oracle = expanded(workspace, expected)
                     assert negative_oracle["mismatches"] > 0 and positive_oracle["mismatches"] == 0
                     report["controls"][contract].update(negative_oracle=negative_oracle, positive_oracle=positive_oracle)
@@ -172,9 +187,16 @@ def main():
             if not args.dry_run:
                 receipt = run_trial(workspace, original, contract, seed, args)
                 receipt.setdefault("grade", grade(workspace))
-                if args.expanded and receipt["candidate_applied"]:
-                    receipt["expanded_oracle"] = expanded(workspace, expected)
+                if use_oracle and receipt["candidate_applied"]:
+                    receipt["expanded_oracle"] = expanded(workspace, expected, first_mismatch=args.refine)
                     receipt["complete"] = receipt["complete"] and receipt["expanded_oracle"]["mismatches"] == 0
+                    if args.refine and "first_mismatch" in receipt["expanded_oracle"]:
+                        first_mismatch = receipt["expanded_oracle"]["first_mismatch"]
+                        repair = run_trial(workspace, original, contract, seed, args, feedback=first_mismatch)
+                        if repair["candidate_applied"]:
+                            repair["expanded_oracle"] = expanded(workspace, expected)
+                            repair["complete"] = repair["complete"] and repair["expanded_oracle"]["mismatches"] == 0
+                        receipt["feedback"] = repair
                 report["trials"].append({"checkpoint": checkpoint["digest"], **receipt})
                 save()
         save()
