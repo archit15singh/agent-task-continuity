@@ -1,0 +1,1751 @@
+{
+  "utc": "2026-11-26T11:37:55+00:00",
+  "model": {
+    "alias": "continuity-paired:8b",
+    "digest": "0b9d5fc41387def5f0c95d5ba7462a390c01569c3f6cff6f40ce4492a15be5c8",
+    "settings": "temperature                    0.6\ntop_k                          20\ntop_p                          0.95\nnum_ctx                        16384\nnum_predict                    2048\nrepeat_penalty                 1\nstop                           \"<|im_start|>\"\nstop                           \"<|im_end|>\"",
+    "family": "qwen3",
+    "quantization": "Q4_K_M",
+    "base_model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41"
+  },
+  "source_sha256": {
+    "evals/capped_reads.py": "bafc5a586b9ca98f336760f0bacfd46fb292f8a845b397333d4c556323f28e5e",
+    "evals/provider_trace.py": "2f449db474fdc51c53c7f870d6f4691a44e2421a7297142c44b0f03efea8a611",
+    "evals/paired_continuation.py": "edbf7b3ef0249d9773c7daa53cc006d3ba2e92744f24afba2e1f08a2b749a7be"
+  },
+  "policy_control": "passed",
+  "attempts": [
+    {
+      "read_limit": null,
+      "runtime": "opencode",
+      "checkpoint_sha256": "084da77ad3dfe2a3a3e979af6207885b18ad7eb479850b990bc3219b004a5c4f",
+      "prompt_sha256": "ae634d9c9bc7ebf3f9faa350edc0635d9f480b88d2b9ca258e4859153dae3bef",
+      "restored_before_launch": true,
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "fccd5610549b87e56f32117a68a453fe7a79a322d1aa077e63ccffe5a8b5e58b",
+        "seconds": 47.7774,
+        "runtime_events": {
+          "step_start": 2,
+          "tool_use": 1,
+          "step_finish": 1,
+          "text": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 94,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 104,
+            "input": 1780,
+            "output": 23,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 12636
+          },
+          {
+            "event": "text",
+            "ms": 44120
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "provider_http_errors": 0,
+      "provider_requests": [
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 0.465,
+          "compaction_summary": false,
+          "messages": 2,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 1780,
+            "completion_tokens": 23,
+            "total_tokens": 1803
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 3.114
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 3.613,
+          "compaction_summary": false,
+          "messages": 4,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "reasoning_characters": 0,
+          "visible_characters": 2895,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 8194,
+            "completion_tokens": 661,
+            "total_tokens": 8855
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 43.999
+        }
+      ],
+      "grade": {
+        "scope_exact": false,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ],
+        "artifact_preserved": {
+          "continuity-live-note.md": true,
+          "continuity-live-repro.py": true
+        },
+        "repro": {
+          "exit": 1,
+          "assertion": true
+        },
+        "native": {
+          "tests/test_commands.py": {
+            "exit": 0,
+            "test_summary": [
+              "82 passed in 0.11s"
+            ]
+          },
+          "tests/test_options.py": {
+            "exit": 0,
+            "test_summary": [
+              "640 passed in 0.27s"
+            ]
+          }
+        },
+        "oracle_exit": 0,
+        "hidden_count": 45,
+        "hidden_disagreements": 16,
+        "hidden_first_disagreements": [
+          "command/' '/'Use the replacement'/37",
+          "command/' '/'Use the replacement'/80",
+          "command/' '/True/37",
+          "command/' '/True/80",
+          "command/''/'Use the replacement'/37",
+          "command/''/'Use the replacement'/80",
+          "command/''/True/37",
+          "command/''/True/80"
+        ],
+        "observed_oracle_sha256": "6f63a0b02109cd1d79d1d3b24b739973f2fc84a81445f391b13e195ded3125eb",
+        "source_sha256": {
+          "src/click/core.py": "090689d002f0e33cb2569e84ee03fa6bf1bcf1e8ae5c4f6607316720943e8a06"
+        },
+        "verified": false
+      }
+    },
+    {
+      "read_limit": 4096,
+      "runtime": "opencode",
+      "checkpoint_sha256": "084da77ad3dfe2a3a3e979af6207885b18ad7eb479850b990bc3219b004a5c4f",
+      "prompt_sha256": "ae634d9c9bc7ebf3f9faa350edc0635d9f480b88d2b9ca258e4859153dae3bef",
+      "restored_before_launch": true,
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "b2217023f57b8934f658579b61cb1b5dd7f94cc3cee629267d63a757731e22a1",
+        "seconds": 55.4506,
+        "runtime_events": {
+          "step_start": 17,
+          "tool_use": 16,
+          "step_finish": 16,
+          "text": 2
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 94,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 110,
+            "input": 1776,
+            "output": 23,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 2963
+          },
+          {
+            "event": "tool_use",
+            "ms": 3071,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 3092,
+            "input": 1226,
+            "output": 29,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 5889
+          },
+          {
+            "event": "tool_use",
+            "ms": 6001,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 6031,
+            "input": 1018,
+            "output": 27,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 7820
+          },
+          {
+            "event": "tool_use",
+            "ms": 7934,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 7983,
+            "input": 244,
+            "output": 28,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 9475
+          },
+          {
+            "event": "tool_use",
+            "ms": 9600,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 9620,
+            "input": 48,
+            "output": 27,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 11295
+          },
+          {
+            "event": "tool_use",
+            "ms": 11411,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 11436,
+            "input": 47,
+            "output": 30,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 13066
+          },
+          {
+            "event": "tool_use",
+            "ms": 13179,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 13199,
+            "input": 50,
+            "output": 31,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 14698
+          },
+          {
+            "event": "tool_use",
+            "ms": 14808,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 14830,
+            "input": 51,
+            "output": 28,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 16388
+          },
+          {
+            "event": "tool_use",
+            "ms": 16501,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 16524,
+            "input": 48,
+            "output": 30,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 18010
+          },
+          {
+            "event": "tool_use",
+            "ms": 18123,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 18145,
+            "input": 50,
+            "output": 28,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 19653
+          },
+          {
+            "event": "tool_use",
+            "ms": 19780,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 19806,
+            "input": 48,
+            "output": 28,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 21468
+          },
+          {
+            "event": "tool_use",
+            "ms": 21599,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 21628,
+            "input": 48,
+            "output": 30,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 23323
+          },
+          {
+            "event": "tool_use",
+            "ms": 23523,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 23554,
+            "input": 50,
+            "output": 30,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 25327
+          },
+          {
+            "event": "tool_use",
+            "ms": 25441,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 25468,
+            "input": 50,
+            "output": 30,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 25697
+          },
+          {
+            "event": "text",
+            "ms": 39375
+          },
+          {
+            "event": "tool_use",
+            "ms": 39396,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 39475,
+            "input": 50,
+            "output": 257,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 44532
+          },
+          {
+            "event": "tool_use",
+            "ms": 44658,
+            "tool": "edit",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 44793,
+            "input": 267,
+            "output": 90,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 45106
+          },
+          {
+            "event": "text",
+            "ms": 51389
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "provider_http_errors": 0,
+      "provider_requests": [
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 0.476,
+          "compaction_summary": false,
+          "messages": 2,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 1780,
+            "completion_tokens": 23,
+            "total_tokens": 1803
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 3.5
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 4.018,
+          "compaction_summary": false,
+          "messages": 4,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 3002,
+            "completion_tokens": 29,
+            "total_tokens": 3031
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 2.927
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 7.007,
+          "compaction_summary": false,
+          "messages": 6,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4016,
+            "completion_tokens": 27,
+            "total_tokens": 4043
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 2.875
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 9.963,
+          "compaction_summary": false,
+          "messages": 8,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4256,
+            "completion_tokens": 28,
+            "total_tokens": 4284
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.85
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 11.91,
+          "compaction_summary": false,
+          "messages": 10,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4300,
+            "completion_tokens": 27,
+            "total_tokens": 4327
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.564
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 13.536,
+          "compaction_summary": false,
+          "messages": 12,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4343,
+            "completion_tokens": 30,
+            "total_tokens": 4373
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.757
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 15.352,
+          "compaction_summary": false,
+          "messages": 14,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4389,
+            "completion_tokens": 31,
+            "total_tokens": 4420
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.709
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 17.114,
+          "compaction_summary": false,
+          "messages": 16,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4436,
+            "completion_tokens": 28,
+            "total_tokens": 4464
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.575
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 18.746,
+          "compaction_summary": false,
+          "messages": 18,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4480,
+            "completion_tokens": 30,
+            "total_tokens": 4510
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.636
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 20.444,
+          "compaction_summary": false,
+          "messages": 20,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4526,
+            "completion_tokens": 28,
+            "total_tokens": 4554
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.565
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 22.06,
+          "compaction_summary": false,
+          "messages": 22,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4570,
+            "completion_tokens": 28,
+            "total_tokens": 4598
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.598
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 23.73,
+          "compaction_summary": false,
+          "messages": 24,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4614,
+            "completion_tokens": 30,
+            "total_tokens": 4644
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.737
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 25.547,
+          "compaction_summary": false,
+          "messages": 26,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4660,
+            "completion_tokens": 30,
+            "total_tokens": 4690
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.786
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 27.484,
+          "compaction_summary": false,
+          "messages": 28,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4706,
+            "completion_tokens": 30,
+            "total_tokens": 4736
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.84
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 29.387,
+          "compaction_summary": false,
+          "messages": 30,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 1048,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4752,
+            "completion_tokens": 257,
+            "total_tokens": 5009
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 13.869
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 43.41,
+          "compaction_summary": false,
+          "messages": 32,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 5015,
+            "completion_tokens": 90,
+            "total_tokens": 5105
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 5.12
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 48.719,
+          "compaction_summary": false,
+          "messages": 34,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 615,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 5127,
+            "completion_tokens": 121,
+            "total_tokens": 5248
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 6.567
+        }
+      ],
+      "grade": {
+        "scope_exact": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py",
+          "src/click/core.py"
+        ],
+        "artifact_preserved": {
+          "continuity-live-note.md": true,
+          "continuity-live-repro.py": true
+        },
+        "repro": {
+          "exit": 1,
+          "assertion": true
+        },
+        "native": {
+          "tests/test_commands.py": {
+            "exit": 1,
+            "test_summary": [
+              "2 failed, 80 passed in 0.22s"
+            ]
+          },
+          "tests/test_options.py": {
+            "exit": 0,
+            "test_summary": [
+              "640 passed in 0.55s"
+            ]
+          }
+        },
+        "oracle_exit": 0,
+        "hidden_count": 45,
+        "hidden_disagreements": 24,
+        "hidden_first_disagreements": [
+          "command/' '/'Use the replacement'/37",
+          "command/' '/'Use the replacement'/80",
+          "command/' '/True/37",
+          "command/' '/True/80",
+          "command/''/'Use the replacement'/37",
+          "command/''/'Use the replacement'/80",
+          "command/''/True/37",
+          "command/''/True/80"
+        ],
+        "observed_oracle_sha256": "640439e704f1066c6787a71b30dcd1e892d5ad2e3250367d2e8a424317859634",
+        "source_sha256": {
+          "src/click/core.py": "3ae64a466b736b1fa0bc89ee64d63ecd19ab86f0adb4bce6d5ce5155125c0362"
+        },
+        "verified": false
+      }
+    },
+    {
+      "read_limit": 4096,
+      "runtime": "opencode",
+      "checkpoint_sha256": "084da77ad3dfe2a3a3e979af6207885b18ad7eb479850b990bc3219b004a5c4f",
+      "prompt_sha256": "ae634d9c9bc7ebf3f9faa350edc0635d9f480b88d2b9ca258e4859153dae3bef",
+      "restored_before_launch": true,
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "9d6d2e54b218d09574287fca65281d50f6fe612839775385b18b383cc1be2786",
+        "seconds": 54.4191,
+        "runtime_events": {
+          "step_start": 11,
+          "tool_use": 10,
+          "step_finish": 10,
+          "text": 2
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 95,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 116,
+            "input": 1425,
+            "output": 23,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 3031
+          },
+          {
+            "event": "tool_use",
+            "ms": 3131,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 3145,
+            "input": 1226,
+            "output": 29,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 6143
+          },
+          {
+            "event": "tool_use",
+            "ms": 6245,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 6260,
+            "input": 1228,
+            "output": 29,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 13346
+          },
+          {
+            "event": "tool_use",
+            "ms": 13452,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 13464,
+            "input": 1018,
+            "output": 120,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 15063
+          },
+          {
+            "event": "tool_use",
+            "ms": 15162,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 15171,
+            "input": 173,
+            "output": 30,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 16667
+          },
+          {
+            "event": "tool_use",
+            "ms": 16758,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 16768,
+            "input": 164,
+            "output": 29,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 24795
+          },
+          {
+            "event": "tool_use",
+            "ms": 24889,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 24953,
+            "input": 1346,
+            "output": 120,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 26579
+          },
+          {
+            "event": "tool_use",
+            "ms": 26682,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 26695,
+            "input": 173,
+            "output": 29,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 34986
+          },
+          {
+            "event": "tool_use",
+            "ms": 35089,
+            "tool": "edit",
+            "status": "error"
+          },
+          {
+            "event": "step_finish",
+            "ms": 35099,
+            "input": 1346,
+            "output": 120,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 35559
+          },
+          {
+            "event": "text",
+            "ms": 43461
+          },
+          {
+            "event": "tool_use",
+            "ms": 43507,
+            "tool": "grep",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 43525,
+            "input": 173,
+            "output": 164,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 43988
+          },
+          {
+            "event": "text",
+            "ms": 50275
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "provider_http_errors": 0,
+      "provider_requests": [
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 0.676,
+          "compaction_summary": false,
+          "messages": 2,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 1780,
+            "completion_tokens": 23,
+            "total_tokens": 1803
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 3.415
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 4.17,
+          "compaction_summary": false,
+          "messages": 4,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 3002,
+            "completion_tokens": 29,
+            "total_tokens": 3031
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 2.971
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 7.182,
+          "compaction_summary": false,
+          "messages": 6,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ],
+            [
+              59093,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 4226,
+            "completion_tokens": 29,
+            "total_tokens": 4255
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 3.073
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 10.301,
+          "compaction_summary": false,
+          "messages": 8,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ],
+            [
+              59093,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 5240,
+            "completion_tokens": 120,
+            "total_tokens": 5360
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 7.158
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 17.504,
+          "compaction_summary": false,
+          "messages": 10,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ],
+            [
+              59093,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 5409,
+            "completion_tokens": 30,
+            "total_tokens": 5439
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.676
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 19.204,
+          "compaction_summary": false,
+          "messages": 12,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ],
+            [
+              59093,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 5569,
+            "completion_tokens": 29,
+            "total_tokens": 5598
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.574
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 20.8,
+          "compaction_summary": false,
+          "messages": 14,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ],
+            [
+              59093,
+              4096
+            ],
+            [
+              59221,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 6911,
+            "completion_tokens": 120,
+            "total_tokens": 7031
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 8.094
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 28.998,
+          "compaction_summary": false,
+          "messages": 16,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ],
+            [
+              59093,
+              4096
+            ],
+            [
+              59221,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 7080,
+            "completion_tokens": 29,
+            "total_tokens": 7109
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 1.697
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 30.731,
+          "compaction_summary": false,
+          "messages": 18,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ],
+            [
+              59093,
+              4096
+            ],
+            [
+              59221,
+              4096
+            ],
+            [
+              59221,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 8422,
+            "completion_tokens": 120,
+            "total_tokens": 8542
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 8.376
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 39.137,
+          "compaction_summary": false,
+          "messages": 20,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ],
+            [
+              59093,
+              4096
+            ],
+            [
+              59221,
+              4096
+            ],
+            [
+              59221,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 619,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 8591,
+            "completion_tokens": 164,
+            "total_tokens": 8755
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 8.346
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 47.571,
+          "compaction_summary": false,
+          "messages": 22,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "capped_read_lengths": [
+            [
+              58174,
+              4096
+            ],
+            [
+              59093,
+              4096
+            ],
+            [
+              59221,
+              4096
+            ],
+            [
+              59221,
+              4096
+            ]
+          ],
+          "reasoning_characters": 0,
+          "visible_characters": 593,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 8745,
+            "completion_tokens": 129,
+            "total_tokens": 8874
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 6.729
+        }
+      ],
+      "grade": {
+        "scope_exact": false,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ],
+        "artifact_preserved": {
+          "continuity-live-note.md": true,
+          "continuity-live-repro.py": true
+        },
+        "repro": {
+          "exit": 1,
+          "assertion": true
+        },
+        "native": {
+          "tests/test_commands.py": {
+            "exit": 0,
+            "test_summary": [
+              "82 passed in 0.19s"
+            ]
+          },
+          "tests/test_options.py": {
+            "exit": 0,
+            "test_summary": [
+              "640 passed in 0.27s"
+            ]
+          }
+        },
+        "oracle_exit": 0,
+        "hidden_count": 45,
+        "hidden_disagreements": 16,
+        "hidden_first_disagreements": [
+          "command/' '/'Use the replacement'/37",
+          "command/' '/'Use the replacement'/80",
+          "command/' '/True/37",
+          "command/' '/True/80",
+          "command/''/'Use the replacement'/37",
+          "command/''/'Use the replacement'/80",
+          "command/''/True/37",
+          "command/''/True/80"
+        ],
+        "observed_oracle_sha256": "6f63a0b02109cd1d79d1d3b24b739973f2fc84a81445f391b13e195ded3125eb",
+        "source_sha256": {
+          "src/click/core.py": "090689d002f0e33cb2569e84ee03fa6bf1bcf1e8ae5c4f6607316720943e8a06"
+        },
+        "verified": false
+      }
+    },
+    {
+      "read_limit": null,
+      "runtime": "opencode",
+      "checkpoint_sha256": "084da77ad3dfe2a3a3e979af6207885b18ad7eb479850b990bc3219b004a5c4f",
+      "prompt_sha256": "ae634d9c9bc7ebf3f9faa350edc0635d9f480b88d2b9ca258e4859153dae3bef",
+      "restored_before_launch": true,
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "4251eff9d27580d340f521290c8d5b331368b04cd0907dd80e412acf42112b6e",
+        "seconds": 52.7467,
+        "runtime_events": {
+          "step_start": 2,
+          "tool_use": 1,
+          "step_finish": 1,
+          "text": 1
+        },
+        "runtime_timeline": [
+          {
+            "event": "step_start",
+            "ms": 0
+          },
+          {
+            "event": "tool_use",
+            "ms": 89,
+            "tool": "read",
+            "status": "completed"
+          },
+          {
+            "event": "step_finish",
+            "ms": 102,
+            "input": 1425,
+            "output": 23,
+            "reasoning": 0
+          },
+          {
+            "event": "step_start",
+            "ms": 7346
+          },
+          {
+            "event": "text",
+            "ms": 49332
+          }
+        ],
+        "reported_input_tokens": 0,
+        "reported_cached_input_tokens": 0,
+        "reported_output_tokens": 0,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "provider_http_errors": 0,
+      "provider_requests": [
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 0.419,
+          "compaction_summary": false,
+          "messages": 2,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "reasoning_characters": 0,
+          "visible_characters": 0,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "tool_calls",
+          "usage": {
+            "prompt_tokens": 1780,
+            "completion_tokens": 23,
+            "total_tokens": 1803
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 2.868
+        },
+        {
+          "path": "/v1/chat/completions",
+          "request_at_seconds": 3.319,
+          "compaction_summary": false,
+          "messages": 4,
+          "tool_count": 5,
+          "reasoning_effort": "none",
+          "reasoning_characters": 0,
+          "visible_characters": 3871,
+          "requested_max_tokens": null,
+          "http_status": 200,
+          "finish_reason": "stop",
+          "usage": {
+            "prompt_tokens": 8194,
+            "completion_tokens": 867,
+            "total_tokens": 9061
+          },
+          "ended": "provider_eof",
+          "duration_seconds": 49.212
+        }
+      ],
+      "grade": {
+        "scope_exact": false,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ],
+        "artifact_preserved": {
+          "continuity-live-note.md": true,
+          "continuity-live-repro.py": true
+        },
+        "repro": {
+          "exit": 1,
+          "assertion": true
+        },
+        "native": {
+          "tests/test_commands.py": {
+            "exit": 0,
+            "test_summary": [
+              "82 passed in 0.11s"
+            ]
+          },
+          "tests/test_options.py": {
+            "exit": 0,
+            "test_summary": [
+              "640 passed in 0.29s"
+            ]
+          }
+        },
+        "oracle_exit": 0,
+        "hidden_count": 45,
+        "hidden_disagreements": 16,
+        "hidden_first_disagreements": [
+          "command/' '/'Use the replacement'/37",
+          "command/' '/'Use the replacement'/80",
+          "command/' '/True/37",
+          "command/' '/True/80",
+          "command/''/'Use the replacement'/37",
+          "command/''/'Use the replacement'/80",
+          "command/''/True/37",
+          "command/''/True/80"
+        ],
+        "observed_oracle_sha256": "6f63a0b02109cd1d79d1d3b24b739973f2fc84a81445f391b13e195ded3125eb",
+        "source_sha256": {
+          "src/click/core.py": "090689d002f0e33cb2569e84ee03fa6bf1bcf1e8ae5c4f6607316720943e8a06"
+        },
+        "verified": false
+      }
+    }
+  ],
+  "calibration": {
+    "id": "click-help",
+    "repository": "pallets/click",
+    "parent": "648d7c403829013ade629d63ddbfe808f6b2b770",
+    "reference": "29bacc773e817b2e49a75b6258399dc3e129b031",
+    "parent_repro": {
+      "exit": 1,
+      "assertion": true
+    },
+    "reference_repro": {
+      "exit": 0,
+      "assertion": false
+    },
+    "parent_native": {
+      "tests/test_commands.py": {
+        "exit": 0,
+        "test_summary": [
+          "82 passed in 0.11s"
+        ]
+      },
+      "tests/test_options.py": {
+        "exit": 0,
+        "test_summary": [
+          "640 passed in 0.26s"
+        ]
+      }
+    },
+    "reference_native": {
+      "tests/test_commands.py": {
+        "exit": 0,
+        "test_summary": [
+          "86 passed in 0.08s"
+        ]
+      },
+      "tests/test_options.py": {
+        "exit": 0,
+        "test_summary": [
+          "644 passed in 0.31s"
+        ]
+      }
+    },
+    "hidden_probe_count": 45,
+    "parent_hidden_disagreements": 16,
+    "reference_hidden_sha256": "76da363976cbda81601c87c61eed68000757eaf8b787412b00cd815fc71e7f0d"
+  }
+}

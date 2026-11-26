@@ -1,0 +1,187 @@
+{
+  "utc": "2026-11-26T11:43:33+00:00",
+  "model": {
+    "alias": "continuity-paired:8b",
+    "digest": "0b9d5fc41387def5f0c95d5ba7462a390c01569c3f6cff6f40ce4492a15be5c8",
+    "settings": "temperature                    0.6\ntop_k                          20\ntop_p                          0.95\nnum_ctx                        16384\nnum_predict                    2048\nrepeat_penalty                 1\nstop                           \"<|im_start|>\"\nstop                           \"<|im_end|>\"",
+    "family": "qwen3",
+    "quantization": "Q4_K_M",
+    "base_model_digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41"
+  },
+  "source_sha256": "230d4ce513b186f3216c6f8891c566879364b7c58c4fd132a313dbcae33ab621",
+  "attempts": [
+    {
+      "requested_seed": 31,
+      "seconds": 3.291,
+      "prompt_sha256": "7eb98cfdd804746e3da6a48af1d55147e753c1158aa88b59f593a22f7a4c97e1",
+      "output_sha256": "9c3fea33403cb67c60a870a82436347c2c329e47480116f7bf1309d49235603a",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 181,
+        "prompt_tokens_details": {
+          "cached_tokens": 1
+        },
+        "completion_tokens": 69,
+        "total_tokens": 250
+      },
+      "applied": false,
+      "disposition": "ValueError",
+      "grade": {
+        "scope_exact": false,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ],
+        "artifact_preserved": {
+          "continuity-live-note.md": true,
+          "continuity-live-repro.py": true
+        },
+        "repro": {
+          "exit": 1,
+          "assertion": true
+        },
+        "native": {
+          "tests/test_commands.py": {
+            "exit": 0,
+            "test_summary": [
+              "82 passed in 0.09s"
+            ]
+          },
+          "tests/test_options.py": {
+            "exit": 0,
+            "test_summary": [
+              "640 passed in 0.28s"
+            ]
+          }
+        },
+        "oracle_exit": 0,
+        "hidden_count": 45,
+        "hidden_disagreements": 16,
+        "hidden_first_disagreements": [
+          "command/' '/'Use the replacement'/37",
+          "command/' '/'Use the replacement'/80",
+          "command/' '/True/37",
+          "command/' '/True/80",
+          "command/''/'Use the replacement'/37",
+          "command/''/'Use the replacement'/80",
+          "command/''/True/37",
+          "command/''/True/80"
+        ],
+        "observed_oracle_sha256": "6f63a0b02109cd1d79d1d3b24b739973f2fc84a81445f391b13e195ded3125eb",
+        "source_sha256": {
+          "src/click/core.py": "090689d002f0e33cb2569e84ee03fa6bf1bcf1e8ae5c4f6607316720943e8a06"
+        },
+        "verified": false
+      }
+    },
+    {
+      "requested_seed": 32,
+      "seconds": 2.606,
+      "prompt_sha256": "7eb98cfdd804746e3da6a48af1d55147e753c1158aa88b59f593a22f7a4c97e1",
+      "output_sha256": "9c3fea33403cb67c60a870a82436347c2c329e47480116f7bf1309d49235603a",
+      "finish_reason": "stop",
+      "usage": {
+        "prompt_tokens": 181,
+        "prompt_tokens_details": {
+          "cached_tokens": 180
+        },
+        "completion_tokens": 69,
+        "total_tokens": 250
+      },
+      "applied": false,
+      "disposition": "ValueError",
+      "grade": {
+        "scope_exact": false,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py"
+        ],
+        "artifact_preserved": {
+          "continuity-live-note.md": true,
+          "continuity-live-repro.py": true
+        },
+        "repro": {
+          "exit": 1,
+          "assertion": true
+        },
+        "native": {
+          "tests/test_commands.py": {
+            "exit": 0,
+            "test_summary": [
+              "82 passed in 0.10s"
+            ]
+          },
+          "tests/test_options.py": {
+            "exit": 0,
+            "test_summary": [
+              "640 passed in 0.30s"
+            ]
+          }
+        },
+        "oracle_exit": 0,
+        "hidden_count": 45,
+        "hidden_disagreements": 16,
+        "hidden_first_disagreements": [
+          "command/' '/'Use the replacement'/37",
+          "command/' '/'Use the replacement'/80",
+          "command/' '/True/37",
+          "command/' '/True/80",
+          "command/''/'Use the replacement'/37",
+          "command/''/'Use the replacement'/80",
+          "command/''/True/37",
+          "command/''/True/80"
+        ],
+        "observed_oracle_sha256": "6f63a0b02109cd1d79d1d3b24b739973f2fc84a81445f391b13e195ded3125eb",
+        "source_sha256": {
+          "src/click/core.py": "090689d002f0e33cb2569e84ee03fa6bf1bcf1e8ae5c4f6607316720943e8a06"
+        },
+        "verified": false
+      }
+    }
+  ],
+  "calibration": {
+    "id": "click-help",
+    "repository": "pallets/click",
+    "parent": "648d7c403829013ade629d63ddbfe808f6b2b770",
+    "reference": "29bacc773e817b2e49a75b6258399dc3e129b031",
+    "parent_repro": {
+      "exit": 1,
+      "assertion": true
+    },
+    "reference_repro": {
+      "exit": 0,
+      "assertion": false
+    },
+    "parent_native": {
+      "tests/test_commands.py": {
+        "exit": 0,
+        "test_summary": [
+          "82 passed in 0.11s"
+        ]
+      },
+      "tests/test_options.py": {
+        "exit": 0,
+        "test_summary": [
+          "640 passed in 0.27s"
+        ]
+      }
+    },
+    "reference_native": {
+      "tests/test_commands.py": {
+        "exit": 0,
+        "test_summary": [
+          "86 passed in 0.09s"
+        ]
+      },
+      "tests/test_options.py": {
+        "exit": 0,
+        "test_summary": [
+          "644 passed in 0.27s"
+        ]
+      }
+    },
+    "hidden_probe_count": 45,
+    "parent_hidden_disagreements": 16,
+    "reference_hidden_sha256": "76da363976cbda81601c87c61eed68000757eaf8b787412b00cd815fc71e7f0d"
+  }
+}

@@ -1,0 +1,35 @@
+{
+  "utc": "2026-11-26T11:42:28+00:00",
+  "mode": "scripted rehearsal",
+  "sequence": 0,
+  "limit_seconds": 240,
+  "source_sha256": "134de5c65a86c7a990ecba699ba470fc1d9996e5b41d1bfdc29b88414d1dc432",
+  "observations": [
+    {
+      "arm": "manual",
+      "case": "click",
+      "completed": true,
+      "verified": true,
+      "phase_elapsed": {
+        "start_to_captured_seconds": 0.010853584,
+        "captured_to_restored_seconds": 0.028117416,
+        "restored_to_finish_seconds": 0.000161709
+      },
+      "total_seconds": 0.039132709,
+      "operator_active_seconds_self_reported": null
+    },
+    {
+      "arm": "managed",
+      "case": "packaging",
+      "completed": true,
+      "verified": true,
+      "phase_elapsed": {
+        "start_to_captured_seconds": 0.130243209,
+        "captured_to_restored_seconds": 0.113205333,
+        "restored_to_finish_seconds": 0.00018475
+      },
+      "total_seconds": 0.243633292,
+      "operator_active_seconds_self_reported": null
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "utc": "2026-11-26T11:37:10+00:00",
+  "receiver": "GitHub Git receive-pack over SSH",
+  "base_revision": "899e0637b4bf68f89c54d119711795ea2f9d676a",
+  "conflicting_revision": "b289080180e4f8b5e9b93d9b6d70b62fb17831d4",
+  "source_sha256": "22ec1d610562ba5d6721ec4ba055ec1880623b6152a146a7050ac455718c2a2d",
+  "trials": [
+    {
+      "namespace": "refs/heads/continuity-eval/a1e92409208e526c",
+      "observed_before_worker_death": "899e0637b4bf68f89c54d119711795ea2f9d676a",
+      "worker_exit": -9,
+      "same_target_retry_exit": 0,
+      "same_target_up_to_date": true,
+      "same_target_readback": "899e0637b4bf68f89c54d119711795ea2f9d676a",
+      "different_target_retry_exit": 1,
+      "different_target_rejected_as_stale": true,
+      "final_independent_readback": "899e0637b4bf68f89c54d119711795ea2f9d676a",
+      "removed_with_matching_lease": true
+    },
+    {
+      "namespace": "refs/heads/continuity-eval/3940e949d1cebf47",
+      "observed_before_worker_death": "899e0637b4bf68f89c54d119711795ea2f9d676a",
+      "worker_exit": -9,
+      "same_target_retry_exit": 0,
+      "same_target_up_to_date": true,
+      "same_target_readback": "899e0637b4bf68f89c54d119711795ea2f9d676a",
+      "different_target_retry_exit": 1,
+      "different_target_rejected_as_stale": true,
+      "final_independent_readback": "899e0637b4bf68f89c54d119711795ea2f9d676a",
+      "removed_with_matching_lease": true
+    },
+    {
+      "namespace": "refs/heads/continuity-eval/832ae7d0bab1b413",
+      "observed_before_worker_death": "899e0637b4bf68f89c54d119711795ea2f9d676a",
+      "worker_exit": -9,
+      "same_target_retry_exit": 0,
+      "same_target_up_to_date": true,
+      "same_target_readback": "899e0637b4bf68f89c54d119711795ea2f9d676a",
+      "different_target_retry_exit": 1,
+      "different_target_rejected_as_stale": true,
+      "final_independent_readback": "899e0637b4bf68f89c54d119711795ea2f9d676a",
+      "removed_with_matching_lease": true
+    }
+  ]
+}

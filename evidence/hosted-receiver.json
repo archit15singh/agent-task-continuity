@@ -1,0 +1,291 @@
+{
+  "utc": "2026-11-26T11:42:09+00:00",
+  "hosted_workflow_revision": "a40b28e9362f1b1d0e56fc5c4835771178c327c4",
+  "hosted_run_id": "45812920668",
+  "container_image_id": "sha256:1027b00b5e347f838a953a6788820eaa24d51a61a13570020011bb85b86ae598",
+  "container_image_digests": [
+    "python@sha256:7249d5587b78209a006dc4a3b5340678f84ea729239193aa559962cd8c1fce50"
+  ],
+  "runner_sha256": "9f449c0a435d62153c61f342fd3f6450677e5334514fb7e997b4edf7f79c7bd2",
+  "trials": [
+    {
+      "fault": "receiver",
+      "coordinator_exit": 32,
+      "epochs_at_interruption": [
+        1,
+        2
+      ],
+      "epochs_after_restart_and_replay": [
+        2,
+        2
+      ],
+      "worktree_prepared_at_interruption": false,
+      "invalid_activation_http": 403,
+      "delayed_old_generation_http": 412,
+      "retired_bearer_current_generation_http": 403,
+      "effects_and_receipts_before_publish": [
+        0,
+        0
+      ],
+      "first_publish_status": "confirmed",
+      "effect_receiver_exit": null,
+      "effects_and_receipts_after_first_publish": [
+        1,
+        1
+      ],
+      "final_status": "confirmed",
+      "final_effects_and_receipts": [
+        1,
+        1
+      ]
+    },
+    {
+      "fault": "before",
+      "coordinator_exit": 0,
+      "epochs_at_interruption": [
+        2,
+        2
+      ],
+      "epochs_after_restart_and_replay": [
+        2,
+        2
+      ],
+      "worktree_prepared_at_interruption": true,
+      "invalid_activation_http": 403,
+      "delayed_old_generation_http": 412,
+      "retired_bearer_current_generation_http": 403,
+      "effects_and_receipts_before_publish": [
+        0,
+        0
+      ],
+      "first_publish_status": "unknown",
+      "effect_receiver_exit": 22,
+      "effects_and_receipts_after_first_publish": [
+        0,
+        0
+      ],
+      "final_status": "confirmed",
+      "final_effects_and_receipts": [
+        1,
+        1
+      ]
+    },
+    {
+      "fault": "after",
+      "coordinator_exit": 0,
+      "epochs_at_interruption": [
+        2,
+        2
+      ],
+      "epochs_after_restart_and_replay": [
+        2,
+        2
+      ],
+      "worktree_prepared_at_interruption": true,
+      "invalid_activation_http": 403,
+      "delayed_old_generation_http": 412,
+      "retired_bearer_current_generation_http": 403,
+      "effects_and_receipts_before_publish": [
+        0,
+        0
+      ],
+      "first_publish_status": "unknown",
+      "effect_receiver_exit": 23,
+      "effects_and_receipts_after_first_publish": [
+        1,
+        1
+      ],
+      "final_status": "confirmed",
+      "final_effects_and_receipts": [
+        1,
+        1
+      ]
+    },
+    {
+      "fault": "receiver",
+      "coordinator_exit": 32,
+      "epochs_at_interruption": [
+        1,
+        2
+      ],
+      "epochs_after_restart_and_replay": [
+        2,
+        2
+      ],
+      "worktree_prepared_at_interruption": false,
+      "invalid_activation_http": 403,
+      "delayed_old_generation_http": 412,
+      "retired_bearer_current_generation_http": 403,
+      "effects_and_receipts_before_publish": [
+        0,
+        0
+      ],
+      "first_publish_status": "confirmed",
+      "effect_receiver_exit": null,
+      "effects_and_receipts_after_first_publish": [
+        1,
+        1
+      ],
+      "final_status": "confirmed",
+      "final_effects_and_receipts": [
+        1,
+        1
+      ]
+    },
+    {
+      "fault": "before",
+      "coordinator_exit": 0,
+      "epochs_at_interruption": [
+        2,
+        2
+      ],
+      "epochs_after_restart_and_replay": [
+        2,
+        2
+      ],
+      "worktree_prepared_at_interruption": true,
+      "invalid_activation_http": 403,
+      "delayed_old_generation_http": 412,
+      "retired_bearer_current_generation_http": 403,
+      "effects_and_receipts_before_publish": [
+        0,
+        0
+      ],
+      "first_publish_status": "unknown",
+      "effect_receiver_exit": 22,
+      "effects_and_receipts_after_first_publish": [
+        0,
+        0
+      ],
+      "final_status": "confirmed",
+      "final_effects_and_receipts": [
+        1,
+        1
+      ]
+    },
+    {
+      "fault": "after",
+      "coordinator_exit": 0,
+      "epochs_at_interruption": [
+        2,
+        2
+      ],
+      "epochs_after_restart_and_replay": [
+        2,
+        2
+      ],
+      "worktree_prepared_at_interruption": true,
+      "invalid_activation_http": 403,
+      "delayed_old_generation_http": 412,
+      "retired_bearer_current_generation_http": 403,
+      "effects_and_receipts_before_publish": [
+        0,
+        0
+      ],
+      "first_publish_status": "unknown",
+      "effect_receiver_exit": 23,
+      "effects_and_receipts_after_first_publish": [
+        1,
+        1
+      ],
+      "final_status": "confirmed",
+      "final_effects_and_receipts": [
+        1,
+        1
+      ]
+    },
+    {
+      "fault": "receiver",
+      "coordinator_exit": 32,
+      "epochs_at_interruption": [
+        1,
+        2
+      ],
+      "epochs_after_restart_and_replay": [
+        2,
+        2
+      ],
+      "worktree_prepared_at_interruption": false,
+      "invalid_activation_http": 403,
+      "delayed_old_generation_http": 412,
+      "retired_bearer_current_generation_http": 403,
+      "effects_and_receipts_before_publish": [
+        0,
+        0
+      ],
+      "first_publish_status": "confirmed",
+      "effect_receiver_exit": null,
+      "effects_and_receipts_after_first_publish": [
+        1,
+        1
+      ],
+      "final_status": "confirmed",
+      "final_effects_and_receipts": [
+        1,
+        1
+      ]
+    },
+    {
+      "fault": "before",
+      "coordinator_exit": 0,
+      "epochs_at_interruption": [
+        2,
+        2
+      ],
+      "epochs_after_restart_and_replay": [
+        2,
+        2
+      ],
+      "worktree_prepared_at_interruption": true,
+      "invalid_activation_http": 403,
+      "delayed_old_generation_http": 412,
+      "retired_bearer_current_generation_http": 403,
+      "effects_and_receipts_before_publish": [
+        0,
+        0
+      ],
+      "first_publish_status": "unknown",
+      "effect_receiver_exit": 22,
+      "effects_and_receipts_after_first_publish": [
+        0,
+        0
+      ],
+      "final_status": "confirmed",
+      "final_effects_and_receipts": [
+        1,
+        1
+      ]
+    },
+    {
+      "fault": "after",
+      "coordinator_exit": 0,
+      "epochs_at_interruption": [
+        2,
+        2
+      ],
+      "epochs_after_restart_and_replay": [
+        2,
+        2
+      ],
+      "worktree_prepared_at_interruption": true,
+      "invalid_activation_http": 403,
+      "delayed_old_generation_http": 412,
+      "retired_bearer_current_generation_http": 403,
+      "effects_and_receipts_before_publish": [
+        0,
+        0
+      ],
+      "first_publish_status": "unknown",
+      "effect_receiver_exit": 23,
+      "effects_and_receipts_after_first_publish": [
+        1,
+        1
+      ],
+      "final_status": "confirmed",
+      "final_effects_and_receipts": [
+        1,
+        1
+      ]
+    }
+  ]
+}

@@ -1,0 +1,334 @@
+{
+  "utc": "2026-11-26T11:41:14+00:00",
+  "seconds_per_worker": 180,
+  "model_requested": "gpt-6.2-sol",
+  "source_sha256": "68fda6c0f2f108165eb4a6d196d32131b8b63423e664ce082627d1580cefc419",
+  "attempts": [
+    {
+      "calibration": {
+        "id": "click-help",
+        "repository": "pallets/click",
+        "parent": "648d7c403829013ade629d63ddbfe808f6b2b770",
+        "reference": "29bacc773e817b2e49a75b6258399dc3e129b031",
+        "parent_repro": {
+          "exit": 1,
+          "assertion": true
+        },
+        "reference_repro": {
+          "exit": 0,
+          "assertion": false
+        },
+        "parent_native": {
+          "tests/test_commands.py": {
+            "exit": 0,
+            "test_summary": [
+              "82 passed in 0.11s"
+            ]
+          },
+          "tests/test_options.py": {
+            "exit": 0,
+            "test_summary": [
+              "640 passed in 0.28s"
+            ]
+          }
+        },
+        "reference_native": {
+          "tests/test_commands.py": {
+            "exit": 0,
+            "test_summary": [
+              "86 passed in 0.10s"
+            ]
+          },
+          "tests/test_options.py": {
+            "exit": 0,
+            "test_summary": [
+              "644 passed in 0.29s"
+            ]
+          }
+        },
+        "hidden_probe_count": 45,
+        "parent_hidden_disagreements": 16,
+        "reference_hidden_sha256": "76da363976cbda81601c87c61eed68000757eaf8b787412b00cd815fc71e7f0d"
+      },
+      "case": "click-help",
+      "checkpoint_sha256": "084da77ad3dfe2a3a3e979af6207885b18ad7eb479850b990bc3219b004a5c4f",
+      "prompt_sha256": "ae634d9c9bc7ebf3f9faa350edc0635d9f480b88d2b9ca258e4859153dae3bef",
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "ab95997f1f08a05edb02db28689b298be3188fda0ec86a909e56f2bc3c3ddba3",
+        "seconds": 34.7264,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 9,
+          "item.started": 7,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 203144,
+        "reported_cached_input_tokens": 159872,
+        "reported_output_tokens": 804,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "scope_exact": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py",
+          "src/click/core.py"
+        ],
+        "artifact_preserved": {
+          "continuity-live-note.md": true,
+          "continuity-live-repro.py": true
+        },
+        "repro": {
+          "exit": 0,
+          "assertion": false
+        },
+        "native": {
+          "tests/test_commands.py": {
+            "exit": 0,
+            "test_summary": [
+              "82 passed in 0.11s"
+            ]
+          },
+          "tests/test_options.py": {
+            "exit": 0,
+            "test_summary": [
+              "640 passed in 0.28s"
+            ]
+          }
+        },
+        "oracle_exit": 0,
+        "hidden_count": 45,
+        "hidden_disagreements": 0,
+        "hidden_first_disagreements": [],
+        "observed_oracle_sha256": "76da363976cbda81601c87c61eed68000757eaf8b787412b00cd815fc71e7f0d",
+        "source_sha256": {
+          "src/click/core.py": "7b5d562499e7ae88d9221f1dc1c96cb285dbc597cfa987cc5baaddafc4c2ca9b"
+        },
+        "verified": true
+      }
+    },
+    {
+      "calibration": {
+        "id": "packaging-quotes",
+        "repository": "pypa/packaging",
+        "parent": "2497782b2bb03812d2a12ae882a4390c61ec5061",
+        "reference": "5b583e309996a085ad3b5b045f3bf50a09c11b58",
+        "parent_repro": {
+          "exit": 1,
+          "assertion": true
+        },
+        "reference_repro": {
+          "exit": 0,
+          "assertion": false
+        },
+        "parent_native": {
+          "tests/test_markers.py": {
+            "exit": 0,
+            "test_summary": [
+              "2294 passed in 0.48s"
+            ]
+          },
+          "tests/test_requirements.py": {
+            "exit": 0,
+            "test_summary": [
+              "5320 passed in 1.31s"
+            ]
+          }
+        },
+        "reference_native": {
+          "tests/test_markers.py": {
+            "exit": 0,
+            "test_summary": [
+              "2299 passed in 0.48s"
+            ]
+          },
+          "tests/test_requirements.py": {
+            "exit": 0,
+            "test_summary": [
+              "5321 passed in 1.31s"
+            ]
+          }
+        },
+        "hidden_probe_count": 165,
+        "parent_hidden_disagreements": 50,
+        "reference_hidden_sha256": "12e829cf0abc1be7638b7b003fb8dca37b29b086794c72e028ee5f123e247b66"
+      },
+      "case": "packaging-quotes",
+      "checkpoint_sha256": "ec27ea2060eb55bd547f3853f416dda9740e0770367bc408272ffd58348a49f0",
+      "prompt_sha256": "4403a9c53aacf7dce1ac4716c3a4a9b6851518129db93bf2d626a0194286331b",
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "c90d55edf3b5822548cf2d32b7332373c164b45cf45bb4c2a79318d98244dda6",
+        "seconds": 31.9886,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 8,
+          "item.started": 6,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 160304,
+        "reported_cached_input_tokens": 141824,
+        "reported_output_tokens": 928,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "scope_exact": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py",
+          "src/packaging/_parser.py"
+        ],
+        "artifact_preserved": {
+          "continuity-live-note.md": true,
+          "continuity-live-repro.py": true
+        },
+        "repro": {
+          "exit": 0,
+          "assertion": false
+        },
+        "native": {
+          "tests/test_markers.py": {
+            "exit": 0,
+            "test_summary": [
+              "2294 passed in 0.50s"
+            ]
+          },
+          "tests/test_requirements.py": {
+            "exit": 0,
+            "test_summary": [
+              "5320 passed in 1.35s"
+            ]
+          }
+        },
+        "oracle_exit": 0,
+        "hidden_count": 165,
+        "hidden_disagreements": 0,
+        "hidden_first_disagreements": [],
+        "observed_oracle_sha256": "12e829cf0abc1be7638b7b003fb8dca37b29b086794c72e028ee5f123e247b66",
+        "source_sha256": {
+          "src/packaging/_parser.py": "71da5e607bb0f698bf563bec178493f6ad55e333cc47be5124b6cc12e21c649c"
+        },
+        "verified": true
+      }
+    },
+    {
+      "calibration": {
+        "id": "attrs-converter",
+        "repository": "python-attrs/attrs",
+        "parent": "53e632c5218b729da6ac37a35b4b68379dc18999",
+        "reference": "6fda0a4e086b56d7058855e4c15112c8f58de74c",
+        "parent_repro": {
+          "exit": 1,
+          "assertion": true
+        },
+        "reference_repro": {
+          "exit": 0,
+          "assertion": false
+        },
+        "parent_native": {
+          "tests/test_converters.py": {
+            "exit": 0,
+            "test_summary": [
+              "30 passed in 0.02s"
+            ]
+          },
+          "tests/test_setattr.py": {
+            "exit": 0,
+            "test_summary": [
+              "35 passed, 1 xfailed in 0.06s"
+            ]
+          }
+        },
+        "reference_native": {
+          "tests/test_converters.py": {
+            "exit": 0,
+            "test_summary": [
+              "31 passed in 0.01s"
+            ]
+          },
+          "tests/test_setattr.py": {
+            "exit": 0,
+            "test_summary": [
+              "36 passed, 1 xfailed in 0.04s"
+            ]
+          }
+        },
+        "hidden_probe_count": 37,
+        "parent_hidden_disagreements": 31,
+        "reference_hidden_sha256": "2c0f20274ed655706c4521c669a06b730650ebc15ec5aa64f6bd99d841de3b4d"
+      },
+      "case": "attrs-converter",
+      "checkpoint_sha256": "d92e88d95c9ff0b7c985dff9e0604d29d8e955868c1235f982089153235061b7",
+      "prompt_sha256": "d26ca0a1bb9ff4d334d34dbbe890ffd47622ca5b6182339f7153bf24b27f18e7",
+      "worker": {
+        "exit_code": 0,
+        "timed_out": false,
+        "output_sha256": "8a840c1bbb00ff5459f62b39df59f53f29ec7131640c0ab0690793977ed25d56",
+        "seconds": 38.3804,
+        "runtime_events": {
+          "thread.started": 1,
+          "turn.started": 1,
+          "item.completed": 8,
+          "item.started": 6,
+          "turn.completed": 1
+        },
+        "runtime_timeline": [],
+        "reported_input_tokens": 190753,
+        "reported_cached_input_tokens": 160000,
+        "reported_output_tokens": 1177,
+        "provider_rate_limited": false,
+        "provider_error_type": null
+      },
+      "grade": {
+        "scope_exact": true,
+        "changed_files": [
+          "continuity-live-note.md",
+          "continuity-live-repro.py",
+          "src/attr/_make.py",
+          "src/attr/setters.py"
+        ],
+        "artifact_preserved": {
+          "continuity-live-note.md": true,
+          "continuity-live-repro.py": true
+        },
+        "repro": {
+          "exit": 0,
+          "assertion": false
+        },
+        "native": {
+          "tests/test_converters.py": {
+            "exit": 0,
+            "test_summary": [
+              "30 passed in 0.02s"
+            ]
+          },
+          "tests/test_setattr.py": {
+            "exit": 0,
+            "test_summary": [
+              "35 passed, 1 xfailed in 0.04s"
+            ]
+          }
+        },
+        "oracle_exit": 0,
+        "hidden_count": 37,
+        "hidden_disagreements": 0,
+        "hidden_first_disagreements": [],
+        "observed_oracle_sha256": "2c0f20274ed655706c4521c669a06b730650ebc15ec5aa64f6bd99d841de3b4d",
+        "source_sha256": {
+          "src/attr/_make.py": "225e54217b416f62ce3f6d448fae5eb2362e327af48f9fe936a259bf13330dbe",
+          "src/attr/setters.py": "bc21e09b677a7806924a59a23e49b2708204c543d8ed71fe7df3fbb4f1af222a"
+        },
+        "verified": true
+      }
+    }
+  ]
+}
