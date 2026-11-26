@@ -152,3 +152,19 @@ The combined durable fixture converged in all 18 trials after testing six interr
 | 2 | Bind each remotely submitted generation to a per-task credential, then repeat delayed delivery and receiver restart | Whether the trusted loopback generation assertion can become an authenticated worker contract |
 | 3 | Stop Git restoration midway through applying a multi-file patch | Whether the coordinator can safely distinguish a verified prepared checkout from an incomplete one and resume it |
 | 4 | Run the paired restart protocol with operators | Whether managed recovery changes human active time |
+
+## Round 4 goal prompt
+
+Determine whether a receiver can enforce task ownership using a credential bound to the active generation, and whether a replacement can recover when a process dies with only part of a multi-file checkpoint applied. Run the restore experiment on the three pinned public repositories and publish both controls and failures.
+
+## Round 4 loop prompt
+
+Freeze the checkpoints and interruption points. Run the controls, inject a process exit, reopen both stores, and independently count recovery, rejected writes, and effects. Compare the committed checkout to the captured fingerprint. Retain the incomplete attempt so a recovery rule can be audited. Report any behavior this design leaves untested, then rank the next questions.
+
+### H16 · Worker-authenticated publication
+
+Compare the existing header-only receiver against one that also checks a task-scoped bearer bound to the active generation. After activating and reopening the receiver, send a generation-1 request and then a generation-2 request carrying the retired credential. Send the same generation-2 request without a credential. The header-only control should accept both current-number requests. The authenticated receiver should reject both and accept the active credential. Retry activation with matching and conflicting bindings. Re-run the original six failure stages, three trials each. Require one final effect and receipt per operation.
+
+### H17 · Incomplete checkout recovery
+
+Reuse the pinned Click, Packaging, and attrs implementation diffs. Capture each source change with a selected untracked note. In a disposable linked checkout apply only the tracked implementation patch and exit the coordinator before the note is applied. The existing coordinator should fail verification and leave ownership unchanged. With recovery enabled it should retain the incomplete checkout, commit a fresh destination to the intent before restoring, and converge on a verified snapshot at generation 2. Also interrupt after committing the fresh path and verify a subsequent restart can finish. Treat the selected-file split as a controlled process-boundary injection rather than a random fault inside Git.
